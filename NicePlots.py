@@ -7,6 +7,8 @@ cm_to_mev = 1.0 / mev_to_cm
 
 filename = 'MAPI_comercial.csv'
 name = 'MAPI_comercial'
+#filename ='IREPA-ND-02.csv'
+#name = 'IREPA-ND-02'
 folder = 'data'
 root = os.path.dirname(os.path.abspath(__file__))
 cwd = os.getcwd()
