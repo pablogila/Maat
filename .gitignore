@@ -1,4 +1,4 @@
 *.png
 /_examples/
-/data/
+#/data/
 
