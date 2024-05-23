@@ -1,4 +1,7 @@
 *.png
 *.svg
+*.csv
+*.dat
+*.txt
 _*
 

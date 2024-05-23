@@ -98,6 +98,6 @@ def plot_ins(ins:INS):
 ### MAIN ###
 
 
-ins_data = INS(filenames=['IREPA-ND-02_INS_temp.csv', 'manley2020-CDND_INS.csv'], units=['cm','ev'], title=None)
+ins_data = INS(filenames=['IREPA-ND-02_INS.csv', 'MAPI_comercial_INS.csv'], units=['cm','cm'], title=None)
 plot_ins(ins_data)
 
