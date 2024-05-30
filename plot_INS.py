@@ -11,7 +11,7 @@ cm_to_mev = 1.0 / mev_to_cm
 
 
 class INS:
-    def __init__(self, filenames, title=None, save_as='INS.svg', units=None, scale=True, xlim=50, ylim_scaling=2, log=False, legend=True):
+    def __init__(self, filenames, title=None, save_as='INS.svg', units=None, scale=[30,50], xlim=50, ylim_scaling=2, hide_y_axis=True, log=False, legend=True):
 
         if units is None:
             self.units = ['cm'] * len(filenames)
@@ -29,6 +29,7 @@ class INS:
         self.dataframes = [self.read_ins(filename) for filename in filenames] if isinstance(filenames, list) else [self.read_ins(filenames)]
         self.xlim = xlim
         self.ylim_scaling = ylim_scaling
+        self.hide_y_axis = hide_y_axis
         self.log = log
         self.scale = scale
         self.legend = legend
@@ -49,7 +50,7 @@ class INS:
         if len(df.columns) > 2:
             df = df.drop(columns=df.columns[2])
 
-        df.columns = ['Energy / meV', 'Intensity / a.u.']
+        df.columns = ['Energy transfer / meV', 'S(Q,E)']
 
         return df
 
@@ -71,8 +72,10 @@ def plot_ins(ins:INS):
 
     strings_to_delete_from_name = ['.csv', '_INS', '_temp']
     for df, name in zip(ins.dataframes, ins.filenames):
-        if ins.scale:
-            df_range_i = df[(df[df.columns[0]] >= 30) & (df[df.columns[0]] <= 50)]
+        if ins.scale is not False:
+            first_cut = ins.scale[0]
+            second_cut = ins.scale[1]
+            df_range_i = df[(df[df.columns[0]] >= first_cut) & (df[df.columns[0]] <= second_cut)]
             max_df_i = df_range_i[df_range_i.columns[1]].max()
             df[df.columns[1]] = df[df.columns[1]] / max_df_i * max_df
         name_clean = name
@@ -88,6 +91,10 @@ def plot_ins(ins:INS):
         ax.legend()
     else:
         ax.legend().set_visible(False)
+    
+    if ins.hide_y_axis:
+        ax.set_yticks([])
+
 
     root = os.path.dirname(os.path.abspath(__file__))
     save_name = os.path.join(root, ins.save_as)
@@ -98,6 +105,6 @@ def plot_ins(ins:INS):
 ### MAIN ###
 
 
-ins_data = INS(filenames=['IREPA-ND-02_INS.csv', 'MAPI_comercial_INS.csv'], units=['cm','cm'], title=None)
+ins_data = INS(filenames=['CH3NH3PbI3.csv', 'CH3ND3PbI3.csv'], units=['cm','cm'], title=None, scale=[8,20], ylim_scaling=1.3)
 plot_ins(ins_data)
 
