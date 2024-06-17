@@ -4,7 +4,7 @@ import numpy as np
 import scipy
 import os
 
-version = '2024.05.30.2100'
+version = '2024.06.17.1800'
 
 # Conversion factors
 mev_to_cm = 8.0655
