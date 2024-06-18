@@ -12,10 +12,12 @@ import json
 import time
 
 
-version = 'vM.2024.06.17.1800'
+version = 'vM.2024.06.18.1300'
 
 
-# Conversion factors
+##############################
+###### CONVERSION FACTORS ####
+##############################
 mev_to_cm = 8.0655
 cm_to_mev = 1.0 / mev_to_cm
 eV_to_J = 1.602176634e-19
@@ -27,15 +29,17 @@ kg_to_amu = 1 / amu_to_kg
 eV_to_meV = 1000
 meV_to_eV = 0.001
 
+##############################
+#### MATERIAL COMPOSITIONS ###
+##############################
+MAPI =      {'Pb': 1, 'I': 1, 'C': 1, 'N': 1, 'H': 6}
+MAPI_CDND = {'Pb': 1, 'I': 1, 'C': 1, 'N': 1, 'D': 6}
+MAPI_ND =   {'Pb': 1, 'I': 1, 'C': 1, 'N': 1, 'H': 3, 'D': 3}
+MAPI_CD =   {'Pb': 1, 'I': 1, 'C': 1, 'N': 1, 'H': 3, 'D': 3}
 
-class Material:
-    def __init__(self, name=None, atoms:dict=None):
-        self.name = name
-        self.atoms = composition
-        '''Material composition as a dictionary, such as: methane.atoms = {'H': 4, 'C': 1}'''
-        self.name = name
-        self.atoms = atoms
-
+##############################
+########### CLASSES ##########
+##############################
 
 class MData:
     def __init__(self,
@@ -56,8 +60,8 @@ class MData:
                  legend=True,
                  scale_range:list=[None, None, 1.0],
                  figsize:tuple=None,
-                 material:Material=None,
-                 material_ref:Material=None,
+                 atoms:dict=None,
+                 atoms_ref:dict=None,
                  ):
 
         if scale_range is not None and not (len(scale_range) == 2 or len(scale_range) == 3):
@@ -76,9 +80,9 @@ class MData:
         self.scale_range = scale_range
         '''scale_range = [x_min, x_max, y_scale_factor]. Scale the y-axis of the dataframe to the maximum value in the range.'''
         self.figsize = figsize
-        self.material = material
+        self.atoms = atoms
         '''Material object'''
-        self.material_ref = material_ref
+        self.atoms_ref = atoms_ref
         ''''Material object used as reference'''
 
         self = self.set_type(type)
@@ -141,8 +145,8 @@ class MData:
             units_in = None
             self.units = default_unit
         elif units is None and units_in is not None:
-            self.units = units_in
             units_in = None
+            self.units = units_in
 
         if isinstance(units_in, list):
             for i, unit_in in enumerate(units_in):
@@ -193,14 +197,29 @@ class MData:
             elif unit == cm and units_in[i] == mev:
                 self.dataframe[i][self.dataframe[i].columns[0]] = self.dataframe[i][self.dataframe[i].columns[0]] * mev_to_cm
             else:
-                raise ValueError(f"Units mismatching: {unit} and {units_in[i]}")
+                raise ValueError(f"Unit conversion error between '{unit}' and '{units_in[i]}'")
+
+        # Rename dataframe columns
+        if self.type == 'INS':
+            E_units = None
+            if self.units[0] in mev:
+                E_units = 'meV'
+            elif self.units[0] in cm:
+                E_units = 'cm^-1'
+            self.dataframe[0].columns = [f'Energy transfer / {E_units}', 'S(Q,E)', 'Error']
+
+        elif self.type == 'ATR':
+            pass  # TO-IMPLEMENT
+
+        return self
 
 
     def read_file(self, file):
         if self.type == 'INS':
             self.read_ins(file)
         elif self.type == 'ATR':
-            self.read_atr(file)
+            self.read_ins(file) # TEMP SOLUTION
+            # self.read_atr(file)
         else:
             raise ValueError("Please specify the type of data: 'INS' or 'ATR'.")
 
@@ -209,13 +228,18 @@ class MData:
 
 
     def read_ins(self, filename):
-        mev = ['mev', 'meV', 'MEV']
-        cm = ['cm', 'CM']
-        E_units = None
         root = os.getcwd()
         file = os.path.join(root, filename)
         df = pd.read_csv(file, comment='#')
-        df = df.sort_values(by=df.columns[0])
+        df = df.sort_values(by=df.columns[0]) # Sort the data by energy
+        return df
+
+
+    def read_atr(self, filename):
+        pass
+
+
+        '''
         # Convert the energies
         if self.units in mev:
             E_units = 'meV'
@@ -233,8 +257,5 @@ class MData:
         df.columns = [f'Energy transfer / {E_units}', 'S(Q,E)', 'Error']
         print(df.head())
         return df
-    
-
-    def read_atr(self, filename):
-        pass
+        '''
 

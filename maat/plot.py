@@ -1,7 +1,7 @@
 from .common import *
 
 
-def mdataset(mdata:MData):
+def spectra(mdata:MData):
     
     if mdata.figsize:
         fig, ax = plt.subplots(figsize=mdata.figsize)
