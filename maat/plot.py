@@ -1,4 +1,4 @@
-from .common import *
+from .core import *
 
 
 def spectra(mdata:MData):
@@ -17,50 +17,52 @@ def spectra(mdata:MData):
     if mdata.top_ylim:
         ax.set_ylim(top=mdata.top_ylim)
 
-    if ins.scale_range:
-        scale_factor = ins.scale_range
-        df0 = ins.dataframes[0]
-        df0 = df0[(df0[df0.columns[0]] >= ins.scale_range[0]) & (df0[df0.columns[0]] <= ins.scale_range[1])]
-        max_df = df0[df0.columns[1]].max()
-        ax.set_ylim(top=ins.scale_y*max_df)
+    if mdata.scale_range:
+        scale_factor = 1.0
+        if mdata.scale_range[2]:
+            scale_factor = mdata.scale_range[2]
+        df0 = mdata.dataframe[0]
+        df0 = df0[(df0[df0.columns[0]] >= mdata.scale_range[0]) & (df0[df0.columns[0]] <= mdata.scale_range[1])]
+        max_value_on_range = df0[df0.columns[1]].max()
+        ax.set_ylim(top=scale_factor*max_value_on_range)
 
-    strings_to_delete_from_name = ['.csv', '_INS', '_temp']
-    for df, name in zip(ins.dataframes, ins.filenames):
-        if ins.scale_range:
-            first_cut = ins.scale_range[0]
-            second_cut = ins.scale_range[1]
-            df_range_i = df[(df[df.columns[0]] >= first_cut) & (df[df.columns[0]] <= second_cut)]
-            max_df_i = df_range_i[df_range_i.columns[1]].max()
-            df[df.columns[1]] = max_df * (df[df.columns[1]] / max_df_i)
+    strings_to_delete_from_name = ['.csv', '_INS', '_ATR', '_FTIR', '_temp']
+    for df, name in zip(mdata.dataframe, mdata.filename):
+        if mdata.scale_range:
+            first_cut = mdata.scale_range[0]
+            second_cut = mdata.scale_range[1]
+            df_range = df[(df[df.columns[0]] >= first_cut) & (df[df.columns[0]] <= second_cut)]
+            i_max_value_on_range = df_range[df_range.columns[1]].max()
+            df[df.columns[1]] = max_value_on_range * (df[df.columns[1]] / i_max_value_on_range)
         
-        if (ins.y_offset is True) and (ins.y_low_lim is not None) and (ins.y_top_lim is not None):
-            number_of_plots = len(ins.dataframes)
-            height = ins.y_top_lim - ins.y_low_lim
-            df[df.columns[1]] = (df[df.columns[1]] / number_of_plots) + (ins.filenames.index(name) * height) / number_of_plots
+        if (mdata.offset is True) and (mdata.low_ylim is not None) and (mdata.top_ylim is not None):
+            number_of_plots = len(mdata.dataframe)
+            height = mdata.top_ylim - mdata.low_ylim
+            df[df.columns[1]] = (df[df.columns[1]] / number_of_plots) + (mdata.filename.index(name) * height) / number_of_plots
 
         name_clean = name.replace('_', ' ')
         for string in strings_to_delete_from_name:
             name_clean = name_clean.replace(string, '')
-        if ins.legend and isinstance(ins.legend, list):
-            name_clean = ins.legend[ins.filenames.index(name)]
+        if mdata.legend and isinstance(mdata.legend, list):
+            name_clean = mdata.legend[mdata.filename.index(name)]
         df.plot(x=df.columns[0], y=df.columns[1], label=name_clean, ax=ax)
 
-    plt.title(ins.title)
+    plt.title(mdata.title)
     plt.xlabel(df.columns[0])
     plt.ylabel(df.columns[1])
 
-    if ins.log_xscale:
+    if mdata.log_xscale:
         ax.set_xscale('log')
-    if not ins.show_yticks:
+    if not mdata.show_yticks:
         ax.set_yticks([])
-    if ins.legend:
+    if mdata.legend:
         ax.legend()
     else:
         ax.legend().set_visible(False)
 
-    if ins.save_as:
+    if mdata.save_as:
         root = os.getcwd()
-        save_name = os.path.join(root, ins.save_as)
+        save_name = os.path.join(root, mdata.save_as)
         plt.savefig(save_name)
     
     plt.show()
