@@ -88,7 +88,7 @@ class MData:
         self = self.set_type(type)
         self = self.set_dataframe(filename, dataframe)
         self.units = None
-        self = self.set_units(self, units, units_in)
+        self = self.set_units(units, units_in)
 
 
     def set_type(self, type):
@@ -114,9 +114,9 @@ class MData:
         if isinstance(dataframe, pd.DataFrame):
             self.dataframe = [dataframe]
         elif isinstance(dataframe, list) and isinstance(dataframe[0], pd.DataFrame):
-                self.dataframe = dataframe
+            self.dataframe = dataframe
         else:
-            self.dataframe = [self.read_file(file) for file in self.filename]
+            self.dataframe = [self.read_dataframe(file) for file in self.filename]
         return self
 
 
@@ -140,13 +140,13 @@ class MData:
             self.units = units
         elif units is not None:
             units_in = units_in
-            self.units = units
+            self.units = deepcopy(units)
         elif units is None and units_in is None:
             units_in = None
             self.units = default_unit
         elif units is None and units_in is not None:
             units_in = None
-            self.units = units_in
+            self.units = deepcopy(units_in)
 
         if isinstance(units_in, list):
             for i, unit_in in enumerate(units_in):
@@ -202,11 +202,12 @@ class MData:
         # Rename dataframe columns
         if self.type == 'INS':
             E_units = None
-            if self.units[0] in mev:
-                E_units = 'meV'
-            elif self.units[0] in cm:
-                E_units = 'cm^-1'
-            self.dataframe[0].columns = [f'Energy transfer / {E_units}', 'S(Q,E)', 'Error']
+            for i, df in enumerate(self.dataframe):
+                if self.units[i] in mev:
+                    E_units = 'meV'
+                elif self.units[i] in cm:
+                    E_units = 'cm^-1'
+                self.dataframe[i].columns = [f'Energy transfer / {E_units}', 'S(Q,E)', 'Error']
 
         elif self.type == 'ATR':
             pass  # TO-IMPLEMENT
@@ -214,14 +215,15 @@ class MData:
         return self
 
 
-    def read_file(self, file):
+    def read_dataframe(self, file):
         if self.type == 'INS':
-            self.read_ins(file)
+            df = self.read_ins(file)
         elif self.type == 'ATR':
-            self.read_ins(file) # TEMP SOLUTION
+            df = self.read_ins(file) # TEMP SOLUTION
             # self.read_atr(file)
         else:
             raise ValueError("Please specify the type of data: 'INS' or 'ATR'.")
+        return df
 
 
 ####### ME LLEGO POR AQUI
@@ -232,6 +234,9 @@ class MData:
         file = os.path.join(root, filename)
         df = pd.read_csv(file, comment='#')
         df = df.sort_values(by=df.columns[0]) # Sort the data by energy
+
+        print(f'\nNew dataframe from {file}')
+        print(df.head(),'\n')
         return df
 
 
