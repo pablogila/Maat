@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import scipy
 from scipy.sparse import diags
 from scipy.sparse.linalg import eigsh
 from scipy.interpolate import CubicSpline
@@ -12,7 +13,7 @@ import json
 import time
 
 
-version = 'vM.2024.06.18.1300'
+version = 'vM.2024.06.19.1700'
 
 
 ##############################
