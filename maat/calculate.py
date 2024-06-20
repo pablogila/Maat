@@ -1,8 +1,8 @@
 from .core import *
 
 
-def baseline(ins:MData, cuts=[27,35], df_index:int=0):
-    df = ins.dataframe[df_index]
+def baseline(spectra:Spectra, cuts=[27,35], df_index:int=0):
+    df = spectra.dataframe[df_index]
     df_range = df[(df[df.columns[0]] >= cuts[0]) & (df[df.columns[0]] <= cuts[1])]
     x = df_range[df.columns[0]]
     y = df_range[df.columns[1]]
@@ -26,33 +26,23 @@ def baseline(ins:MData, cuts=[27,35], df_index:int=0):
     return baseline_value, error_std
 
 
-def deuteration_mapi(ins:MData,
-                     baseline:float=0.15,
+def deuteration_mapi(ins:Spectra,
+                     peaks:dict,
+                     baseline:float,
                      baseline_error:float=0.0,
-                     partial=True,
-                     peaks:dict=None,
                      df_index:int=0,
                      ):
-    '''Calculate the deuteration of MAPI by integrating the INS disrotatory peaks.'''
+    '''
+    Calculate the deuteration of MAPI by integrating the INS disrotatory peaks.
+    peaks must be a dictionary with the peak limits, such as peaks={'h6d0:[36,39],etc}
+    Peak keywords required for partial deuteration: h6d0, h5d1, h4d2, h3d3
+    Additional peak keywords required for total deuteration: h2d4, h1d5, h0d6
+    If some peak is not present, just set the limits to a small baseline plateau.
+    '''
 
-    if peaks is None:
-        h6d0_peak = 37.8
-        h5d1_peak = 35.0
-        h4d2_peak = 32.7
-        h3d3_peak = 30.9
-        h2d4_peak = 29.3
-        h1d5_peak = 27.9
-        h0d6_peak = 26.7
-        peaks = {
-            'h6d0' : [h6d0_peak - 1, h6d0_peak + 1],
-            'h5d1' : [h5d1_peak - 1, h5d1_peak + 1],
-            'h4d2' : [h4d2_peak - 1, h4d2_peak + 1],
-            'h3d3' : [h3d3_peak - 1, h3d3_peak + 1],
-            'h2d4' : [h2d4_peak - 1, h2d4_peak + 1],
-            'h1d5' : [h1d5_peak - 1, h1d5_peak + 1],
-            'h0d6' : [h0d6_peak - 1, h0d6_peak + 1],
-        }
-    
+    run_partial = True
+    run_total = True
+
     h6d0_limits = None
     h5d1_limits = None
     h4d2_limits = None
@@ -60,9 +50,6 @@ def deuteration_mapi(ins:MData,
     h2d4_limits = None
     h1d5_limits = None
     h0d6_limits = None
-
-    run_partial = True
-    run_total = True
 
     if 'h6d0' in peaks:
         h6d0_limits = peaks['h6d0']
@@ -100,15 +87,16 @@ def deuteration_mapi(ins:MData,
     h4d2_area = scipy.integrate.simpson(h4d2[h4d2.columns[1]], x=h4d2[h4d2.columns[0]]) / 4
     h3d3_area = scipy.integrate.simpson(h3d3[h3d3.columns[1]], x=h3d3[h3d3.columns[0]]) / 3
 
-    total_area = h6d0_area + h5d1_area + h4d2_area + h3d3_area
+    if not run_total:
+        total_area = h6d0_area + h5d1_area + h4d2_area + h3d3_area
 
-    h6d0_ratio = h6d0_area / total_area
-    h5d1_ratio = h5d1_area / total_area
-    h4d2_ratio = h4d2_area / total_area
-    h3d3_ratio = h3d3_area / total_area
+        h6d0_ratio = h6d0_area / total_area
+        h5d1_ratio = h5d1_area / total_area
+        h4d2_ratio = h4d2_area / total_area
+        h3d3_ratio = h3d3_area / total_area
 
-    deuteration = 0 * h6d0_ratio + (1/3) * h5d1_ratio + (2/3) * h4d2_ratio + 1 * h3d3_ratio
-    protonation = 1 * h6d0_ratio + (2/3) * h5d1_ratio + (1/3) * h4d2_ratio + 0 * h3d3_ratio
+        deuteration = 0 * h6d0_ratio + (1/3) * h5d1_ratio + (2/3) * h4d2_ratio + 1 * h3d3_ratio
+        protonation = 1 * h6d0_ratio + (2/3) * h5d1_ratio + (1/3) * h4d2_ratio + 0 * h3d3_ratio
 
     if run_total:
         h2d4 = df[(df[df.columns[0]] >= h2d4_limits[0]) & (df[df.columns[0]] <= h2d4_limits[1])]
@@ -154,15 +142,16 @@ def deuteration_mapi(ins:MData,
     h4d2_area_error = np.sqrt(h4d2_area_error + baseline_error**2)
     h3d3_area_error = np.sqrt(h3d3_area_error + baseline_error**2)
 
-    total_area_error = np.sqrt(h6d0_area_error**2 + h5d1_area_error**2 + h4d2_area_error**2 + h3d3_area_error**2)
+    if not run_total:
+        total_area_error = np.sqrt(h6d0_area_error**2 + h5d1_area_error**2 + h4d2_area_error**2 + h3d3_area_error**2)
 
-    h6d0_error = abs(h6d0_area) * np.sqrt((h6d0_area_error/h6d0_area)**2 + (total_area_error/total_area)**2)
-    h5d1_error = abs(h5d1_area) * np.sqrt((h5d1_area_error/h5d1_area)**2 + (total_area_error/total_area)**2)
-    h4d2_error = abs(h4d2_area) * np.sqrt((h4d2_area_error/h4d2_area)**2 + (total_area_error/total_area)**2)
-    h3d3_error = abs(h3d3_area) * np.sqrt((h3d3_area_error/h3d3_area)**2 + (total_area_error/total_area)**2)
+        h6d0_error = abs(h6d0_area) * np.sqrt((h6d0_area_error/h6d0_area)**2 + (total_area_error/total_area)**2)
+        h5d1_error = abs(h5d1_area) * np.sqrt((h5d1_area_error/h5d1_area)**2 + (total_area_error/total_area)**2)
+        h4d2_error = abs(h4d2_area) * np.sqrt((h4d2_area_error/h4d2_area)**2 + (total_area_error/total_area)**2)
+        h3d3_error = abs(h3d3_area) * np.sqrt((h3d3_area_error/h3d3_area)**2 + (total_area_error/total_area)**2)
 
-    deuteration_error = np.sqrt(h5d1_error**2 + h4d2_error**2 + h3d3_error**2)
-    protonation_error = np.sqrt(h6d0_error**2 + h5d1_error**2 + h4d2_error**2)
+        deuteration_error = np.sqrt(h5d1_error**2 + h4d2_error**2 + h3d3_error**2)
+        protonation_error = np.sqrt(h6d0_error**2 + h5d1_error**2 + h4d2_error**2)
     
     if run_total:
         h2d4_area_error = 0
@@ -193,7 +182,13 @@ def deuteration_mapi(ins:MData,
         protonation_CDND_error = np.sqrt(h0d6_error_CDND**2 + h1d5_error_CDND**2 + h2d4_error_CDND**2 + h3d3_error_CDND**2 + h4d2_error_CDND**2 + h5d1_error_CDND**2 + h6d0_error_CDND**2)
 
 
-    if partial or not run_total:
+    print()
+    if ins.legend:
+        print(f'Sample:  {ins.legend[df_index]}')
+    else:
+        print(f'Sample:  {ins.filename[df_index]}')
+    print(f'Corrected baseline: {round(baseline,2)} +- {round(baseline_error,2)}')
+    if not run_total:
         print(f"HHH {h6d0_limits}:  {round(h6d0_ratio,2)}  +-  {round(h6d0_error,2)}")
         print(f"DHH {h5d1_limits}:  {round(h5d1_ratio,2)}  +-  {round(h5d1_error,2)}")
         print(f"DDH {h4d2_limits}:  {round(h4d2_ratio,2)}  +-  {round(h4d2_error,2)}")
@@ -210,5 +205,5 @@ def deuteration_mapi(ins:MData,
         print(f"DDD-DDD {h0d6_limits}:  {round(h0d6_ratio_CDND,2)}  +-  {round(h0d6_error_CDND,2)}")
         print(f"Total deuteration:  {round(deuteration_CDND,2)}  +-  {round(deuteration_CDND_error,2)}")
         print(f"Total protonation:  {round(protonation_CDND,2)}  +-  {round(protonation_CDND_error,2)}")
-    print(f'Baseline: {round(baseline,2)} +- {round(baseline_error,2)}')
+    print()
 
