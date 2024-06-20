@@ -1,37 +1,12 @@
 from .core import *
 
 
-def baseline(spectra:Spectra, cuts=[27,35], df_index:int=0):
-    df = spectra.dataframe[df_index]
-    df_range = df[(df[df.columns[0]] >= cuts[0]) & (df[df.columns[0]] <= cuts[1])]
-    x = df_range[df.columns[0]]
-    y = df_range[df.columns[1]]
-    error_range = df_range[df.columns[2]]
-
-    # Perform a weighted least squares fit
-    degree = 1
-    weights = 1.0 / error_range**2
-    coefficients = np.polyfit(x, y, degree, w=weights)
-    polynomial = np.poly1d(coefficients)
-
-    # Calculate the baseline
-    baseline = polynomial(x)
-
-    # Calculate the standard deviation of the residuals
-    residuals = y - baseline
-    error_std = np.std(residuals)
-
-    baseline_value = np.mean(baseline)
-
-    return baseline_value, error_std
-
-
-def deuteration_mapi(ins:Spectra,
-                     peaks:dict,
-                     baseline:float,
-                     baseline_error:float=0.0,
-                     df_index:int=0,
-                     ):
+def mapi_peaks(ins:Spectra,
+         peaks:dict,
+         baseline:float,
+         baseline_error:float=0.0,
+         df_index:int=0,
+         ):
     '''
     Calculate the deuteration of MAPI by integrating the INS disrotatory peaks.
     peaks must be a dictionary with the peak limits, such as peaks={'h6d0:[36,39],etc}
@@ -120,7 +95,6 @@ def deuteration_mapi(ins:Spectra,
         deuteration_CDND = 0 * h6d0_ratio_CDND + (1/6) * h5d1_ratio_CDND + (2/6) * h4d2_ratio_CDND + (3/6) * h3d3_ratio_CDND + (4/6) * h2d4_ratio_CDND + (5/6) * h1d5_ratio_CDND + 1 * h0d6_ratio_CDND
         protonation_CDND = 1 * h6d0_ratio_CDND + (5/6) * h5d1_ratio_CDND + (4/6) * h4d2_ratio_CDND + (3/6) * h3d3_ratio_CDND + (2/6) * h2d4_ratio_CDND + (1/6) * h1d5_ratio_CDND + 0 * h0d6_ratio_CDND
 
-
     # Error propagation
 
     h6d0_area_error = 0
@@ -128,14 +102,15 @@ def deuteration_mapi(ins:Spectra,
     h4d2_area_error = 0
     h3d3_area_error = 0
 
-    for error in h6d0['Error']:
-        h6d0_area_error += error**2
-    for error in h5d1['Error']:
-        h5d1_area_error += error**2
-    for error in h4d2['Error']:
-        h4d2_area_error += error**2
-    for error in h3d3['Error']:
-        h3d3_area_error += error**2
+    if 'Error' in df.columns:
+        for error in h6d0['Error']:
+            h6d0_area_error += error**2
+        for error in h5d1['Error']:
+            h5d1_area_error += error**2
+        for error in h4d2['Error']:
+            h4d2_area_error += error**2
+        for error in h3d3['Error']:
+            h3d3_area_error += error**2
     
     h6d0_area_error = np.sqrt(h6d0_area_error + baseline_error**2)
     h5d1_area_error = np.sqrt(h5d1_area_error + baseline_error**2)
@@ -157,12 +132,13 @@ def deuteration_mapi(ins:Spectra,
         h2d4_area_error = 0
         h1d5_area_error = 0
         h0d6_area_error = 0
-        for error in h2d4['Error']:
-            h2d4_area_error += error**2
-        for error in h1d5['Error']:
-            h1d5_area_error += error**2
-        for error in h0d6['Error']:
-            h0d6_area_error += error**2
+        if 'Error' in df.columns:
+            for error in h2d4['Error']:
+                h2d4_area_error += error**2
+            for error in h1d5['Error']:
+                h1d5_area_error += error**2
+            for error in h0d6['Error']:
+                h0d6_area_error += error**2
     
         h2d4_area_error = np.sqrt(h2d4_area_error + baseline_error**2)
         h1d5_area_error = np.sqrt(h1d5_area_error + baseline_error**2)
@@ -180,7 +156,6 @@ def deuteration_mapi(ins:Spectra,
 
         deuteration_CDND_error = np.sqrt(h6d0_error_CDND**2 + h5d1_error_CDND**2 + h4d2_error_CDND**2 + h3d3_error_CDND**2 + h2d4_error_CDND**2 + h1d5_error_CDND**2 + h0d6_error_CDND**2)
         protonation_CDND_error = np.sqrt(h0d6_error_CDND**2 + h1d5_error_CDND**2 + h2d4_error_CDND**2 + h3d3_error_CDND**2 + h4d2_error_CDND**2 + h5d1_error_CDND**2 + h6d0_error_CDND**2)
-
 
     print()
     if ins.legend:

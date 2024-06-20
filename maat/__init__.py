@@ -1,5 +1,6 @@
 from .constants import *
 from .core import *
 from . import plot
-from . import calculate
+from . import deuteration
+from . import fit
 
