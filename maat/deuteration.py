@@ -95,6 +95,9 @@ def mapi_peaks(ins:Spectra,
         deuteration_CDND = 0 * h6d0_ratio_CDND + (1/6) * h5d1_ratio_CDND + (2/6) * h4d2_ratio_CDND + (3/6) * h3d3_ratio_CDND + (4/6) * h2d4_ratio_CDND + (5/6) * h1d5_ratio_CDND + 1 * h0d6_ratio_CDND
         protonation_CDND = 1 * h6d0_ratio_CDND + (5/6) * h5d1_ratio_CDND + (4/6) * h4d2_ratio_CDND + (3/6) * h3d3_ratio_CDND + (2/6) * h2d4_ratio_CDND + (1/6) * h1d5_ratio_CDND + 0 * h0d6_ratio_CDND
 
+        deuteration_CDND_amine = 0 * h3d3_ratio_CDND + (1/3) * h2d4_ratio_CDND + (2/3) * h1d5_ratio_CDND + 1 * h0d6_ratio_CDND
+        protonation_CDND_amine = 1 * h3d3_ratio_CDND + (2/3) * h2d4_ratio_CDND + (1/3) * h1d5_ratio_CDND + 0 * h0d6_ratio_CDND
+
     # Error propagation
 
     h6d0_area_error = 0
@@ -154,8 +157,11 @@ def mapi_peaks(ins:Spectra,
         h1d5_error_CDND = abs(h1d5_area) * np.sqrt((h1d5_area_error/h1d5_area)**2 + (total_area_error_CDND/total_area_CDND)**2)
         h0d6_error_CDND = abs(h0d6_area) * np.sqrt((h0d6_area_error/h0d6_area)**2 + (total_area_error_CDND/total_area_CDND)**2)
 
-        deuteration_CDND_error = np.sqrt(h6d0_error_CDND**2 + h5d1_error_CDND**2 + h4d2_error_CDND**2 + h3d3_error_CDND**2 + h2d4_error_CDND**2 + h1d5_error_CDND**2 + h0d6_error_CDND**2)
-        protonation_CDND_error = np.sqrt(h0d6_error_CDND**2 + h1d5_error_CDND**2 + h2d4_error_CDND**2 + h3d3_error_CDND**2 + h4d2_error_CDND**2 + h5d1_error_CDND**2 + h6d0_error_CDND**2)
+        deuteration_CDND_error = np.sqrt(h5d1_error_CDND**2 + h4d2_error_CDND**2 + h3d3_error_CDND**2 + h2d4_error_CDND**2 + h1d5_error_CDND**2 + h0d6_error_CDND**2)
+        protonation_CDND_error = np.sqrt(h0d6_error_CDND**2 + h1d5_error_CDND**2 + h2d4_error_CDND**2 + h3d3_error_CDND**2 + h4d2_error_CDND**2 + h5d1_error_CDND**2)
+
+        deuteration_CDND_amine_error = np.sqrt(h2d4_error_CDND**2 + h1d5_error_CDND**2 + h0d6_error_CDND**2)
+        protonation_CDND_amine_error = np.sqrt(h1d5_error_CDND**2 + h2d4_error_CDND**2 + h3d3_error_CDND**2)
 
     print()
     if ins.legend:
@@ -168,8 +174,8 @@ def mapi_peaks(ins:Spectra,
         print(f"DHH {h5d1_limits}:  {round(h5d1_ratio,2)}  +-  {round(h5d1_error,2)}")
         print(f"DDH {h4d2_limits}:  {round(h4d2_ratio,2)}  +-  {round(h4d2_error,2)}")
         print(f"DDD {h3d3_limits}:  {round(h3d3_ratio,2)}  +-  {round(h3d3_error,2)}")
-        print(f"Total deuteration:  {round(deuteration,2)}  +-  {round(deuteration_error,2)}")
-        print(f"Total protonation:  {round(protonation,2)}  +-  {round(protonation_error,2)}")
+        print(f"Amine deuteration:  {round(deuteration,2)}  +-  {round(deuteration_error,2)}")
+        print(f"Amine protonation:  {round(protonation,2)}  +-  {round(protonation_error,2)}")
     else:
         print(f"HHH-HHH {h6d0_limits}:  {round(h6d0_ratio_CDND,2)}  +-  {round(h6d0_error_CDND,2)}")
         print(f"DHH-HHH {h5d1_limits}:  {round(h5d1_ratio_CDND,2)}  +-  {round(h5d1_error_CDND,2)}")
@@ -180,5 +186,7 @@ def mapi_peaks(ins:Spectra,
         print(f"DDD-DDD {h0d6_limits}:  {round(h0d6_ratio_CDND,2)}  +-  {round(h0d6_error_CDND,2)}")
         print(f"Total deuteration:  {round(deuteration_CDND,2)}  +-  {round(deuteration_CDND_error,2)}")
         print(f"Total protonation:  {round(protonation_CDND,2)}  +-  {round(protonation_CDND_error,2)}")
+        print(f"Amine deuteration:  {round(deuteration_CDND_amine,2)}  +-  {round(deuteration_CDND_amine_error,2)}")
+        print(f"Amine protonation:  {round(protonation_CDND_amine,2)}  +-  {round(protonation_CDND_amine_error,2)}")
     print()
 

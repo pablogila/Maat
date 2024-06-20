@@ -1,8 +1,10 @@
 from .core import *
 
 
-def spectra(sdata:Spectra):
-    
+def spectra(spectrum:Spectra):
+
+    sdata = deepcopy(spectrum)
+
     if sdata.figsize:
         fig, ax = plt.subplots(figsize=sdata.figsize)
     else:
