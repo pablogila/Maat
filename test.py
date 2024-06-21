@@ -24,13 +24,17 @@ ins = mt.Spectra(
 mt.plot.spectra(ins)
 
 peaks = {
+    'baseline' : None,
+    'baseline_error' : None,
     'h6d0' : [36.0, 39.0],
     'h5d1' : [33.0, 35.0],
     'h4d2' : [30.7, 33.0],
     'h3d3' : [28.8, 30.7],
-}
+    }
 
 peaks_manley = {
+    'baseline' : None,
+    'baseline_error' : None,
     'h6d0' : [41, 43],
     'h5d1' : [41, 43],
     'h4d2' : [41, 43],
@@ -38,21 +42,21 @@ peaks_manley = {
     'h2d4' : [31.0, 33.0],
     'h1d5' : [28.0, 30.5],
     'h0d6' : [26.5, 28.0],
-}
+    }
 
 plateau_H = [30, 35]
 plateau_D = [35, 50]
 plateau_manley = [41, 43]
 
 # Protonated sample
-baseline_H, baseline_error_H = mt.fit.plateau(spectra=ins, cuts=plateau_H, df_index=0)
-mt.deuteration.mapi_peaks(ins=ins, peaks=peaks, baseline=baseline_H, baseline_error=baseline_error_H, df_index=0)
+peaks['baseline'], peaks['baseline_error'] = mt.fit.plateau(spectra=ins, cuts=plateau_H, df_index=0)
+mt.deuteration.mapi_peaks(ins=ins, peaks=peaks, df_index=0)
 
 # Deuterated sample
-baseline_D, baseline_error_D = mt.fit.plateau(spectra=ins, cuts=plateau_D, df_index=1)
-mt.deuteration.mapi_peaks(ins=ins, peaks=peaks, baseline=baseline_D, baseline_error=baseline_error_D, df_index=1)
+peaks['baseline'], peaks['baseline_error'] = mt.fit.plateau(spectra=ins, cuts=plateau_D, df_index=1)
+mt.deuteration.mapi_peaks(ins=ins, peaks=peaks, df_index=1)
 
 # Manley2020-CDND sample
-baseline_manley, baseline_error_manley = mt.fit.plateau(spectra=ins, cuts=plateau_manley, df_index=2)
-mt.deuteration.mapi_peaks(ins=ins, peaks=peaks_manley, baseline=baseline_manley, baseline_error=baseline_error_manley, df_index=2)
+peaks_manley['baseline'], peaks_manley['baseline_error'] = mt.fit.plateau(spectra=ins, cuts=plateau_manley, df_index=2)
+mt.deuteration.mapi_peaks(ins=ins, peaks=peaks_manley, df_index=2)
 

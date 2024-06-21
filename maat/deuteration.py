@@ -3,17 +3,36 @@ from .core import *
 
 def mapi_peaks(ins:Spectra,
          peaks:dict,
-         baseline:float,
-         baseline_error:float=0.0,
          df_index:int=0,
          ):
     '''
-    Calculate the deuteration of MAPI by integrating the INS disrotatory peaks.
-    peaks must be a dictionary with the peak limits, such as peaks={'h6d0:[36,39],etc}
-    Peak keywords required for partial deuteration: h6d0, h5d1, h4d2, h3d3
-    Additional peak keywords required for total deuteration: h2d4, h1d5, h0d6
-    If some peak is not present, just set the limits to a small baseline plateau.
+    Calculate the deuteration of MAPI by integrating the INS disrotatory peaks.\n
+    'peaks' must be a dictionary with the peak limits and the baseline.\n
+    Peak keywords required for partial deuteration: h6d0, h5d1, h4d2, h3d3\n
+    Additional peak keywords required for total deuteration: h2d4, h1d5, h0d6\n
+    If some peak is not present, just set the limits to a small baseline plateau.\n
+    Peaks example:\n
+    peaks = {
+        'baseline' : None,
+        'baseline_error' : None,
+        'h6d0' : [41, 43],
+        'h5d1' : [41, 43],
+        'h4d2' : [41, 43],
+        'h3d3' : [34.7, 37.3],
+        'h2d4' : [31.0, 33.0],
+        'h1d5' : [28.0, 30.5],
+        'h0d6' : [26.5, 28.0],
+        }
     '''
+
+    baseline = 0.0
+    baseline_error = 0.0
+    if 'baseline' in peaks:
+        if peaks['baseline'] is not None:
+            baseline = peaks['baseline']
+    if 'baseline_error' in peaks:
+        if peaks['baseline_error'] is not None:
+            baseline_error = peaks['baseline_error']
 
     run_partial = True
     run_total = True
