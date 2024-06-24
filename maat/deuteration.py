@@ -195,6 +195,8 @@ def mapi_peaks(ins:Spectra,
         print(f"DDD {h3d3_limits}:  {round(h3d3_ratio,2)}  +-  {round(h3d3_error,2)}")
         print(f"Amine deuteration:  {round(deuteration,2)}  +-  {round(deuteration_error,2)}")
         print(f"Amine protonation:  {round(protonation,2)}  +-  {round(protonation_error,2)}")
+        print()
+        return f"{deuteration:.2f} +- {deuteration_error:.2f}"
     else:
         print(f"HHH-HHH {h6d0_limits}:  {round(h6d0_ratio_CDND,2)}  +-  {round(h6d0_error_CDND,2)}")
         print(f"DHH-HHH {h5d1_limits}:  {round(h5d1_ratio_CDND,2)}  +-  {round(h5d1_error_CDND,2)}")
@@ -207,5 +209,6 @@ def mapi_peaks(ins:Spectra,
         print(f"Total protonation:  {round(protonation_CDND,2)}  +-  {round(protonation_CDND_error,2)}")
         print(f"Amine deuteration:  {round(deuteration_CDND_amine,2)}  +-  {round(deuteration_CDND_amine_error,2)}")
         print(f"Amine protonation:  {round(protonation_CDND_amine,2)}  +-  {round(protonation_CDND_amine_error,2)}")
-    print()
+        print()
+        return f"{deuteration_CDND_amine:.2f} +- {deuteration_CDND_amine_error:.2f} / {deuteration_CDND:.2f} +- {deuteration_CDND_error:.2f}"
 

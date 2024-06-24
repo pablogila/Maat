@@ -51,7 +51,9 @@ def spectra(spectrum:Spectra):
         if sdata.offset is True:# and (sdata.low_ylim is not None) and (sdata.top_ylim is not None):
             number_of_plots = len(sdata.dataframe)
             height = top_ylim - low_ylim
-            df[df.columns[1]] = (df[df.columns[1]] / number_of_plots) + (sdata.filename.index(name) * height) / number_of_plots
+            reverse_index = (number_of_plots - 1) - sdata.filename.index(name)
+            df[df.columns[1]] = (df[df.columns[1]] / number_of_plots) + (reverse_index * height) / number_of_plots
+            #df[df.columns[1]] = (df[df.columns[1]] / number_of_plots) + (sdata.filename.index(name) * height) / number_of_plots
 
         strings_to_delete_from_name = ['.csv', '_INS', '_ATR', '_FTIR', '_temp', '_RAMAN', '_Raman']
         name_clean = name.replace('_', ' ')
