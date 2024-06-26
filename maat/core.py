@@ -172,9 +172,9 @@ class Spectra:
             if unit == units_in[i]:
                 continue
             if unit == mev and units_in[i] == cm:
-                self.dataframe[i][self.dataframe[i].columns[0]] = self.dataframe[i][self.dataframe[i].columns[0]] * cm_to_mev
+                self.dataframe[i][self.dataframe[i].columns[0]] = self.dataframe[i][self.dataframe[i].columns[0]] * cm_to_meV
             elif unit == cm and units_in[i] == mev:
-                self.dataframe[i][self.dataframe[i].columns[0]] = self.dataframe[i][self.dataframe[i].columns[0]] * mev_to_cm
+                self.dataframe[i][self.dataframe[i].columns[0]] = self.dataframe[i][self.dataframe[i].columns[0]] * meV_to_cm
             else:
                 raise ValueError(f"Unit conversion error between '{unit}' and '{units_in[i]}'")
 
