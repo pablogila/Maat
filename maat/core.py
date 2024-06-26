@@ -14,7 +14,7 @@ import json
 import time
 
 
-version = 'vMT.2024.06.21.1700'
+version = 'vMT.2024.06.26.1200'
 
 
 class Spectra:
