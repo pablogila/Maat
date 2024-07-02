@@ -36,6 +36,9 @@ Pa_to_bar   = 1.0e-5
 bar_to_Pa   = 1.0 / Pa_to_bar
 GPa_to_kbar = GPa_to_Pa * Pa_to_bar * bar_to_kbar
 kbar_to_GPa = 1.0 / GPa_to_kbar
+## Time
+h_to_s      = 3600.0
+s_to_h      = 1.0 / h_to_s
 
 
 #############################
