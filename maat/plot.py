@@ -35,7 +35,7 @@ def spectra(spectrum:Spectra):
         if sdata.scale_range.xmax:
             df0 = df0[(df0[df0.columns[0]] <= sdata.scale_range.xmax)]
         ymax_on_range = df0[df0.columns[1]].max()
-    if sdata.plotting.zoom_on_range and ymax_on_range is not None:
+    if sdata.plotting.zoom_range and ymax_on_range is not None:
         calculated_top_ylim = ymax_on_range * scale_factor
 
     if sdata.plotting.low_ylim is None:

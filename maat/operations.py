@@ -3,6 +3,7 @@ from .core import *
 
 def normalize(spectra:Spectra):
     sdata = deepcopy(spectra)
+    scale_range = sdata.scale_range
     df_index = scale_range.index if scale_range.index else 0
     df0 = sdata.dataframe[df_index]
     
@@ -25,27 +26,20 @@ def normalize(spectra:Spectra):
 
 
 def _normalize_y(sdata:Spectra):
-    return None  ## TO-IMPLEMENT
-'''
+    if not len(sdata.scale_range.ymax) == len(sdata.dataframe):
+        raise ValueError("normalize: len(ymax) does not match len(dataframe)")
     scale_range = sdata.scale_range
-    ymax_on_range = None
     ymax = scale_range.ymax
-    ymin = scale_range.ymin if scale_range.ymin else 0.0
+    ymin = scale_range.ymin if scale_range.ymin else [0.0]
+    if len(ymin) == 1:
+        ymin = ymin * len(sdata.dataframe)
+    index = scale_range.index if scale_range.index else 0
+    reference_height = ymax[index] - ymin[index]
     normalized_dataframes = []
-    for df in sdata.dataframe:
-        df[df.columns[1]] =  df[df.columns[1]] * (ymax - ymin)
+    for i, df in enumerate(sdata.dataframe):
+        height = ymax[i] - ymin[i]
+        df[df.columns[1]] =  df[df.columns[1]] * reference_height / height
         normalized_dataframes.append(df)
     sdata.dataframe = normalized_dataframes
-    return sdata, ymax_on_range
-
-    elif scale_range.ymax:
-        ymax = scale_range.ymax
-        ymin = scale_range.ymin if scale_range.ymin else 0.0
-        normalized_dataframes = []
-        for df in sdata.dataframe:
-            df[df.columns[1]] =  df[df.columns[1]] * (ymax - ymin)
-            normalized_dataframes.append(df)
-        sdata.dataframe = normalized_dataframes
-        return sdata, ymax_on_range
-'''
+    return sdata
 

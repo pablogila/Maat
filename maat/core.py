@@ -14,7 +14,7 @@ import json
 import time
 
 
-version = 'vMT.0.0.1'
+version = 'vMT.0.0.2'
 
 
 class ScaleRange:
@@ -55,7 +55,7 @@ class Plotting:
                  log_xscale:bool=False,
                  offset=True,
                  scale_factor:float=1.0,
-                 zoom_on_range:bool=False,
+                 zoom_range:bool=False,
                  normalize:bool=True,
                  show_yticks:bool=False,
                  legend=None,
@@ -68,7 +68,7 @@ class Plotting:
         self.log_xscale = log_xscale
         self.offset = offset
         self.scale_factor = scale_factor
-        self.zoom_on_range = zoom_on_range
+        self.zoom_range = zoom_range
         self.normalize = normalize
         self.show_yticks = show_yticks
         self.legend = legend

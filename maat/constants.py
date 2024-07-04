@@ -59,4 +59,9 @@ MAPI_peaks = {
     'h4d2' : [30.7, 33.0],
     'h3d3' : [28.8, 30.7],
 }
+'''
+Experimental values of the partially-deuterated peaks\n
+for the disrotatory mode of MAPbI3's methylammonium.\n
+Measured at TOSCA, ISIS RAL, UK, May 2024.
+'''
 
