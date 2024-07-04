@@ -14,7 +14,64 @@ import json
 import time
 
 
-version = 'vMT.2024.06.26.1200'
+version = 'vMT.0.0.1'
+
+
+class ScaleRange:
+    def __init__(self,
+                 index:int=0,
+                 xmin:float=None,
+                 xmax:float=None,
+                 ymin:list=None,
+                 ymax:list=None,
+                 ):
+        self.index = index
+        self.xmin = xmin
+        self.xmax = xmax
+        self.ymin = ymin
+        self.ymax = ymax
+    def x(self, xmin:float=None, xmax:float=None):
+        self.xmin = xmin
+        self.xmax = xmax
+        self.ymin = None
+        self.ymax = None
+        return self
+    def y(self, ymin:list=None, ymax:list=None):
+        self.xmin = None
+        self.xmax = None
+        self.ymin = ymin
+        self.ymax = ymax
+        return self
+
+
+class Plotting:
+
+    def __init__(self,
+                 low_xlim=0,
+                 top_xlim=50,
+                 low_ylim=None,
+                 top_ylim=None,
+                 figsize:tuple=None,
+                 log_xscale:bool=False,
+                 offset=True,
+                 scale_factor:float=1.0,
+                 zoom_on_range:bool=False,
+                 normalize:bool=True,
+                 show_yticks:bool=False,
+                 legend=None,
+                 ):
+        self.low_xlim = low_xlim
+        self.top_xlim = top_xlim
+        self.low_ylim = low_ylim
+        self.top_ylim = top_ylim
+        self.figsize = figsize
+        self.log_xscale = log_xscale
+        self.offset = offset
+        self.scale_factor = scale_factor
+        self.zoom_on_range = zoom_on_range
+        self.normalize = normalize
+        self.show_yticks = show_yticks
+        self.legend = legend
 
 
 class Spectra:
@@ -26,40 +83,21 @@ class Spectra:
                  dataframe=None,
                  units=None,
                  units_in=None,
-                 log_xscale:bool=False,
-                 low_xlim=0,
-                 top_xlim=50,
-                 low_ylim=None,
-                 top_ylim=None,
-                 offset=True,       
-                 show_yticks:bool=False,
-                 legend=None,
-                 scale_range:list=[None, None, 1.0],
-                 figsize:tuple=None,
+                 scale_range:ScaleRange=None,
+                 plotting:Plotting=None,
                  atoms:dict=None,
                  atoms_ref:dict=None,
                  ):
-
-        if scale_range is not None and not (len(scale_range) == 2 or len(scale_range) == 3):
-            raise ValueError("scale_range must be a list of two elements: scale_range = [x_min, x_max, y_scale_factor]")
+        
 
         self.title = title
         self.save_as = save_as
-        self.log_xscale = log_xscale
-        self.low_xlim = low_xlim
-        self.top_xlim = top_xlim
-        self.low_ylim = low_ylim
-        self.top_ylim = top_ylim
-        self.offset = offset
-        self.show_yticks = show_yticks
-        self.legend = legend
         self.scale_range = scale_range
-        '''scale_range = [x_min, x_max, y_scale_factor]. Scale the y-axis of the dataframe to the maximum value in the range.'''
-        self.figsize = figsize
+        self.plotting = plotting
         self.atoms = atoms
-        '''Material object'''
+        '''Dict of atoms in the material'''
         self.atoms_ref = atoms_ref
-        ''''Material object used as reference'''
+        ''''Dict of atoms used as reference'''
 
         self = self.set_type(type)
         self = self.set_dataframe(filename, dataframe)
