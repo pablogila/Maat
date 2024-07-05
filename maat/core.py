@@ -26,6 +26,7 @@ class ScaleRange:
                  ymax:list=None,
                  ):
         self.index = index
+        '''Index of the dataframe to use as reference.'''
         self.xmin = xmin
         self.xmax = xmax
         self.ymin = ymin

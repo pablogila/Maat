@@ -3,9 +3,6 @@
 #################################################
 ##  CONVERSION FACTORS                         ##
 #################################################
-##  All conversion factors are taken from the  ##
-##  sources cited in the English Wikipedia.    ##
-#################################################
 ## Energy
 eV_to_meV   = 1000.0
 meV_to_eV   = 0.001
