@@ -1,4 +1,5 @@
 from .core import *
+from .fit import area_under_peak
 
 
 def mapi_peaks(ins:Spectra,
@@ -75,6 +76,9 @@ def mapi_peaks(ins:Spectra,
     h5d1 = df[(df[df.columns[0]] >= h5d1_limits[0]) & (df[df.columns[0]] <= h5d1_limits[1])]
     h4d2 = df[(df[df.columns[0]] >= h4d2_limits[0]) & (df[df.columns[0]] <= h4d2_limits[1])]
     h3d3 = df[(df[df.columns[0]] >= h3d3_limits[0]) & (df[df.columns[0]] <= h3d3_limits[1])]
+
+    #peak_data = Spectra(dataframe=[h6d0, h5d1, h4d2, h3d3], legend=['h6d0', 'h5d1', 'h4d2', 'h3d3'], units='meV')
+    # I should do this errors with fit.area_under_peak...
 
     h6d0_area = scipy.integrate.simpson(h6d0[h6d0.columns[1]], x=h6d0[h6d0.columns[0]]) / 6
     h5d1_area = scipy.integrate.simpson(h5d1[h5d1.columns[1]], x=h5d1[h5d1.columns[0]]) / 5

@@ -36,7 +36,7 @@ def plateau(spectra:Spectra, cuts=[27,35], df_index:int=0):
 
 
 def area_under_peak(spectra:Spectra, peak:list, df_index:int=0):
-    '''area, area_error = area_under_peak(spectra, peak=[xmin, xmax, baseline=0.0, baseline_error=0.0], df_index=0)'''
+    '''area, area_error = area_under_peak(spectra, [xmin, xmax, baseline=0.0, baseline_error=0.0], df_index=0)'''
     if len(peak) < 2:
         raise ValueError("area_under_peak: peak must have at least two values: [xmin, xmax]")
     xmin = peak[0]

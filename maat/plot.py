@@ -1,5 +1,5 @@
 from .core import *
-from .operations import normalize
+from .tools import normalize
 
 
 def spectra(spectrum:Spectra):

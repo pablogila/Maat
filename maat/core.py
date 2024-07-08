@@ -14,7 +14,7 @@ import json
 import time
 
 
-version = 'vMT.0.0.2'
+version = 'vMT.0.1.0'
 
 
 class ScaleRange:
@@ -142,7 +142,7 @@ class Spectra:
             self,
             units,
             units_in=None,
-            default_unit='cm',
+            default_unit='cm-1',
             ):
         ''''ALWAYS use this method to change units.'''
 
