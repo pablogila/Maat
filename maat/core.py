@@ -14,7 +14,11 @@ import json
 import time
 
 
-version = 'vMT.0.1.0'
+version = 'vMT.1.0.0-alpha'
+'''
+Version comments:
+Bugs when plotting due to tools.normalize() function.
+'''
 
 
 class ScaleRange:
@@ -72,6 +76,8 @@ class Plotting:
         self.zoom_range = zoom_range
         self.normalize = normalize
         self.show_yticks = show_yticks
+        if not isinstance(legend, list) and legend is not None:
+            legend = [legend]
         self.legend = legend
 
 
@@ -84,13 +90,11 @@ class Spectra:
                  dataframe=None,
                  units=None,
                  units_in=None,
-                 scale_range:ScaleRange=None,
-                 plotting:Plotting=None,
+                 scale_range:ScaleRange=ScaleRange(),
+                 plotting:Plotting=Plotting(),
                  atoms:dict=None,
                  atoms_ref:dict=None,
                  ):
-        
-
         self.title = title
         self.save_as = save_as
         self.scale_range = scale_range
@@ -99,7 +103,6 @@ class Spectra:
         '''Dict of atoms in the material'''
         self.atoms_ref = atoms_ref
         ''''Dict of atoms used as reference'''
-
         self = self.set_type(type)
         self = self.set_dataframe(filename, dataframe)
         self.units = None

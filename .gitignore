@@ -4,5 +4,7 @@
 *.dat
 *.txt
 _*
+data/
+__pycache__/
 !__init__.py
 

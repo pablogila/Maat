@@ -3,15 +3,22 @@ from .core import *
 
 def normalize(spectra:Spectra):
     sdata = deepcopy(spectra)
-    scale_range = sdata.scale_range
+    if hasattr(sdata, 'scale_range') and sdata.scale_range is not None:
+        scale_range = sdata.scale_range
+    else:
+        scale_range = ScaleRange(
+            xmin=min(df0[df0.columns[0]]),
+            xmax=max(df0[df0.columns[0]]),
+            index=0,
+        )
     df_index = scale_range.index if scale_range.index else 0
     df0 = sdata.dataframe[df_index]
     
-    if getattr(sdata, 'scale_range', None) and scale_range.ymax:
+    if scale_range.ymax:
         return _normalize_y(sdata)
 
-    xmin = scale_range.xmin if scale_range.xmin else min(df0[df0.columns[0]])
-    xmax = scale_range.xmax if scale_range.xmax else max(df0[df0.columns[0]])
+    xmin = scale_range.xmin
+    xmax = scale_range.xmax
 
     df0 = df0[(df0[df0.columns[0]] >= xmin) & (df0[df0.columns[0]] <= xmax)]
     ymax_on_range = df0[df0.columns[1]].max()

@@ -38,12 +38,14 @@ def spectra(spectrum:Spectra):
     if sdata.plotting.zoom_range and ymax_on_range is not None:
         calculated_top_ylim = ymax_on_range * scale_factor
 
-    if sdata.plotting.low_ylim is None:
-        sdata.plotting.low_ylim = calculated_low_ylim
-    if sdata.plotting.top_ylim is None:
-        sdata.plotting.top_ylim = calculated_top_ylim
-    low_ylim = sdata.plotting.low_ylim
-    top_ylim = sdata.plotting.top_ylim
+    low_ylim = calculated_low_ylim if not hasattr(sdata, 'plotting') or sdata.plotting.low_ylim is None else sdata.plotting.low_ylim
+    top_ylim = calculated_top_ylim if not hasattr(sdata, 'plotting') or sdata.plotting.top_ylim is None else sdata.plotting.top_ylim
+    
+    low_xlim = None
+    top_xlim = None
+    if hasattr(sdata, 'plotting') and sdata.plotting is not None:
+        low_xlim = sdata.plotting.low_xlim
+        top_xlim = sdata.plotting.top_xlim
 
     if hasattr(sdata, 'plotting') and sdata.plotting.offset is True:
         number_of_plots = len(sdata.dataframe)
@@ -52,43 +54,38 @@ def spectra(spectrum:Spectra):
         for i, df in enumerate(sdata.dataframe):
             reverse_i = (number_of_plots - 1) - i
             df[df.columns[1]] = df[df.columns[1]] + (reverse_i * height)
-
     elif hasattr(sdata, 'plotting') and isinstance(sdata.plotting.offset, float):
         for i, df in enumerate(sdata.dataframe):
             df[df.columns[1]] = df[df.columns[1]] + sdata.plotting.offset
 
-
-###### ME LLEGO POR AQUI
     for df, name in zip(sdata.dataframe, sdata.filename):
-        strings_to_delete_from_name = ['.csv', '_INS', '_ATR', '_FTIR', '_temp', '_RAMAN', '_Raman']
-        name_clean = name.replace('_', ' ')
+        strings_to_delete_from_name = ['.csv', '_INS', '_ATR', '_FTIR', '_temp', '_RAMAN', '_Raman', '/data/', 'data/']
+        clean_name = name
         for string in strings_to_delete_from_name:
-            name_clean = name_clean.replace(string, '')
-        if sdata.plotting.legend and isinstance(sdata.plotting.legend, list):
-            name_clean = sdata.plotting.legend[sdata.filename.index(name)]
-        df.plot(x=df.columns[0], y=df.columns[1], label=name_clean, ax=ax)
+            clean_name = clean_name.replace(string, '')
+        clean_name = clean_name.replace('_', ' ')
+        if hasattr(sdata, 'plotting') and sdata.plotting.legend[sdata.filename.index(name)]:
+            clean_name = sdata.plotting.legend[sdata.filename.index(name)]
+        df.plot(x=df.columns[0], y=df.columns[1], label=name, ax=ax)
 
-    if sdata.plotting.low_xlim is not None:
-        ax.set_xlim(left=sdata.plotting.low_xlim)
-    if sdata.plotting.top_xlim is not None:
-        ax.set_xlim(right=sdata.plotting.top_xlim)
-    if sdata.plotting.low_ylim is not None:
-        ax.set_ylim(bottom=sdata.plotting.low_ylim)
-    if sdata.plotting.top_ylim is not None:
-        ax.set_ylim(top=sdata.plotting.top_ylim)
+    ax.set_ylim(bottom=low_ylim)
+    ax.set_ylim(top=top_ylim)
+    ax.set_xlim(left=low_xlim)
+    ax.set_xlim(right=top_xlim)
 
     plt.title(sdata.title)
     plt.xlabel(df.columns[0])
     plt.ylabel(df.columns[1])
 
-    if sdata.plotting.log_xscale:
-        ax.set_xscale('log')
-    if not sdata.plotting.show_yticks:
-        ax.set_yticks([])
-    if sdata.plotting.legend is not False:
-        ax.legend()
-    else:
-        ax.legend().set_visible(False)
+    if hasattr(sdata, 'plotting'):
+        if sdata.plotting.log_xscale:
+            ax.set_xscale('log')
+        if not sdata.plotting.show_yticks:
+            ax.set_yticks([])
+        if sdata.plotting.legend is not False:
+            ax.legend()
+        else:
+            ax.legend().set_visible(False)
 
     if sdata.save_as:
         root = os.getcwd()

@@ -1,24 +1,30 @@
 import maat as mt
 
 
+'''
+Tool to analyze MAPI deuteration with INS data from TOSCA and other papers,\n
+based on the peaks of the disrotatory mode of the methylammonium cation.\n
+Working on vMT.1.0.0
+'''
+
+
 ins = mt.Spectra(
-    filename=['CH3NH3PbI3.csv', 'IREPA-ND-02_INS.csv', 'CH3ND3PbI3.csv', 'manley2020-CDND.csv'],
-    title=None,
     type='INS',
+    title=None,
     save_as=None,
+    filename=['data/IREPA-MAPI-12_INS.csv', 'data/IREPA-ND-02_INS.csv', 'data/IREPA-ND-03_INS.csv', 'data/manley2020-CDND_INS.csv'],
     units_in=['cm', 'cm', 'cm', 'mev'],
     units='meV',
-    low_xlim=3,
-    top_xlim=50,
-    low_ylim=-0.1,
-    top_ylim=None,
-    figsize=(7,10),
-    offset=True,
-    log_xscale=False,
-    show_yticks=False,
-    #legend=['CH3NH3PbI3', 'IREPA-MAPI-02', 'CH3ND3PbI3', 'manley2020-CDND'],
-    #scale_range=[None, None, 1.0],
-    atoms=mt.MAPI,
+    plotting=mt.Plotting(
+        low_xlim=3,
+        top_xlim=50,
+        low_ylim=-0.1,
+        top_ylim=None,
+        figsize=(7,10),
+        offset=True,
+        log_xscale=False,
+        show_yticks=False,
+        )
     )
 
 peaks = {
@@ -49,20 +55,21 @@ plateau_manley = [41, 43]
 
 # Protonated sample
 peaks['baseline'], peaks['baseline_error'] = mt.fit.plateau(spectra=ins, cuts=plateau_H, df_index=0)
-deuteration_H = mt.deuteration.mapi_peaks(ins=ins, peaks=peaks, df_index=0)
+deuteration_H = mt.deuteration.peaks_mapi(ins=ins, peaks=peaks, df_index=0)
 
 # Deuterated samples
 
 peaks['baseline'], peaks['baseline_error'] = mt.fit.plateau(spectra=ins, cuts=plateau_02, df_index=1)
-deuteration_02 = mt.deuteration.mapi_peaks(ins=ins, peaks=peaks, df_index=1)
+deuteration_02 = mt.deuteration.peaks_mapi(ins=ins, peaks=peaks, df_index=1)
 
 peaks['baseline'], peaks['baseline_error'] = mt.fit.plateau(spectra=ins, cuts=plateau_03, df_index=2)
-deuteration_03 = mt.deuteration.mapi_peaks(ins=ins, peaks=peaks, df_index=2)
+deuteration_03 = mt.deuteration.peaks_mapi(ins=ins, peaks=peaks, df_index=2)
 
 # Manley2020-CDND sample
 peaks_manley['baseline'], peaks_manley['baseline_error'] = mt.fit.plateau(spectra=ins, cuts=plateau_manley, df_index=3)
-deuteration_manley = mt.deuteration.mapi_peaks(ins=ins, peaks=peaks_manley, df_index=3)
+deuteration_manley = mt.deuteration.peaks_mapi(ins=ins, peaks=peaks_manley, df_index=3)
 
-ins.legend = ['MAPI-12: ' + deuteration_H, 'ND-02:    ' + deuteration_02, 'ND-03:    ' + deuteration_03, 'manley:  ' + deuteration_manley]
+ins.plotting.legend = ['MAPI-12: ' + deuteration_H, 'ND-02:    ' + deuteration_02, 'ND-03:    ' + deuteration_03, 'manley:  ' + deuteration_manley]
 
 mt.plot.spectra(ins)
+
