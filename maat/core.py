@@ -14,11 +14,7 @@ import json
 import time
 
 
-version = 'vMT.1.0.0-alpha'
-'''
-Version comments:
-Bugs when plotting due to tools.normalize() function.
-'''
+version = 'vMT.1.0.0'
 
 
 class ScaleRange:
@@ -56,12 +52,16 @@ class Plotting:
                  top_xlim=50,
                  low_ylim=None,
                  top_ylim=None,
+                 hline:list=None,
+                 hline_error:list=None,
+                 vline:list=None,
+                 vline_error:list=None,
                  figsize:tuple=None,
                  log_xscale:bool=False,
                  offset=True,
                  scale_factor:float=1.0,
                  zoom_range:bool=False,
-                 normalize:bool=True,
+                 normalize:bool=False,
                  show_yticks:bool=False,
                  legend=None,
                  ):
@@ -69,6 +69,10 @@ class Plotting:
         self.top_xlim = top_xlim
         self.low_ylim = low_ylim
         self.top_ylim = top_ylim
+        self.hline = hline
+        self.hline_error = hline_error
+        self.vline = vline
+        self.vline_error = vline_error
         self.figsize = figsize
         self.log_xscale = log_xscale
         self.offset = offset

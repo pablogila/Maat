@@ -1,18 +1,21 @@
 from .core import *
-from .tools import normalize
+from . import tools
 
 
 def spectra(spectrum:Spectra):
 
+    strings_to_delete_from_name = ['.csv', '.dat', '.txt', '_INS', '_ATR', '_FTIR', '_temp', '_RAMAN', '_Raman', '/data/', 'data/', '/INS/', 'INS/', '/FTIR/', 'FTIR/', '/ATR/', 'ATR/', '_smooth', '_smoothed', '_subtracted', '_cellsubtracted']
+
     sdata = deepcopy(spectrum)
     scale_factor = sdata.plotting.scale_factor if hasattr(sdata, 'plotting') and sdata.plotting.scale_factor else 1.0
 
-    fig, ax = plt.subplots()
-    if sdata.plotting.figsize:
+    if hasattr(sdata, 'plotting') and sdata.plotting.figsize:
         fig, ax = plt.subplots(figsize=sdata.plotting.figsize)
+    else:
+        fig, ax = plt.subplots()
 
     if sdata.plotting.normalize is True:
-        sdata = normalize(sdata)
+        sdata = tools.normalize(sdata)
     normalized_dataframes = sdata.dataframe
 
     all_y_values = []
@@ -59,14 +62,24 @@ def spectra(spectrum:Spectra):
             df[df.columns[1]] = df[df.columns[1]] + sdata.plotting.offset
 
     for df, name in zip(sdata.dataframe, sdata.filename):
-        strings_to_delete_from_name = ['.csv', '_INS', '_ATR', '_FTIR', '_temp', '_RAMAN', '_Raman', '/data/', 'data/']
         clean_name = name
         for string in strings_to_delete_from_name:
             clean_name = clean_name.replace(string, '')
         clean_name = clean_name.replace('_', ' ')
-        if hasattr(sdata, 'plotting') and sdata.plotting.legend[sdata.filename.index(name)]:
-            clean_name = sdata.plotting.legend[sdata.filename.index(name)]
-        df.plot(x=df.columns[0], y=df.columns[1], label=name, ax=ax)
+        if hasattr(sdata, 'plotting') and hasattr(sdata.plotting, 'legend') and sdata.plotting.legend is not None:
+            if len(sdata.plotting.legend) == len(sdata.filename):
+                clean_name = sdata.plotting.legend[sdata.filename.index(name)]
+            elif len(sdata.plotting.legend) == 1:
+                clean_name = sdata.plotting.legend[0]
+            else:
+                raise ValueError("len(Spectra.plotting.legend) does not match len(Spectra.filename)")
+        df.plot(x=df.columns[0], y=df.columns[1], label=clean_name, ax=ax)
+
+        # TO-DO
+        #if sdata.plotting.h_line is not None and sdata.plotting.h_line_error:
+        #    ax.fill_between(df[df.columns[0]], ins.baseline - ins.baseline_error, ins.baseline + ins.baseline_error, color='gray', alpha=0.5, label='Peak baseline')
+        #elif sdata.plotting.h_line is not None:
+        #    ax.axhline(y=ins.baseline, color='black', linestyle='--', label='Peak baseline')
 
     ax.set_ylim(bottom=low_ylim)
     ax.set_ylim(top=top_ylim)

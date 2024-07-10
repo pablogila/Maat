@@ -1,5 +1,159 @@
 from .core import *
 
+
+def plot_ins(ins:INS):
+    fig, ax = plt.subplots()
+
+    # Limit max intensity to INS.ylim_scale times the MAPI peak of the 1st dataframe
+    df0 = ins.dataframes[0]
+
+    if ins.scale_range and len(ins.scale_range) == 2:
+        range_start = ins.scale_range[0]
+        range_end = ins.scale_range[1]
+    else:
+        range_start = 30
+        range_end = 50
+
+    df_range = df0[(df0[df0.columns[0]] >= range_start) & (df0[df0.columns[0]] <= range_end)]
+    max_df = df_range[df_range.columns[1]].max()
+
+    ax.set_xlim([0, ins.xlim])
+    ax.set_ylim([0, ins.ylim_scale * max_df])
+
+    strings_to_delete_from_name = ['.csv', '_INS', '_temp', '_cellsubtracted']
+    for df, name in zip(ins.dataframes, ins.filenames):
+        if ins.scale_range is not False:
+            first_cut = ins.scale_range[0]
+            second_cut = ins.scale_range[1]
+            df_range_i = df[(df[df.columns[0]] >= first_cut) & (df[df.columns[0]] <= second_cut)]
+            max_df_i = df_range_i[df_range_i.columns[1]].max()
+            df[df.columns[1]] = df[df.columns[1]] / max_df_i * max_df
+        name_clean = name
+        for string in strings_to_delete_from_name:
+            name_clean = name_clean.replace(string, '')
+        df.plot(x=df.columns[0], y=df.columns[1], label=name_clean, ax=ax)
+
+        if ins.baseline is not None and ins.baseline_error is not None:
+            ax.fill_between(df[df.columns[0]], ins.baseline - ins.baseline_error, ins.baseline + ins.baseline_error, color='gray', alpha=0.5, label='Peak baseline')
+        elif ins.baseline is not None:
+            ax.axhline(y=ins.baseline, color='black', linestyle='--', label='Peak baseline')
+
+
+    plt.title(ins.title)
+    plt.xlabel(df.columns[0])
+    plt.ylabel(df.columns[1])
+
+    if ins.log:
+        ax.set_xscale_range('log')
+    if ins.hide_y_axis:
+        ax.set_yticks([])
+    if ins.legend:
+        ax.legend()
+    else:
+        ax.legend().set_visible(False)
+
+    root = os.getcwd()
+    save_name = os.path.join(root, ins.save_as)
+    # plt.savefig(save_name)
+    plt.show()
+
+
+def plot_atr(atr:ATR):
+    
+    if atr.figsize:
+        fig, ax = plt.subplots(figsize=atr.figsize)
+    else:
+        fig, ax = plt.subplots()
+
+    if atr.x_low_lim:
+        ax.set_xlim(left=atr.x_low_lim)
+    if atr.x_top_lim:
+        ax.set_xlim(right=atr.x_top_lim)
+    if atr.y_low_lim:
+        ax.set_ylim(bottom=atr.y_low_lim)
+    if atr.y_top_lim:
+        ax.set_ylim(top=atr.y_top_lim)
+
+    if atr.scale_range:
+        df0 = atr.dataframes[0]
+        df0 = df0[(df0[df0.columns[0]] >= atr.scale_range[0]) & (df0[df0.columns[0]] <= atr.scale_range[1])]
+        max_df = df0[df0.columns[1]].max()
+        ax.set_ylim(top=atr.scale_y*max_df)
+
+    strings_to_delete_from_name = ['.csv', '_INS', '_temp']
+    for df, name in zip(atr.dataframes, atr.filenames):
+        if atr.scale_range:
+            first_cut = atr.scale_range[0]
+            second_cut = atr.scale_range[1]
+            df_range_i = df[(df[df.columns[0]] >= first_cut) & (df[df.columns[0]] <= second_cut)]
+            max_df_i = df_range_i[df_range_i.columns[1]].max()
+            df[df.columns[1]] = max_df * (df[df.columns[1]] / max_df_i)
+        
+        if (atr.y_offset is True) and (atr.y_low_lim is not None) and (atr.y_top_lim is not None):
+            number_of_plots = len(atr.dataframes)
+            height = atr.y_top_lim - atr.y_low_lim
+            df[df.columns[1]] = (df[df.columns[1]] / number_of_plots) + (atr.filenames.index(name) * height) / number_of_plots
+
+        name_clean = name.replace('_', ' ')
+        for string in strings_to_delete_from_name:
+            name_clean = name_clean.replace(string, '')
+        if atr.legend and isinstance(atr.legend, list):
+            name_clean = atr.legend[atr.filenames.index(name)]
+        df.plot(x=df.columns[0], y=df.columns[1], label=name_clean, ax=ax)
+
+    plt.title(atr.title)
+    plt.xlabel(df.columns[0])
+    plt.ylabel(df.columns[1])
+
+    if atr.log:
+        ax.set_xscale('log')
+    if atr.hide_y_axis:
+        ax.set_yticks([])
+    if atr.legend:
+        ax.legend()
+    else:
+        ax.legend().set_visible(False)
+
+    if atr.save_as:
+        root = os.getcwd()
+        save_name = os.path.join(root, atr.save_as)
+        plt.savefig(save_name)
+    
+    plt.show()
+
+
+def normalize(spectra:Spectra):
+    '''Deprecated on vMT.0.1.0.'''
+    sdata = deepcopy(spectra)
+    if hasattr(sdata, 'scale_range') and sdata.scale_range is not None:
+        scale_range = sdata.scale_range
+    else:
+        scale_range = ScaleRange(
+            xmin=min(df0[df0.columns[0]]),
+            xmax=max(df0[df0.columns[0]]),
+            index=0,
+        )
+    df_index = scale_range.index if scale_range.index else 0
+    df0 = sdata.dataframe[df_index]
+    
+    if scale_range.ymax:
+        return _normalize_y(sdata)
+
+    xmin = scale_range.xmin
+    xmax = scale_range.xmax
+
+    df0 = df0[(df0[df0.columns[0]] >= xmin) & (df0[df0.columns[0]] <= xmax)]
+    ymax_on_range = df0[df0.columns[1]].max()
+    normalized_dataframes = []
+    for df in sdata.dataframe:
+        df_range = df[(df[df.columns[0]] >= xmin) & (df[df.columns[0]] <= xmax)]
+        i_ymax_on_range = df_range[df_range.columns[1]].max()
+        df[df.columns[1]] =  df[df.columns[1]] * ymax_on_range / i_ymax_on_range
+        normalized_dataframes.append(df)
+    sdata.dataframe = normalized_dataframes
+    return sdata
+
+
 def mapi_peaks(ins:Spectra,
          peaks:dict,
          df_index:int=0,

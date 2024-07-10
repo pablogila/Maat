@@ -12,7 +12,12 @@ ins = mt.Spectra(
     type='INS',
     title=None,
     save_as=None,
-    filename=['data/IREPA-MAPI-12_INS.csv', 'data/IREPA-ND-02_INS.csv', 'data/IREPA-ND-03_INS.csv', 'data/manley2020-CDND_INS.csv'],
+    filename=[
+        'data/INS/IREPA-MAPI-12_2.02g_cellsubtracted_INS.csv',
+        'data/INS/IREPA-ND-02_1.284g_20K_cellsubtracted_INS.csv',
+        'data/INS/IREPA-ND-03_2.672g_cellsubtracted_INS.csv',
+        'data/INS/manley2020-CDND_INS.csv'
+        ],
     units_in=['cm', 'cm', 'cm', 'mev'],
     units='meV',
     plotting=mt.Plotting(
@@ -23,8 +28,14 @@ ins = mt.Spectra(
         figsize=(7,10),
         offset=True,
         log_xscale=False,
+        normalize=False,
         show_yticks=False,
-        )
+        ),
+    scale_range=mt.ScaleRange(
+        xmin=None,
+        xmax=None,
+        index=0,
+        ),
     )
 
 peaks = {

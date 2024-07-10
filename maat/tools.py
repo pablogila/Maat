@@ -5,17 +5,20 @@ def normalize(spectra:Spectra):
     sdata = deepcopy(spectra)
     if hasattr(sdata, 'scale_range') and sdata.scale_range is not None:
         scale_range = sdata.scale_range
+        if scale_range.ymax:
+            return _normalize_y(sdata)
     else:
-        scale_range = ScaleRange(
-            xmin=min(df0[df0.columns[0]]),
-            xmax=max(df0[df0.columns[0]]),
-            index=0,
-        )
+        scale_range = ScaleRange()
+
     df_index = scale_range.index if scale_range.index else 0
     df0 = sdata.dataframe[df_index]
-    
-    if scale_range.ymax:
-        return _normalize_y(sdata)
+
+    if scale_range.xmin is None:
+        scale_range.xmin = min(df0[df0.columns[0]])
+    if scale_range.xmax is None:
+        scale_range.xmax = max(df0[df0.columns[0]])
+
+    sdata.scale_range = scale_range
 
     xmin = scale_range.xmin
     xmax = scale_range.xmax
@@ -32,6 +35,7 @@ def normalize(spectra:Spectra):
     return sdata
 
 
+# TO-CHECK
 def _normalize_y(sdata:Spectra):
     if not len(sdata.scale_range.ymax) == len(sdata.dataframe):
         raise ValueError("normalize: len(ymax) does not match len(dataframe)")
