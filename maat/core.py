@@ -14,7 +14,7 @@ import json
 import time
 
 
-version = 'vMT.1.0.0'
+version = 'v1.0.0'
 
 
 class ScaleRange:
