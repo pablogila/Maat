@@ -35,7 +35,6 @@ def normalize(spectra:Spectra):
     return sdata
 
 
-# TO-CHECK
 def _normalize_y(sdata:Spectra):
     if not len(sdata.scale_range.ymax) == len(sdata.dataframe):
         raise ValueError("normalize: len(ymax) does not match len(dataframe)")
