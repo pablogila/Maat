@@ -13,9 +13,9 @@ ins = mt.Spectra(
     title=None,
     save_as=None,
     filename=[
-        'data/INS/IREPA-MAPI-12_2.02g_cellsubtracted_INS.csv',
-        'data/INS/IREPA-ND-02_1.284g_20K_cellsubtracted_INS.csv',
-        'data/INS/IREPA-ND-03_2.672g_cellsubtracted_INS.csv',
+        'data/INS/IREPA-MAPI-12_INS_2.02g_cellsubtracted.csv',
+        'data/INS/IREPA-ND-02_INS_1.284g_20K_cellsubtracted.csv',
+        'data/INS/IREPA-ND-03_INS_2.672g_cellsubtracted.csv',
         'data/INS/manley2020-CDND_INS.csv'
         ],
     units_in=['cm', 'cm', 'cm', 'mev'],

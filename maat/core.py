@@ -14,7 +14,7 @@ import json
 import time
 
 
-version = 'v1.0.0'
+version = 'v1.0.1'
 
 
 class ScaleRange:
@@ -71,7 +71,11 @@ class Plotting:
         self.top_ylim = top_ylim
         self.hline = hline
         self.hline_error = hline_error
+        if vline is not None and not isinstance(vline, list):
+            vline = [vline]
         self.vline = vline
+        if vline_error is not None and not isinstance(vline_error, list):
+            vline_error = [vline_error]
         self.vline_error = vline_error
         self.figsize = figsize
         self.log_xscale = log_xscale

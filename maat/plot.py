@@ -75,11 +75,14 @@ def spectra(spectrum:Spectra):
                 raise ValueError("len(Spectra.plotting.legend) does not match len(Spectra.filename)")
         df.plot(x=df.columns[0], y=df.columns[1], label=clean_name, ax=ax)
 
-        # TO-DO
-        #if sdata.plotting.h_line is not None and sdata.plotting.h_line_error:
-        #    ax.fill_between(df[df.columns[0]], ins.baseline - ins.baseline_error, ins.baseline + ins.baseline_error, color='gray', alpha=0.5, label='Peak baseline')
-        #elif sdata.plotting.h_line is not None:
-        #    ax.axhline(y=ins.baseline, color='black', linestyle='--', label='Peak baseline')
+        # TO-ADD: horizontal lines
+
+    if hasattr(sdata, 'plotting') and sdata.plotting.vline is not None and sdata.plotting.vline_error is not None:
+        for vline, vline_error in zip(sdata.plotting.vline, sdata.plotting.vline_error):
+            ax.fill_betweeb(df[df.columns[0]], vline - vline_error, vline + vline_error, color='gray', alpha=0.5)
+    elif hasattr(sdata, 'plotting') and sdata.plotting.vline is not None:
+        for vline in sdata.plotting.vline:
+            ax.axvline(x=vline, color='gray', alpha=0.5, linestyle='--')
 
     ax.set_ylim(bottom=low_ylim)
     ax.set_ylim(top=top_ylim)
