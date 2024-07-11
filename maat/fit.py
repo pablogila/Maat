@@ -52,10 +52,10 @@ def area_under_peak(spectra:Spectra, peak:list, df_index:int=0):
 
     if 'Error' in df_range.columns:
         point_errors = df_range['Error'].to_numpy()
-    else:
-        point_errors = np.zeros_like(y)
+    else: # Assume the error in each point is the same as the baseline error
+        point_errors = np.full_like(y, baseline_error)
     total_errors = np.sqrt(point_errors**2 + baseline_error**2)
     area_error = np.sqrt(scipy.integrate.simpson(total_errors**2, x))
-
+    
     return area, area_error
 

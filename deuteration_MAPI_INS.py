@@ -4,7 +4,7 @@ import maat as mt
 '''
 Tool to analyze MAPI deuteration with INS data from TOSCA and other papers,\n
 based on the peaks of the disrotatory mode of the methylammonium cation.\n
-Working on vMT.1.0.0
+Working on Maat v1.0.2
 '''
 
 
