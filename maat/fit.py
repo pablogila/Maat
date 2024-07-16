@@ -59,3 +59,13 @@ def area_under_peak(spectra:Spectra, peak:list, df_index:int=0):
     
     return area, area_error
 
+
+def ratio_areas(area:float, area_total:float, area_error:float=0.0, area_total_error:float=0.0):
+    '''To check the ratio between two areas, e.g. to estimate deuteration levels from ATR data.'''
+    ratio = (area_total - area) / area_total
+    if ratio != 0.0:
+        ratio_error = ratio * np.sqrt((np.sqrt(area_total_error**2 + area_error**2) / (area_total - area))**2 + (area_total_error / area_total)**2)
+    else:
+        ratio_error = None
+    return ratio, ratio_error
+

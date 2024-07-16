@@ -10,7 +10,7 @@ Working on Maat v1.0.2
 
 atr = mt.Spectra(
     type='ATR',
-    title=None,
+    title='CH$_3$ND$_3$I ATR at ISIS, estimated deuteration of 86%',
     save_as=None,
     filename=[
         'data/ATR/MAI_comGCSM_ATR_ISIS_256scans_4cm-res_atr-corrected.dat',
@@ -24,7 +24,7 @@ atr = mt.Spectra(
         low_ylim=None,
         top_ylim=None,
         figsize=None,
-        offset=False,
+        offset=True,
         log_xscale=False,
         normalize=False,
         show_yticks=False,

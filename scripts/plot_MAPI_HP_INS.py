@@ -4,7 +4,7 @@ from math import sqrt
 
 ins = mt.Spectra(
     type='INS',
-    title='HP MAPI at TOSCA',
+    title='INS of MAPbI$_3$ under High Pressure at TOSCA',
     save_as=None,
     filename=[
         'data/INS/MAPI_comXPLT_INS_1.9GPa_smooth_cellsubtracted.csv',
@@ -24,7 +24,7 @@ ins = mt.Spectra(
         log_xscale=False,
         normalize=False,
         show_yticks=False,
-        scale_factor = 1.1,
+        scale_factor = 1.0,
         legend=['CH$_3$NH$_3$PbI$_3$ 1.9GPa', 'CH$_3$ND$_3$PbI$_3$ 1.9GPa']
         ),
     scale_range=mt.ScaleRange(
