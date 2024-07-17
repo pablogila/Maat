@@ -37,7 +37,7 @@ atr = mt.Spectra(
         show_yticks=False,
         scale_factor=0.5,
         legend=[
-            'MAI-ND (KS169)',
+            'MAI-ND_KS169',
             't = 10 min',
             't = 30 min',
             't = 60 min',
@@ -154,6 +154,15 @@ deuteration_60, deuteration_60_error = mt.fit.ratio_areas(area_60, area_NH, area
 deuteration_120, deuteration_120_error = mt.fit.ratio_areas(area_120, area_NH, area_120_error, area_NH_error)
 deuteration_360, deuteration_360_error = mt.fit.ratio_areas(area_360, area_NH, area_360_error, area_NH_error)
 deuteration_900, deuteration_900_error = mt.fit.ratio_areas(area_900, area_NH, area_900_error, area_NH_error)
+
+
+atr.plotting.legend[0] = atr.plotting.legend[0] + f' ({deuteration_ND:.2f} ± {deuteration_ND_error:.2f})'
+atr.plotting.legend[1] = atr.plotting.legend[1] + f' ({deuteration_10:.2f} ± {deuteration_10_error:.2f})'
+atr.plotting.legend[2] = atr.plotting.legend[2] + f' ({deuteration_30:.2f} ± {deuteration_30_error:.2f})'
+atr.plotting.legend[3] = atr.plotting.legend[3] + f' ({deuteration_60:.2f} ± {deuteration_60_error:.2f})'
+atr.plotting.legend[4] = atr.plotting.legend[4] + f' ({deuteration_120:.2f} ± {deuteration_120_error:.2f})'
+atr.plotting.legend[5] = atr.plotting.legend[5] + f' ({deuteration_360:.2f} ± {deuteration_360_error:.2f})'
+atr.plotting.legend[6] = atr.plotting.legend[6] + f' ({deuteration_900:.2f} ± {deuteration_900_error:.2f})'
 
 
 print('MAI-ND deuteration levels over time at 75% Relative Humidity')
