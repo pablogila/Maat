@@ -14,7 +14,7 @@ import json
 import time
 
 
-version = 'v1.0.2'
+version = 'v1.0.3'
 
 
 class ScaleRange:

@@ -14,6 +14,10 @@ Ry_to_eV    = 13.605693122990
 eV_to_Ry    = 1.0 / Ry_to_eV
 Ry_to_J     = 2.1798723611030e-18
 J_to_Ry     = 1.0 / Ry_to_J
+cal_to_J    = 4.184
+J_to_cal    = 1 / cal_to_J
+kcal_to_J   = cal_to_J * 1000.0
+J_to_kcal   = 1 / kcal_to_J
 ## Distance
 A_to_m      = 1.0e-10
 m_to_A      = 1.0 / A_to_m
