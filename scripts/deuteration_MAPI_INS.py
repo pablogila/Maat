@@ -4,13 +4,14 @@ import maat as mt
 '''
 Tool to analyze MAPI deuteration with INS data from TOSCA and other papers,\n
 based on the peaks of the disrotatory mode of the methylammonium cation.\n
-Working on Maat v1.0.2
+Working on Maat v1.1.0
 '''
 
+mt.run_here()
 
 ins = mt.Spectra(
     type='INS',
-    title=None,
+    title='INS of MAPbI$_3$ samples',
     save_as=None,
     filename=[
         'data/INS/IREPA-MAPI-12_INS_2.02g_cellsubtracted.csv',
@@ -30,6 +31,7 @@ ins = mt.Spectra(
         log_xscale=False,
         normalize=False,
         show_yticks=False,
+        legend_title='Deuteration of the NH$_3$',
         ),
     scale_range=mt.ScaleRange(
         xmin=None,

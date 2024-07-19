@@ -154,12 +154,12 @@ def normalize(spectra:Spectra):
     return sdata
 
 
-def mapi_peaks(ins:Spectra,
+def peaks_mapi(ins:Spectra,
          peaks:dict,
          df_index:int=0,
          ):
     '''
-    Major changes on vMT.0.1.0.\n
+    DEPRECATED after v1.0.3\n
     Calculate the deuteration of MAPI by integrating the INS disrotatory peaks.\n
     'peaks' must be a dictionary with the peak limits and the baseline.\n
     Peak keywords required for partial deuteration: h6d0, h5d1, h4d2, h3d3\n
@@ -178,6 +178,8 @@ def mapi_peaks(ins:Spectra,
         'h0d6' : [26.5, 28.0],
         }
     '''
+
+    peak_data = deepcopy(ins)
 
     baseline = 0.0
     baseline_error = 0.0
@@ -218,23 +220,19 @@ def mapi_peaks(ins:Spectra,
         run_total = False
     if h6d0_limits is None or h5d1_limits is None or h4d2_limits is None or h3d3_limits is None:
         run_partial = False
-    
+
     if not run_partial:
         raise ValueError('No peaks to integrate. Remember to assign peak limits as a dictionary with the keys: h6d0, h5d1, h4d2, h3d3, h2d4, h1d5, h0d6.')
 
-    df = ins.dataframe[df_index].copy()
-    df[df.columns[1]] = df[df.columns[1]] - baseline
-
-    h6d0 = df[(df[df.columns[0]] >= h6d0_limits[0]) & (df[df.columns[0]] <= h6d0_limits[1])]
-    h5d1 = df[(df[df.columns[0]] >= h5d1_limits[0]) & (df[df.columns[0]] <= h5d1_limits[1])]
-    h4d2 = df[(df[df.columns[0]] >= h4d2_limits[0]) & (df[df.columns[0]] <= h4d2_limits[1])]
-    h3d3 = df[(df[df.columns[0]] >= h3d3_limits[0]) & (df[df.columns[0]] <= h3d3_limits[1])]
-
-    h6d0_area = scipy.integrate.simpson(h6d0[h6d0.columns[1]], x=h6d0[h6d0.columns[0]]) / 6
-    h5d1_area = scipy.integrate.simpson(h5d1[h5d1.columns[1]], x=h5d1[h5d1.columns[0]]) / 5
-    h4d2_area = scipy.integrate.simpson(h4d2[h4d2.columns[1]], x=h4d2[h4d2.columns[0]]) / 4
-    h3d3_area = scipy.integrate.simpson(h3d3[h3d3.columns[1]], x=h3d3[h3d3.columns[0]]) / 3
-
+    h6d0_area, h6d0_area_error = area_under_peak(peak_data, [h6d0_limits[0], h6d0_limits[1], baseline, baseline_error], df_index)
+    h5d1_area, h5d1_area_error = area_under_peak(peak_data, [h5d1_limits[0], h5d1_limits[1], baseline, baseline_error], df_index)
+    h4d2_area, h4d2_area_error = area_under_peak(peak_data, [h4d2_limits[0], h4d2_limits[1], baseline, baseline_error], df_index)
+    h3d3_area, h3d3_area_error = area_under_peak(peak_data, [h3d3_limits[0], h3d3_limits[1], baseline, baseline_error], df_index)
+    h6d0_area /= 6
+    h5d1_area /= 5
+    h4d2_area /= 4
+    h3d3_area /= 3
+    
     if not run_total:
         total_area = h6d0_area + h5d1_area + h4d2_area + h3d3_area
 
@@ -246,14 +244,25 @@ def mapi_peaks(ins:Spectra,
         deuteration = 0 * h6d0_ratio + (1/3) * h5d1_ratio + (2/3) * h4d2_ratio + 1 * h3d3_ratio
         protonation = 1 * h6d0_ratio + (2/3) * h5d1_ratio + (1/3) * h4d2_ratio + 0 * h3d3_ratio
 
-    if run_total:
-        h2d4 = df[(df[df.columns[0]] >= h2d4_limits[0]) & (df[df.columns[0]] <= h2d4_limits[1])]
-        h1d5 = df[(df[df.columns[0]] >= h1d5_limits[0]) & (df[df.columns[0]] <= h1d5_limits[1])]
-        h0d6 = df[(df[df.columns[0]] >= h0d6_limits[0]) & (df[df.columns[0]] <= h0d6_limits[1])]
+        # Error propagation
 
-        h2d4_area = scipy.integrate.simpson(h2d4[h2d4.columns[1]], x=h2d4[h2d4.columns[0]]) / 2
-        h1d5_area = scipy.integrate.simpson(h1d5[h1d5.columns[1]], x=h1d5[h1d5.columns[0]]) / 1
-        h0d6_area = scipy.integrate.simpson(h0d6[h0d6.columns[1]], x=h0d6[h0d6.columns[0]]) / 1
+        total_area_error = np.sqrt(h6d0_area_error**2 + h5d1_area_error**2 + h4d2_area_error**2 + h3d3_area_error**2)
+
+        h6d0_error = abs(h6d0_area) * np.sqrt((h6d0_area_error/h6d0_area)**2 + (total_area_error/total_area)**2)
+        h5d1_error = abs(h5d1_area) * np.sqrt((h5d1_area_error/h5d1_area)**2 + (total_area_error/total_area)**2)
+        h4d2_error = abs(h4d2_area) * np.sqrt((h4d2_area_error/h4d2_area)**2 + (total_area_error/total_area)**2)
+        h3d3_error = abs(h3d3_area) * np.sqrt((h3d3_area_error/h3d3_area)**2 + (total_area_error/total_area)**2)
+
+        deuteration_error = np.sqrt(h5d1_error**2 + h4d2_error**2 + h3d3_error**2)
+        protonation_error = np.sqrt(h6d0_error**2 + h5d1_error**2 + h4d2_error**2)
+
+    if run_total:
+        h2d4_area, h2d4_area_error = area_under_peak(peak_data, [h2d4_limits[0], h2d4_limits[1], baseline, baseline_error], df_index)
+        h1d5_area, h1d5_area_error = area_under_peak(peak_data, [h1d5_limits[0], h1d5_limits[1], baseline, baseline_error], df_index)
+        h0d6_area, h0d6_area_error = area_under_peak(peak_data, [h0d6_limits[0], h0d6_limits[1], baseline, baseline_error], df_index)
+        h2d4_area /= 2
+        h1d5_area /= 1
+        h0d6_area /= 1
 
         total_area_CDND = h6d0_area + h5d1_area + h4d2_area + h3d3_area + h2d4_area + h1d5_area + h0d6_area
 
@@ -271,54 +280,7 @@ def mapi_peaks(ins:Spectra,
         deuteration_CDND_amine = 0 * h3d3_ratio_CDND + (1/3) * h2d4_ratio_CDND + (2/3) * h1d5_ratio_CDND + 1 * h0d6_ratio_CDND
         protonation_CDND_amine = 1 * h3d3_ratio_CDND + (2/3) * h2d4_ratio_CDND + (1/3) * h1d5_ratio_CDND + 0 * h0d6_ratio_CDND
 
-    # Error propagation
-
-    h6d0_area_error = 0
-    h5d1_area_error = 0
-    h4d2_area_error = 0
-    h3d3_area_error = 0
-
-    if 'Error' in df.columns:
-        for error in h6d0['Error']:
-            h6d0_area_error += error**2
-        for error in h5d1['Error']:
-            h5d1_area_error += error**2
-        for error in h4d2['Error']:
-            h4d2_area_error += error**2
-        for error in h3d3['Error']:
-            h3d3_area_error += error**2
-    
-    h6d0_area_error = np.sqrt(h6d0_area_error + baseline_error**2)
-    h5d1_area_error = np.sqrt(h5d1_area_error + baseline_error**2)
-    h4d2_area_error = np.sqrt(h4d2_area_error + baseline_error**2)
-    h3d3_area_error = np.sqrt(h3d3_area_error + baseline_error**2)
-
-    if not run_total:
-        total_area_error = np.sqrt(h6d0_area_error**2 + h5d1_area_error**2 + h4d2_area_error**2 + h3d3_area_error**2)
-
-        h6d0_error = abs(h6d0_area) * np.sqrt((h6d0_area_error/h6d0_area)**2 + (total_area_error/total_area)**2)
-        h5d1_error = abs(h5d1_area) * np.sqrt((h5d1_area_error/h5d1_area)**2 + (total_area_error/total_area)**2)
-        h4d2_error = abs(h4d2_area) * np.sqrt((h4d2_area_error/h4d2_area)**2 + (total_area_error/total_area)**2)
-        h3d3_error = abs(h3d3_area) * np.sqrt((h3d3_area_error/h3d3_area)**2 + (total_area_error/total_area)**2)
-
-        deuteration_error = np.sqrt(h5d1_error**2 + h4d2_error**2 + h3d3_error**2)
-        protonation_error = np.sqrt(h6d0_error**2 + h5d1_error**2 + h4d2_error**2)
-    
-    if run_total:
-        h2d4_area_error = 0
-        h1d5_area_error = 0
-        h0d6_area_error = 0
-        if 'Error' in df.columns:
-            for error in h2d4['Error']:
-                h2d4_area_error += error**2
-            for error in h1d5['Error']:
-                h1d5_area_error += error**2
-            for error in h0d6['Error']:
-                h0d6_area_error += error**2
-    
-        h2d4_area_error = np.sqrt(h2d4_area_error + baseline_error**2)
-        h1d5_area_error = np.sqrt(h1d5_area_error + baseline_error**2)
-        h0d6_area_error = np.sqrt(h0d6_area_error + baseline_error**2)
+        # Error propagation
 
         total_area_error_CDND = np.sqrt(h6d0_area_error**2 + h5d1_area_error**2 + h4d2_area_error**2 + h3d3_area_error**2 + h2d4_area_error**2 + h1d5_area_error**2 + h0d6_area_error**2)
 
@@ -337,8 +299,8 @@ def mapi_peaks(ins:Spectra,
         protonation_CDND_amine_error = np.sqrt(h1d5_error_CDND**2 + h2d4_error_CDND**2 + h3d3_error_CDND**2)
 
     print()
-    if ins.legend:
-        print(f'Sample:  {ins.legend[df_index]}')
+    if hasattr(ins, "plotting") and ins.plotting.legend != None:
+        print(f'Sample:  {ins.plotting.legend[df_index]}')
     else:
         print(f'Sample:  {ins.filename[df_index]}')
     print(f'Corrected baseline: {round(baseline,2)} +- {round(baseline_error,2)}')

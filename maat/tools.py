@@ -1,5 +1,8 @@
 from .core import *
 
+'''
+This module contains functions to manipulate data.
+'''
 
 def normalize(spectra:Spectra):
     sdata = deepcopy(spectra)

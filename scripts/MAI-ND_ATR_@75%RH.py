@@ -1,12 +1,15 @@
 import maat as mt
 from math import sqrt
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 '''
 Tool to analyze MAI ATR data.\n
-Working on Maat v1.0.3
+Working on Maat v1.1.0
 '''
 
+mt.run_here()
 
 atr = mt.Spectra(
     type='ATR',
@@ -46,6 +49,7 @@ atr = mt.Spectra(
             't = 900 min',
             'MAI (GreatCell Solar Materials)'
             ],
+        legend_title='Deuteration over time',
         ),
     scale_range=mt.ScaleRange(
         xmin=None,
@@ -56,19 +60,20 @@ atr = mt.Spectra(
         ),
     )
 
-# Peaks
-# We will normalize the height of the vCH3 peak.
-# We will extract the area under the dsCH3, dasCH3, and vCH3 peaks.
+# Peak locations
+# The protonated amine peak will be used as a reference for the deuteration levels.
+peak_NH3 = [2600, 3350]
+plateau_NH3 = [peak_NH3[0], 4000]
+# We will extract the area under the dsCH3, dasCH3, and vCH3 peaks. We use the deuterated peaks as reference.
 peak_dsCH3 = [2770, 2800]
 peak_dasCH3 = [2865, 2895]
 peak_vCH3 =[2945, 2975]
 plateau_CH3 = [peak_dsCH3[1], peak_dasCH3[0]]
-# The protonated amine peak will be used as a reference for the deuteration levels.
-peak_NH3 = [2600, 3350]
-plateau_NH3 = [peak_NH3[0], 4000]
+
+atr.plotting.vline = peak_NH3
 
 
-# Normalize the height of the C peak
+# Normalize the height of the vCH3 peak
 # 0
 ymin_ND = -0.019
 ymax_ND = 0.075
@@ -94,15 +99,17 @@ ymax_900 = 0.3489
 ymin_NH = 0.22
 ymax_NH = 0.375
 
-
 atr.scale_range.ymin = [ymin_ND, ymin_10, ymin_30, ymin_60, ymin_120, ymin_360, ymin_900, ymin_NH]
 atr.scale_range.ymax = [ymax_ND, ymax_10, ymax_30, ymax_60, ymax_120, ymax_360, ymax_900, ymax_NH]
-
 atr = mt.tools.normalize(atr)
 
-atr.plotting.vline = peak_NH3
 
 baseline_CH3, baseline_CH3_error = mt.fit.plateau(atr, plateau_CH3, 0)
+
+area_dsCH3, area_dsCH3_error = mt.fit.area_under_peak(atr, [peak_dsCH3[0], peak_dsCH3[1], baseline_CH3, baseline_CH3_error], 0, True)
+area_dasCH3, area_dasCH3_error = mt.fit.area_under_peak(atr, [peak_dasCH3[0], peak_dasCH3[1], baseline_CH3, baseline_CH3_error], 0, True)
+area_vCH3, area_vCH3_error = mt.fit.area_under_peak(atr, [peak_vCH3[0], peak_vCH3[1], baseline_CH3, baseline_CH3_error], 0, True)
+
 
 baseline_ND, baseline_ND_error = mt.fit.plateau(atr, plateau_NH3, 0)
 baseline_10, baseline_10_error = mt.fit.plateau(atr, plateau_NH3, 1)
@@ -113,19 +120,14 @@ baseline_360, baseline_360_error = mt.fit.plateau(atr, plateau_NH3, 5)
 baseline_900, baseline_900_error = mt.fit.plateau(atr, plateau_NH3, 6)
 baseline_NH, baseline_NH_error = mt.fit.plateau(atr, plateau_NH3, 7)
 
-
-area_dsCH3, area_dsCH3_error = mt.fit.area_under_peak(atr, [peak_dsCH3[0], peak_dsCH3[1], baseline_CH3, baseline_CH3_error], 0)
-area_dasCH3, area_dasCH3_error = mt.fit.area_under_peak(atr, [peak_dasCH3[0], peak_dasCH3[1], baseline_CH3, baseline_CH3_error], 0)
-area_vCH3, area_vCH3_error = mt.fit.area_under_peak(atr, [peak_vCH3[0], peak_vCH3[1], baseline_CH3, baseline_CH3_error], 0)
-
-area_ND, area_ND_error = mt.fit.area_under_peak(atr, [peak_NH3[0], peak_NH3[1], baseline_ND, baseline_ND_error], 0)
-area_10, area_10_error = mt.fit.area_under_peak(atr, [peak_NH3[0], peak_NH3[1], baseline_10, baseline_10_error], 1)
-area_30, area_30_error = mt.fit.area_under_peak(atr, [peak_NH3[0], peak_NH3[1], baseline_30, baseline_30_error], 2)
-area_60, area_60_error = mt.fit.area_under_peak(atr, [peak_NH3[0], peak_NH3[1], baseline_60, baseline_60_error], 3)
-area_120, area_120_error = mt.fit.area_under_peak(atr, [peak_NH3[0], peak_NH3[1], baseline_120, baseline_120_error], 4)
-area_360, area_360_error = mt.fit.area_under_peak(atr, [peak_NH3[0], peak_NH3[1], baseline_360, baseline_360_error], 5)
-area_900, area_900_error = mt.fit.area_under_peak(atr, [peak_NH3[0], peak_NH3[1], baseline_900, baseline_900_error], 6)
-area_NH, area_NH_error = mt.fit.area_under_peak(atr, [peak_NH3[0], peak_NH3[1], baseline_NH, baseline_NH_error], 7)
+area_ND, area_ND_error = mt.fit.area_under_peak(atr, [peak_NH3[0], peak_NH3[1], baseline_ND, baseline_ND_error], 0, True)
+area_10, area_10_error = mt.fit.area_under_peak(atr, [peak_NH3[0], peak_NH3[1], baseline_10, baseline_10_error], 1, True)
+area_30, area_30_error = mt.fit.area_under_peak(atr, [peak_NH3[0], peak_NH3[1], baseline_30, baseline_30_error], 2, True)
+area_60, area_60_error = mt.fit.area_under_peak(atr, [peak_NH3[0], peak_NH3[1], baseline_60, baseline_60_error], 3, True)
+area_120, area_120_error = mt.fit.area_under_peak(atr, [peak_NH3[0], peak_NH3[1], baseline_120, baseline_120_error], 4, True)
+area_360, area_360_error = mt.fit.area_under_peak(atr, [peak_NH3[0], peak_NH3[1], baseline_360, baseline_360_error], 5, True)
+area_900, area_900_error = mt.fit.area_under_peak(atr, [peak_NH3[0], peak_NH3[1], baseline_900, baseline_900_error], 6, True)
+area_NH, area_NH_error = mt.fit.area_under_peak(atr, [peak_NH3[0], peak_NH3[1], baseline_NH, baseline_NH_error], 7, True)
 
 area_ND = area_ND - area_dsCH3 - area_dasCH3 - area_vCH3
 area_10 = area_10 - area_dsCH3 - area_dasCH3 - area_vCH3
@@ -147,13 +149,13 @@ area_900_error = sqrt(area_900_error**2 + area_dsCH3_error**2 + area_dasCH3_erro
 area_NH_error = sqrt(area_NH_error**2 + area_dsCH3_error**2 + area_dasCH3_error**2 + area_vCH3_error**2)
 
 
-deuteration_ND, deuteration_ND_error = mt.fit.ratio_areas(area_ND, area_NH, area_ND_error, area_NH_error)
-deuteration_10, deuteration_10_error = mt.fit.ratio_areas(area_10, area_NH, area_10_error, area_NH_error)
-deuteration_30, deuteration_30_error = mt.fit.ratio_areas(area_30, area_NH, area_30_error, area_NH_error)
-deuteration_60, deuteration_60_error = mt.fit.ratio_areas(area_60, area_NH, area_60_error, area_NH_error)
-deuteration_120, deuteration_120_error = mt.fit.ratio_areas(area_120, area_NH, area_120_error, area_NH_error)
-deuteration_360, deuteration_360_error = mt.fit.ratio_areas(area_360, area_NH, area_360_error, area_NH_error)
-deuteration_900, deuteration_900_error = mt.fit.ratio_areas(area_900, area_NH, area_900_error, area_NH_error)
+deuteration_ND, deuteration_ND_error = mt.fit.ratio_areas(area_ND, area_NH, area_ND_error, area_NH_error, True)
+deuteration_10, deuteration_10_error = mt.fit.ratio_areas(area_10, area_NH, area_10_error, area_NH_error, True)
+deuteration_30, deuteration_30_error = mt.fit.ratio_areas(area_30, area_NH, area_30_error, area_NH_error, True)
+deuteration_60, deuteration_60_error = mt.fit.ratio_areas(area_60, area_NH, area_60_error, area_NH_error, True)
+deuteration_120, deuteration_120_error = mt.fit.ratio_areas(area_120, area_NH, area_120_error, area_NH_error, True)
+deuteration_360, deuteration_360_error = mt.fit.ratio_areas(area_360, area_NH, area_360_error, area_NH_error, True)
+deuteration_900, deuteration_900_error = mt.fit.ratio_areas(area_900, area_NH, area_900_error, area_NH_error, True)
 
 
 atr.plotting.legend[0] = atr.plotting.legend[0] + f' ({deuteration_ND:.2f} ± {deuteration_ND_error:.2f})'
@@ -175,4 +177,20 @@ print(f'360 min:  {deuteration_360:.2f} ± {deuteration_360_error:.2f}')
 print(f'900 min:  {deuteration_900:.2f} ± {deuteration_900_error:.2f}')
 
 mt.plot.spectra(atr)
+
+
+# Plotting of the deuteration levels over time
+time = [1, 10, 30, 60, 120, 360, 900]
+protonation = [deuteration_ND, deuteration_10, deuteration_30, deuteration_60, deuteration_120, deuteration_360, deuteration_900]
+deuteration_error = [deuteration_ND_error, deuteration_10_error, deuteration_30_error, deuteration_60_error, deuteration_120_error, deuteration_360_error, deuteration_900_error]
+# Bounds of the error envelope
+upper_bound = np.array(protonation) + np.array(deuteration_error)
+lower_bound = np.array(protonation) - np.array(deuteration_error)
+plt.plot(time, protonation, '-o', label='Protonation over time')
+plt.fill_between(time, lower_bound, upper_bound, color='C0', alpha=0.2)
+plt.xlabel('Time / minutes')
+plt.ylabel('Deuteration of the amine group')
+plt.title('Deuteration of CH$_3$ND$_3$I over time at 75% RH')
+plt.xscale('log')
+plt.show()
 

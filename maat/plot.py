@@ -53,7 +53,7 @@ def spectra(spectrum:Spectra):
     if hasattr(sdata, 'plotting') and sdata.plotting.offset is True:
         number_of_plots = len(sdata.dataframe)
         height = top_ylim - low_ylim
-        top_ylim = height * number_of_plots
+        top_ylim = height * (number_of_plots - 1) + (top_ylim / scale_factor - low_ylim)
         for i, df in enumerate(sdata.dataframe):
             reverse_i = (number_of_plots - 1) - i
             df[df.columns[1]] = df[df.columns[1]] + (reverse_i * height)
@@ -99,7 +99,7 @@ def spectra(spectrum:Spectra):
         if not sdata.plotting.show_yticks:
             ax.set_yticks([])
         if sdata.plotting.legend is not False:
-            ax.legend()
+            ax.legend(title=sdata.plotting.legend_title)
         else:
             ax.legend().set_visible(False)
 

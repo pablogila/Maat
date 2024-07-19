@@ -13,8 +13,11 @@ import shutil
 import json
 import time
 
+'''
+This module contains the core classes and functions.
+'''
 
-version = 'v1.0.3'
+version = 'v1.1.0'
 
 
 class ScaleRange:
@@ -64,6 +67,7 @@ class Plotting:
                  normalize:bool=False,
                  show_yticks:bool=False,
                  legend=None,
+                 legend_title:str=None,
                  ):
         self.low_xlim = low_xlim
         self.top_xlim = top_xlim
@@ -87,6 +91,7 @@ class Plotting:
         if not isinstance(legend, list) and legend is not None:
             legend = [legend]
         self.legend = legend
+        self.legend_title = legend_title
 
 
 class Spectra:

@@ -1,4 +1,8 @@
+import numpy as np
 
+'''
+This module contains constants and conversion factors.
+'''
 
 #################################################
 ##  CONVERSION FACTORS                         ##
@@ -38,8 +42,18 @@ bar_to_Pa   = 1.0 / Pa_to_bar
 GPa_to_kbar = GPa_to_Pa * Pa_to_bar * bar_to_kbar
 kbar_to_GPa = 1.0 / GPa_to_kbar
 ## Time
-h_to_s      = 3600.0
-s_to_h      = 1.0 / h_to_s
+H_to_s      = 3600.0
+s_to_H      = 1.0 / H_to_s
+
+
+#############################
+##   UNIVERSAL CONSTANTS   ##
+#############################
+# Given in SI units unless stated otherwise
+h = 6.62607015e-34      # J s
+h_eV = h * J_to_eV
+hbar = h / (2 * np.pi)  # J s
+hbar_eV = h_eV / (2 * np.pi)
 
 
 #############################

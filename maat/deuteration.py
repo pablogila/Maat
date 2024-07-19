@@ -1,5 +1,5 @@
 from .core import *
-from .fit import area_under_peak
+from .fit import area_under_peak, ratio_areas
 
 
 def peaks_mapi(ins:Spectra,
@@ -71,79 +71,68 @@ def peaks_mapi(ins:Spectra,
     if not run_partial:
         raise ValueError('No peaks to integrate. Remember to assign peak limits as a dictionary with the keys: h6d0, h5d1, h4d2, h3d3, h2d4, h1d5, h0d6.')
 
-    h6d0_area, h6d0_area_error = area_under_peak(peak_data, [h6d0_limits[0], h6d0_limits[1], baseline, baseline_error], df_index)
-    h5d1_area, h5d1_area_error = area_under_peak(peak_data, [h5d1_limits[0], h5d1_limits[1], baseline, baseline_error], df_index)
-    h4d2_area, h4d2_area_error = area_under_peak(peak_data, [h4d2_limits[0], h4d2_limits[1], baseline, baseline_error], df_index)
-    h3d3_area, h3d3_area_error = area_under_peak(peak_data, [h3d3_limits[0], h3d3_limits[1], baseline, baseline_error], df_index)
+    h6d0_area, h6d0_area_error = area_under_peak(peak_data, [h6d0_limits[0], h6d0_limits[1], baseline, baseline_error], df_index, True)
+    h5d1_area, h5d1_area_error = area_under_peak(peak_data, [h5d1_limits[0], h5d1_limits[1], baseline, baseline_error], df_index, True)
+    h4d2_area, h4d2_area_error = area_under_peak(peak_data, [h4d2_limits[0], h4d2_limits[1], baseline, baseline_error], df_index, True)
+    h3d3_area, h3d3_area_error = area_under_peak(peak_data, [h3d3_limits[0], h3d3_limits[1], baseline, baseline_error], df_index, True)
     h6d0_area /= 6
     h5d1_area /= 5
     h4d2_area /= 4
     h3d3_area /= 3
+    h6d0_area_error /= 6
+    h5d1_area_error /= 5
+    h4d2_area_error /= 4
+    h3d3_area_error /= 3
     
     if not run_total:
         total_area = h6d0_area + h5d1_area + h4d2_area + h3d3_area
+        total_area_error = np.sqrt(h6d0_area_error**2 + h5d1_area_error**2 + h4d2_area_error**2 + h3d3_area_error**2)
 
-        h6d0_ratio = h6d0_area / total_area
-        h5d1_ratio = h5d1_area / total_area
-        h4d2_ratio = h4d2_area / total_area
-        h3d3_ratio = h3d3_area / total_area
+        h6d0_ratio, h6d0_error = ratio_areas(h6d0_area, total_area, h6d0_area_error, total_area_error)
+        h5d1_ratio, h5d1_error = ratio_areas(h5d1_area, total_area, h5d1_area_error, total_area_error)
+        h4d2_ratio, h4d2_error = ratio_areas(h4d2_area, total_area, h4d2_area_error, total_area_error)
+        h3d3_ratio, h3d3_error = ratio_areas(h3d3_area, total_area, h3d3_area_error, total_area_error)
 
         deuteration = 0 * h6d0_ratio + (1/3) * h5d1_ratio + (2/3) * h4d2_ratio + 1 * h3d3_ratio
         protonation = 1 * h6d0_ratio + (2/3) * h5d1_ratio + (1/3) * h4d2_ratio + 0 * h3d3_ratio
 
-        # Error propagation
-
-        total_area_error = np.sqrt(h6d0_area_error**2 + h5d1_area_error**2 + h4d2_area_error**2 + h3d3_area_error**2)
-
-        h6d0_error = abs(h6d0_area) * np.sqrt((h6d0_area_error/h6d0_area)**2 + (total_area_error/total_area)**2)
-        h5d1_error = abs(h5d1_area) * np.sqrt((h5d1_area_error/h5d1_area)**2 + (total_area_error/total_area)**2)
-        h4d2_error = abs(h4d2_area) * np.sqrt((h4d2_area_error/h4d2_area)**2 + (total_area_error/total_area)**2)
-        h3d3_error = abs(h3d3_area) * np.sqrt((h3d3_area_error/h3d3_area)**2 + (total_area_error/total_area)**2)
-
-        deuteration_error = np.sqrt(h5d1_error**2 + h4d2_error**2 + h3d3_error**2)
-        protonation_error = np.sqrt(h6d0_error**2 + h5d1_error**2 + h4d2_error**2)
+        deuteration_error = np.sqrt((1/3 * h5d1_error)**2 + (2/3 * h4d2_error)**2 + (1 * h3d3_error)**2)
+        protonation_error = np.sqrt((1 * h6d0_error)**2 + (2/3 * h5d1_error)**2 + (1/3 * h4d2_error)**2)
 
     if run_total:
-        h2d4_area, h2d4_area_error = area_under_peak(peak_data, [h2d4_limits[0], h2d4_limits[1], baseline, baseline_error], df_index)
-        h1d5_area, h1d5_area_error = area_under_peak(peak_data, [h1d5_limits[0], h1d5_limits[1], baseline, baseline_error], df_index)
-        h0d6_area, h0d6_area_error = area_under_peak(peak_data, [h0d6_limits[0], h0d6_limits[1], baseline, baseline_error], df_index)
+        h2d4_area, h2d4_area_error = area_under_peak(peak_data, [h2d4_limits[0], h2d4_limits[1], baseline, baseline_error], df_index, True)
+        h1d5_area, h1d5_area_error = area_under_peak(peak_data, [h1d5_limits[0], h1d5_limits[1], baseline, baseline_error], df_index, True)
+        h0d6_area, h0d6_area_error = area_under_peak(peak_data, [h0d6_limits[0], h0d6_limits[1], baseline, baseline_error], df_index, True)
         h2d4_area /= 2
         h1d5_area /= 1
         h0d6_area /= 1
+        h2d4_area_error /= 2
+        h1d5_area_error /= 1
+        h0d6_area_error /= 1
 
         total_area_CDND = h6d0_area + h5d1_area + h4d2_area + h3d3_area + h2d4_area + h1d5_area + h0d6_area
-
-        h6d0_ratio_CDND = h6d0_area / total_area_CDND
-        h5d1_ratio_CDND = h5d1_area / total_area_CDND
-        h4d2_ratio_CDND = h4d2_area / total_area_CDND
-        h3d3_ratio_CDND = h3d3_area / total_area_CDND
-        h2d4_ratio_CDND = h2d4_area / total_area_CDND
-        h1d5_ratio_CDND = h1d5_area / total_area_CDND
-        h0d6_ratio_CDND = h0d6_area / total_area_CDND
-
-        deuteration_CDND = 0 * h6d0_ratio_CDND + (1/6) * h5d1_ratio_CDND + (2/6) * h4d2_ratio_CDND + (3/6) * h3d3_ratio_CDND + (4/6) * h2d4_ratio_CDND + (5/6) * h1d5_ratio_CDND + 1 * h0d6_ratio_CDND
-        protonation_CDND = 1 * h6d0_ratio_CDND + (5/6) * h5d1_ratio_CDND + (4/6) * h4d2_ratio_CDND + (3/6) * h3d3_ratio_CDND + (2/6) * h2d4_ratio_CDND + (1/6) * h1d5_ratio_CDND + 0 * h0d6_ratio_CDND
-
-        deuteration_CDND_amine = 0 * h3d3_ratio_CDND + (1/3) * h2d4_ratio_CDND + (2/3) * h1d5_ratio_CDND + 1 * h0d6_ratio_CDND
-        protonation_CDND_amine = 1 * h3d3_ratio_CDND + (2/3) * h2d4_ratio_CDND + (1/3) * h1d5_ratio_CDND + 0 * h0d6_ratio_CDND
-
-        # Error propagation
-
         total_area_error_CDND = np.sqrt(h6d0_area_error**2 + h5d1_area_error**2 + h4d2_area_error**2 + h3d3_area_error**2 + h2d4_area_error**2 + h1d5_area_error**2 + h0d6_area_error**2)
 
-        h6d0_error_CDND = abs(h6d0_area) * np.sqrt((h6d0_area_error/h6d0_area)**2 + (total_area_error_CDND/total_area_CDND)**2)
-        h5d1_error_CDND = abs(h5d1_area) * np.sqrt((h5d1_area_error/h5d1_area)**2 + (total_area_error_CDND/total_area_CDND)**2)
-        h4d2_error_CDND = abs(h4d2_area) * np.sqrt((h4d2_area_error/h4d2_area)**2 + (total_area_error_CDND/total_area_CDND)**2)
-        h3d3_error_CDND = abs(h3d3_area) * np.sqrt((h3d3_area_error/h3d3_area)**2 + (total_area_error_CDND/total_area_CDND)**2)
-        h2d4_error_CDND = abs(h2d4_area) * np.sqrt((h2d4_area_error/h2d4_area)**2 + (total_area_error_CDND/total_area_CDND)**2)
-        h1d5_error_CDND = abs(h1d5_area) * np.sqrt((h1d5_area_error/h1d5_area)**2 + (total_area_error_CDND/total_area_CDND)**2)
-        h0d6_error_CDND = abs(h0d6_area) * np.sqrt((h0d6_area_error/h0d6_area)**2 + (total_area_error_CDND/total_area_CDND)**2)
+        h6d0_ratio_CDND, h6d0_error_CDND = ratio_areas(h6d0_area, total_area_CDND, h6d0_area_error, total_area_error_CDND)
+        h5d1_ratio_CDND, h5d1_error_CDND = ratio_areas(h5d1_area, total_area_CDND, h5d1_area_error, total_area_error_CDND)
+        h4d2_ratio_CDND, h4d2_error_CDND = ratio_areas(h4d2_area, total_area_CDND, h4d2_area_error, total_area_error_CDND)
+        h3d3_ratio_CDND, h3d3_error_CDND = ratio_areas(h3d3_area, total_area_CDND, h3d3_area_error, total_area_error_CDND)
+        h2d4_ratio_CDND, h2d4_error_CDND = ratio_areas(h2d4_area, total_area_CDND, h2d4_area_error, total_area_error_CDND)
+        h1d5_ratio_CDND, h1d5_error_CDND = ratio_areas(h1d5_area, total_area_CDND, h1d5_area_error, total_area_error_CDND)
+        h0d6_ratio_CDND, h0d6_error_CDND = ratio_areas(h0d6_area, total_area_CDND, h0d6_area_error, total_area_error_CDND)
 
-        deuteration_CDND_error = np.sqrt(h5d1_error_CDND**2 + h4d2_error_CDND**2 + h3d3_error_CDND**2 + h2d4_error_CDND**2 + h1d5_error_CDND**2 + h0d6_error_CDND**2)
-        protonation_CDND_error = np.sqrt(h0d6_error_CDND**2 + h1d5_error_CDND**2 + h2d4_error_CDND**2 + h3d3_error_CDND**2 + h4d2_error_CDND**2 + h5d1_error_CDND**2)
+        deuteration_CDND = 0 * h6d0_ratio_CDND + (1/6) * h5d1_ratio_CDND + (2/6) * h4d2_ratio_CDND + (3/6) * h3d3_ratio_CDND + (4/6) * h2d4_ratio_CDND + (5/6) * h1d5_ratio_CDND + 1 * h0d6_ratio_CDND
+        deuteration_CDND_error = np.sqrt((1/6 * h5d1_error_CDND)**2 + (2/6 * h4d2_error_CDND)**2 + (3/6 * h3d3_error_CDND)**2 + (4/6 * h2d4_error_CDND)**2 + (5/6 * h1d5_error_CDND)**2 + (1 * h0d6_error_CDND)**2)
 
-        deuteration_CDND_amine_error = np.sqrt(h2d4_error_CDND**2 + h1d5_error_CDND**2 + h0d6_error_CDND**2)
-        protonation_CDND_amine_error = np.sqrt(h1d5_error_CDND**2 + h2d4_error_CDND**2 + h3d3_error_CDND**2)
+        protonation_CDND = 1 * h6d0_ratio_CDND + (5/6) * h5d1_ratio_CDND + (4/6) * h4d2_ratio_CDND + (3/6) * h3d3_ratio_CDND + (2/6) * h2d4_ratio_CDND + (1/6) * h1d5_ratio_CDND + 0 * h0d6_ratio_CDND
+        protonation_CDND_error = np.sqrt((1 * h6d0_error_CDND)**2 + (5/6 * h5d1_error_CDND)**2 + (4/6 * h4d2_error_CDND)**2 + (3/6 * h3d3_error_CDND)**2 + (2/6 * h2d4_error_CDND)**2 + (1/6 * h1d5_error_CDND)**2)
+
+        deuteration_CDND_amine = 0 * h3d3_ratio_CDND + (1/3) * h2d4_ratio_CDND + (2/3) * h1d5_ratio_CDND + 1 * h0d6_ratio_CDND
+        deuteration_CDND_amine_error = np.sqrt((1/3 * h2d4_error_CDND)**2 + (2/3 * h1d5_error_CDND)**2 + (1 * h0d6_error_CDND)**2)
+
+        protonation_CDND_amine = 1 * h3d3_ratio_CDND + (2/3) * h2d4_ratio_CDND + (1/3) * h1d5_ratio_CDND + 0 * h0d6_ratio_CDND
+        protonation_CDND_amine_error = np.sqrt((1 * h3d3_error_CDND)**2 + (2/3 * h2d4_error_CDND)**2 + (1/3 * h1d5_error_CDND)**2)
+
 
     print()
     if hasattr(ins, "plotting") and ins.plotting.legend != None:
