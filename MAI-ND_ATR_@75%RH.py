@@ -187,32 +187,37 @@ mt.plot.spectra(atr)
 ## Fit of the deuterium exchange over time ##
 #############################################
 # Model for the H exchange
-def model_1(t, a, b, c):
-    return a * (np.log(t))**2 + b * np.log(t) + c
-def model_2(t, a, b, c, d):
-    return a * np.exp(-b * t) + c * np.exp(-d * t)     #######   EXPLORE THIS......
+def model_halflife(t, a, b, c, d):
+    return a * (np.exp(-b * t))
+def model_weibull(t, a, b, c, d):
+    return a * np.exp(-b * t**c)
+def model_konermann(t, a, b, c, d):
+    return a * np.exp(-b * t) + c * np.exp(-d * t)
 
-model = model_2
+model = model_weibull
 
 # Experimental data -> to % units
 time = np.array([1, 10, 30, 60, 120, 360, 900])
 deuteration = np.array([deuteration_ND, deuteration_10, deuteration_30, deuteration_60, deuteration_120, deuteration_360, deuteration_900]) * 100
 deuteration_error = np.array([deuteration_ND_error, deuteration_10_error, deuteration_30_error, deuteration_60_error, deuteration_120_error, deuteration_360_error, deuteration_900_error]) * 100
 # Fitting of the data to the model with scipy.curve_fit
-popt, pcov = curve_fit(model, time, deuteration)
+popt, pcov = curve_fit(model, time, deuteration, p0=[100, 1, 1, 0])
 a, b, c, d = popt
+popt = a, b, c, d
 # Calculation of R^2
 deuteration_fitted = model(time, *popt)
 R2 = r2_score(deuteration, deuteration_fitted)
 print(f"Fitted parameters:  {popt},  R^2 = {R2}")
 # HD fit for plotting
-time_fit = np.linspace(min(time), max(time), 1000)
+time_fit = np.linspace(0, 10000, 100000)
 deuteration_fit = model(time_fit, *popt)
 # Regression label to display in the plot. CHANGE ALONG WITH THE MODEL.
-regression_text = f"$y = {a:+.1f} \cdot \ln(t)^2 {b:+.1f} \cdot \ln(t) {c:+.1f}$\n$R^2 = {R2:.2f}$"
-#regression_text = f"$y = {a:+.5f} \cdot \exp(-{b:+.5f} sqrt(t) + {c:.5f}$\n$R^2 = {R2:.2f}$"
+regression_halflife = f"$D(t) = {a:.1f} \cdot \exp(-{b:.3f} \cdot t)$\n$R^2 = {R2:.2f}$"
+regression_weibull = f"$D(t) = {a:.1f} \cdot \exp(-{b:.3f} \cdot t^{{{c:.3f}}})$\n$R^2 = {R2:.2f}$"
+regression_konermann = f"$D(t) = {a:.1f} \cdot \exp(-{b:.3f} \cdot t) + {c:.3f} \cdot \exp(-{d:.3f} \cdot t)$\n$R^2 = {R2:.2f}$"
+regression_text = regression_weibull
 # Plotting
-plt.text(x=1, y=10, s=regression_text, fontsize=10, bbox=None)
+plt.text(x=0.11, y=1, s=regression_text, fontsize=10, bbox=None)
 plt.plot(time, deuteration, 'o', label='ATR data')
 plt.fill_between(time, deuteration - deuteration_error, deuteration + deuteration_error, color='C0', alpha=0.1)
 plt.plot(time_fit, deuteration_fit, 'r', label='Fit')
@@ -220,11 +225,13 @@ plt.xlabel('Time / minutes')
 plt.ylabel('Amine deuteration / %')
 plt.title('Deuteration of CH$_3$ND$_3$I over time at 75% RH')
 plt.ylim(0, 100)
+plt.xlim(0.1, 10000)
 plt.legend()
 plt.xscale('log')
 plt.show()
 
 print(model(0, *popt))
+
 
 
 
