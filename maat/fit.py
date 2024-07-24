@@ -4,45 +4,25 @@ from .core import *
 This module contains functions for fitting and analyzing data.
 '''
 
-def plateau(spectra:Spectra, cuts=[27,35], df_index:int=0):
+
+def plateau(spectra:Spectra, cuts:list, df_index:int=0):
+    '''Fit the mean value of a plateau and its standard deviation.'''
     df = spectra.dataframe[df_index]
     df_range = df[(df[df.columns[0]] >= cuts[0]) & (df[df.columns[0]] <= cuts[1])]
-    x = df_range[df.columns[0]]
-    y = df_range[df.columns[1]]
-
-    if 'Error' in df_range.columns:
-
-        error_range = df_range['Error']
-
-        # Perform a weighted least squares fit
-        degree = 1
-        weights = 1.0 / error_range**2
-        coefficients = np.polyfit(x, y, degree, w=weights)
-        polynomial = np.poly1d(coefficients)
-
-    else:
-        # Perform a least squares fit
-        degree = 1
-        coefficients = np.polyfit(x, y, degree)
-        polynomial = np.poly1d(coefficients)
-
-    # Calculate the baseline
-    baseline = polynomial(x)
-
-    # Calculate the standard deviation of the residuals
-    residuals = y - baseline
-    error_std = np.std(residuals)
-
-    baseline_value = np.mean(baseline)
-
-    return baseline_value, error_std
+    mean = df_range[df.columns[1]].mean()
+    std = df_range[df.columns[1]].std()
+    return mean, std
 
 
-def area_under_peak(spectra:Spectra, peak:list, df_index:int=0, errors_as_in_baseline:bool=True):
+def area_under_peak(spectra:Spectra, peak:list, df_index:int=0, errors_as_in_baseline:bool=True, min_as_baseline:bool=False):
     '''
+    peak:list=[xmin, xmax, baseline=0, baseline_error=0]\n
     If the dataset has no 'Error' column, the error in each point is assumed\n
     to be the same as the baseline error if `errors_as_in_baseline = True`,\n
-    otherwise it is assumed to be zero.
+    otherwise it is assumed to be zero.\n
+    If `min_as_baseline = True` and baseline=0, the baseline is assumed to be the minimum value.\n
+    Also, if `min_as_baseline=True` and there are negative areas after applying the baseline,\n
+    the baseline will be set to the minimum value.
     '''
     if len(peak) < 2:
         raise ValueError("area_under_peak: peak must have at least two values: [xmin, xmax]")
@@ -54,7 +34,14 @@ def area_under_peak(spectra:Spectra, peak:list, df_index:int=0, errors_as_in_bas
     df = spectra.dataframe[df_index]
     df_range = df[(df[df.columns[0]] >= xmin) & (df[df.columns[0]] <= xmax)]
     x = df_range[df.columns[0]].to_numpy()
-    y = df_range[df.columns[1]].to_numpy() - baseline
+    y = df_range[df.columns[1]].to_numpy()
+    
+    min_y = y.min()
+    if min_as_baseline and (baseline == 0 or baseline > min_y):
+        baseline = min_y
+
+    y = y - baseline
+
     area = scipy.integrate.simpson(y, x)
 
     if 'Error' in df_range.columns:
@@ -91,4 +78,13 @@ def ratio_areas(area:float, area_total:float, area_error:float=0.0, area_total_e
             ratio_error = None
     
     return ratio, ratio_error
+
+
+def mean_with_errors(values, errors):
+    '''Calculate the mean value and corresponding errors.'''
+    values = np.array(values)
+    errors = np.array(errors)
+    mean_value = np.mean(values)
+    total_error = np.sqrt(np.sum(np.square(errors)))
+    return mean_value, total_error
 
