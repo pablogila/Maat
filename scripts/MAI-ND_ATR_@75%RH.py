@@ -7,9 +7,12 @@ from sklearn.metrics import r2_score
 
 
 '''
-Script to analyze deuterated MAI ATR data.\n
-Working on Maat v1.2.0
+Last modified 2024-07-26. Working on Maat v1.2.0\n
+Analysis of MAI-ND (KS169) over time at 75% Relative Humidity.\n
+ATR measurements performed at CFM.\n
+This script should be placed next to /maat/ before running.
 '''
+
 
 mt.run_here()
 
@@ -62,9 +65,11 @@ atr = mt.Spectra(
         ),
     )
 
+
 ######################
 ##  Peak locations  ##
 ######################
+
 # Two amine peaks are used to estimate the deuteration levels.
 # The first amine peak (dNH3) is at 1560 cm-1, which is isolated, but quite small.
 peak_dNH3 = [1520, 1600]
@@ -115,6 +120,7 @@ atr = mt.tools.normalize(atr)
 #################################################
 ##  Estimation from the 1st amine peak (dNH3)  ##
 #################################################
+
 # Baselines
 baseline_dND, baseline_dND_error = mt.fit.plateau(atr, plateau_dNH3, 0)
 baseline_d10, baseline_d10_error = mt.fit.plateau(atr, plateau_dNH3, 1)
@@ -124,6 +130,7 @@ baseline_d120, baseline_d120_error = mt.fit.plateau(atr, plateau_dNH3, 4)
 baseline_d360, baseline_d360_error = mt.fit.plateau(atr, plateau_dNH3, 5)
 baseline_d900, baseline_d900_error = mt.fit.plateau(atr, plateau_dNH3, 6)
 baseline_dNH, baseline_dNH_error = mt.fit.plateau(atr, plateau_dNH3, 7)
+
 # Areas
 area_dND, area_dND_error = mt.fit.area_under_peak(atr, [peak_dNH3[0], peak_dNH3[1], baseline_dND, baseline_dND_error], 0, True)
 area_d10, area_d10_error = mt.fit.area_under_peak(atr, [peak_dNH3[0], peak_dNH3[1], baseline_d10, baseline_d10_error], 1, True)
@@ -133,6 +140,7 @@ area_d120, area_d120_error = mt.fit.area_under_peak(atr, [peak_dNH3[0], peak_dNH
 area_d360, area_d360_error = mt.fit.area_under_peak(atr, [peak_dNH3[0], peak_dNH3[1], baseline_d360, baseline_d360_error], 5, True)
 area_d900, area_d900_error = mt.fit.area_under_peak(atr, [peak_dNH3[0], peak_dNH3[1], baseline_d900, baseline_d900_error], 6, True)
 area_dNH, area_dNH_error = mt.fit.area_under_peak(atr, [peak_dNH3[0], peak_dNH3[1], baseline_dNH, baseline_dNH_error], 7, True)
+
 # Ratios
 deuteration_dND, deuteration_dND_error = mt.fit.ratio_areas(area_dND, area_dNH, area_dND_error, area_dNH_error, True)
 deuteration_d10, deuteration_d10_error = mt.fit.ratio_areas(area_d10, area_dNH, area_d10_error, area_dNH_error, True)
@@ -156,6 +164,7 @@ area_vCH3, area_vCH3_error = mt.fit.area_under_peak(atr, [peak_vCH3[0], peak_vCH
 # CH3 total area and error
 area_CH3 = area_dsCH3 + area_dasCH3 + area_vCH3
 area_CH3_error = sqrt(area_dsCH3_error**2 + area_dasCH3_error**2 + area_vCH3_error**2)
+
 # vNH3 baselines
 baseline_vND, baseline_vND_error = mt.fit.plateau(atr, plateau_vNH3, 0)
 baseline_v10, baseline_v10_error = mt.fit.plateau(atr, plateau_vNH3, 1)
@@ -174,6 +183,7 @@ area_v120, area_v120_error = mt.fit.area_under_peak(atr, [peak_vNH3[0], peak_vNH
 area_v360, area_v360_error = mt.fit.area_under_peak(atr, [peak_vNH3[0], peak_vNH3[1], baseline_v360, baseline_v360_error], 5, True, True)
 area_v900, area_v900_error = mt.fit.area_under_peak(atr, [peak_vNH3[0], peak_vNH3[1], baseline_v900, baseline_v900_error], 6, True, True)
 area_vNH, area_vNH_error = mt.fit.area_under_peak(atr, [peak_vNH3[0], peak_vNH3[1], baseline_vNH, baseline_vNH_error], 7, True, True)
+
 # Subtract the CH3 area from the vNH3 areas
 area_vND = area_vND - area_CH3
 area_v10 = area_v10 - area_CH3
@@ -192,6 +202,7 @@ area_v120_error = sqrt(area_v120_error**2 + area_CH3_error**2)
 area_v360_error = sqrt(area_v360_error**2 + area_CH3_error**2)
 area_v900_error = sqrt(area_v900_error**2 + area_CH3_error**2)
 area_vNH_error = sqrt(area_vNH_error**2 + area_CH3_error**2)
+
 # Ratios
 deuteration_vND, deuteration_vND_error = mt.fit.ratio_areas(area_vND, area_vNH, area_vND_error, area_vNH_error, True)
 deuteration_v10, deuteration_v10_error = mt.fit.ratio_areas(area_v10, area_vNH, area_v10_error, area_vNH_error, True)
@@ -201,9 +212,11 @@ deuteration_v120, deuteration_v120_error = mt.fit.ratio_areas(area_v120, area_vN
 deuteration_v360, deuteration_v360_error = mt.fit.ratio_areas(area_v360, area_vNH, area_v360_error, area_vNH_error, True)
 deuteration_v900, deuteration_v900_error = mt.fit.ratio_areas(area_v900, area_vNH, area_v900_error, area_vNH_error, True)
 
+
 ################################################
 ##  Mean estimation from the two amine peaks  ##
 ################################################
+
 deuteration_ND, deuteration_ND_error = mt.fit.mean_with_errors([deuteration_dND, deuteration_vND], [deuteration_dND_error, deuteration_vND_error])
 deuteration_10, deuteration_10_error = mt.fit.mean_with_errors([deuteration_d10, deuteration_v10], [deuteration_d10_error, deuteration_v10_error])
 deuteration_30, deuteration_30_error = mt.fit.mean_with_errors([deuteration_d30, deuteration_v30], [deuteration_d30_error, deuteration_v30_error])
@@ -231,7 +244,7 @@ print(f'360 min:  {deuteration_360:.2f} ± {deuteration_360_error:.2f}')
 print(f'900 min:  {deuteration_900:.2f} ± {deuteration_900_error:.2f}')
 print('')
 
-# Plotting of the spectra
+# Adding the deuteration estimation to the legend
 atr.plotting.legend[0] = atr.plotting.legend[0] + f' ({deuteration_ND:.2f} ± {deuteration_ND_error:.2f})'
 atr.plotting.legend[1] = atr.plotting.legend[1] + f' ({deuteration_10:.2f} ± {deuteration_10_error:.2f})'
 atr.plotting.legend[2] = atr.plotting.legend[2] + f' ({deuteration_30:.2f} ± {deuteration_30_error:.2f})'
@@ -245,15 +258,18 @@ mt.plot.spectra(atr)
 #############################################
 ## Fit of the deuterium exchange over time ##
 #############################################
-# Model for the H exchange, with 2 exponential decays:
+
+# Model to fit the H exchange, with 2 exponential decays:
 # DDD -> DDH
 # DDH -> DHH  (and  DHH -> HHH, yet we assume it to be negligible)
 def model(t, A1, k1, A2, k2):
     return A1 * np.exp(-k1 * t) + A2 * np.exp(-k2 * t)
+
 # Experimental data -> to % units
 time = np.array([1, 10, 30, 60, 120, 360, 900])
 deuteration = np.array([deuteration_ND, deuteration_10, deuteration_30, deuteration_60, deuteration_120, deuteration_360, deuteration_900]) * 100
 deuteration_error = np.array([deuteration_ND_error, deuteration_10_error, deuteration_30_error, deuteration_60_error, deuteration_120_error, deuteration_360_error, deuteration_900_error]) * 100
+
 # Fitting of the data to the model with scipy.curve_fit
 popt, pcov = curve_fit(model, time, deuteration, p0=[50, 0.1, 50, 0])
 A1, k1, A2, k2 = popt
@@ -261,15 +277,18 @@ A1, k1, A2, k2 = popt
 deuteration_fitted = model(time, *popt)
 R2 = r2_score(deuteration, deuteration_fitted)
 print(f"Fitted parameters:  {popt},  R^2 = {R2}")
+
 # Estimated initial deuteration at t=0
 initial_deuteration = model(0, *popt)
 initial_deuteration_error_pcov = sqrt(pcov[0, 0] + pcov[2, 2])  # Fitting error
 initial_deuteration_error_exp = np.mean(deuteration_error)  # Experimental error
 initial_deuteration_error = np.sqrt(initial_deuteration_error_exp**2 + initial_deuteration_error_pcov**2)  # Combined errors
 print(f"Estimated initial deuteration at t=0: {initial_deuteration:.0f} ± {initial_deuteration_error:.0f} %")
+
 # HD fit for plotting
 time_fit = np.linspace(0, 10000, 100000)
 deuteration_fit = model(time_fit, *popt)
+
 # Regression label to display in the plot. CHANGE ALONG WITH THE MODEL.
 regression_text = f"$D(t) = {A1:.1f} \cdot \exp(-{k1:.3f}) + {A2:.1f} \cdot \exp(-{k2:.3f})$\n$R^2 = {R2:.2f}$\nD(t=0) = {initial_deuteration:.0f} ± {initial_deuteration_error:.0f}%"
 # Plotting
