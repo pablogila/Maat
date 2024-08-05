@@ -280,9 +280,7 @@ print(f"Fitted parameters:  {popt},  R^2 = {R2}")
 
 # Estimated initial deuteration at t=0
 initial_deuteration = model(0, *popt)
-initial_deuteration_error_pcov = sqrt(pcov[0, 0] + pcov[2, 2])  # Fitting error
-initial_deuteration_error_exp = np.mean(deuteration_error)  # Experimental error
-initial_deuteration_error = np.sqrt(initial_deuteration_error_exp**2 + initial_deuteration_error_pcov**2)  # Combined errors
+initial_deuteration_error = sqrt(pcov[0, 0] + pcov[2, 2])
 print(f"Estimated initial deuteration at t=0: {initial_deuteration:.0f} ± {initial_deuteration_error:.0f} %")
 
 # HD fit for plotting
