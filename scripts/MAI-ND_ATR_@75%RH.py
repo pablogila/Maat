@@ -288,7 +288,7 @@ time_fit = np.linspace(0, 10000, 100000)
 deuteration_fit = model(time_fit, *popt)
 
 # Regression label to display in the plot. CHANGE ALONG WITH THE MODEL.
-regression_text = f"$D(t) = {A1:.1f} \cdot \exp(-{k1:.3f}) + {A2:.1f} \cdot \exp(-{k2:.3f})$\n$R^2 = {R2:.2f}$\n$D(t=0) = {initial_deuteration:.0f} ± {initial_deuteration_error:.0f}$%"
+regression_text = f"$D(t) = {A1:.1f} \\cdot \\exp(-{k1:.3f}) + {A2:.1f} \\cdot \\exp(-{k2:.3f})$\n$R^2 = {R2:.2f}$\n$D(t=0) = {initial_deuteration:.0f} ± {initial_deuteration_error:.0f}$%"
 # Plotting
 plt.text(x=0.15, y=5, s=regression_text, fontsize=10, bbox=None)
 plt.plot(time, deuteration, 'o', label='ATR data')
