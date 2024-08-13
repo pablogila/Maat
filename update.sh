@@ -14,7 +14,7 @@ error_handler() {
 trap 'error_handler "$BASH_COMMAND"' ERR
 
 if [ ! -d "$VENV_PATH" ]; then
-  error_handler "Python virtualenv missing, create one with 'python3 -m venv ~/.venv'"
+  error_handler "Python virtualenv missing, create one with 'python3 -m venv $VENV_PATH'"
 fi
 
 SOURCE_FOLDER="./maat"
