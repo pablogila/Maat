@@ -6,16 +6,16 @@ This Python package makes my life easier when analyzing INS, FTIR and Raman CSV 
 
 ## Installation in a virtualenv
 
-First create a Python virtual environment. The default one is `~/.venv/`. Create it with:
+First create a Python virtual environment. The default one in the `upgrade.sh` script is `~/venvs/main/`. It can be changed within said script. Create it with:
 
 ```shell
-python3 -m venv ~/.venv
+python3 -m venv ~/venvs/main
 ```
 
 You can activate this environment as:
 
 ```shell
-source ~/.venv/bin/activate
+source ~/venvs/main/bin/activate
 ```
 
 If you want to use a different virtualenv, you must specify it in the `update.sh` script.  

@@ -3,7 +3,7 @@
 #######################################
 ##  Target virtual environment path  ##
 #######################################
-VENV_PATH="$HOME/.venv"
+VENV_PATH="$HOME/venvs/main"
 #######################################
 
 error_handler() {
