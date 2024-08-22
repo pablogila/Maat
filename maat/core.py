@@ -17,10 +17,17 @@ import time
 This module contains the core classes and functions.
 '''
 
-version = 'v1.2.3'
+version = 'v1.2.4'
 
 
 class ScaleRange:
+    '''
+    If `plotting.normalize=True`, the data will be normalized inside the specified range.
+    The vertical scale of the plots is still determined by the full data range, unless
+    `plotting.zoom_range=True`, so that the data is scaled inside the range.
+    If only `plotting.zoom_range=True`, with `plotting.normalize=False`, only the `index` dataset
+    will be scaled to fit the range, and the rest of the datasets will be scaled accordingly. 
+    '''
     def __init__(self,
                  index:int=0,
                  xmin:float=None,
@@ -34,6 +41,8 @@ class ScaleRange:
         self.xmax = xmax
         self.ymin = ymin
         self.ymax = ymax
+        '''If `plotting.normalize=True`, normalize the plots according to the y-values provided.'''
+
     def x(self, xmin:float=None, xmax:float=None):
         self.xmin = xmin
         self.xmax = xmax
@@ -55,6 +64,8 @@ class Plotting:
                  top_xlim=50,
                  low_ylim=None,
                  top_ylim=None,
+                 add_top_ylim:float=0,
+                 add_low_ylim:float=0,
                  hline:list=None,
                  hline_error:list=None,
                  vline:list=None,
@@ -68,11 +79,14 @@ class Plotting:
                  show_yticks:bool=False,
                  legend=None,
                  legend_title:str=None,
+                 legend_size='medium',
                  ):
         self.low_xlim = low_xlim
         self.top_xlim = top_xlim
         self.low_ylim = low_ylim
         self.top_ylim = top_ylim
+        self.add_top_ylim = add_top_ylim
+        self.add_low_ylim = add_low_ylim
         self.hline = hline
         self.hline_error = hline_error
         if vline is not None and not isinstance(vline, list):
@@ -92,6 +106,7 @@ class Plotting:
             legend = [legend]
         self.legend = legend
         self.legend_title = legend_title
+        self.legend_size = legend_size
 
 
 class Spectra:

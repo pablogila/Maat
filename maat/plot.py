@@ -27,7 +27,7 @@ def spectra(spectrum:Spectra):
             df_trim = df_trim[(df_trim[df_trim.columns[0]] <= sdata.plotting.top_xlim)]
         all_y_values.extend(df_trim[df_trim.columns[1]].tolist())
     calculated_low_ylim = min(all_y_values)
-    calculated_top_ylim = max(all_y_values) * scale_factor
+    calculated_top_ylim = max(all_y_values) / scale_factor
 
     ymax_on_range = None
     if hasattr(sdata, 'scale_range') and sdata.scale_range is not None:
@@ -39,7 +39,7 @@ def spectra(spectrum:Spectra):
             df0 = df0[(df0[df0.columns[0]] <= sdata.scale_range.xmax)]
         ymax_on_range = df0[df0.columns[1]].max()
     if sdata.plotting.zoom_range and ymax_on_range is not None:
-        calculated_top_ylim = ymax_on_range * scale_factor
+        calculated_top_ylim = ymax_on_range / scale_factor
 
     low_ylim = calculated_low_ylim if not hasattr(sdata, 'plotting') or sdata.plotting.low_ylim is None else sdata.plotting.low_ylim
     top_ylim = calculated_top_ylim if not hasattr(sdata, 'plotting') or sdata.plotting.top_ylim is None else sdata.plotting.top_ylim
@@ -53,7 +53,7 @@ def spectra(spectrum:Spectra):
     if hasattr(sdata, 'plotting') and sdata.plotting.offset is True:
         number_of_plots = len(sdata.dataframe)
         height = top_ylim - low_ylim
-        top_ylim = height * (number_of_plots - 1) + (top_ylim / scale_factor - low_ylim)
+        top_ylim = height * (number_of_plots - 1) + (top_ylim * scale_factor - low_ylim)
         for i, df in enumerate(sdata.dataframe):
             reverse_i = (number_of_plots - 1) - i
             df[df.columns[1]] = df[df.columns[1]] + (reverse_i * height)
@@ -84,24 +84,28 @@ def spectra(spectrum:Spectra):
         for vline in sdata.plotting.vline:
             ax.axvline(x=vline, color='gray', alpha=0.5, linestyle='--')
 
-    ax.set_ylim(bottom=low_ylim)
-    ax.set_ylim(top=top_ylim)
-    ax.set_xlim(left=low_xlim)
-    ax.set_xlim(right=top_xlim)
-
     plt.title(sdata.title)
     plt.xlabel(df.columns[0])
     plt.ylabel(df.columns[1])
 
+    add_top_ylim = 0
+    add_low_ylim = 0
     if hasattr(sdata, 'plotting'):
+        add_top_ylim = sdata.plotting.add_top_ylim
+        add_low_ylim = sdata.plotting.add_low_ylim
         if sdata.plotting.log_xscale:
             ax.set_xscale('log')
         if not sdata.plotting.show_yticks:
             ax.set_yticks([])
         if sdata.plotting.legend is not False:
-            ax.legend(title=sdata.plotting.legend_title)
+            ax.legend(title=sdata.plotting.legend_title, fontsize=sdata.plotting.legend_size)
         else:
             ax.legend().set_visible(False)
+    
+    ax.set_ylim(bottom=low_ylim-add_low_ylim)
+    ax.set_ylim(top=top_ylim+add_top_ylim)
+    ax.set_xlim(left=low_xlim)
+    ax.set_xlim(right=top_xlim)
 
     if sdata.save_as:
         root = os.getcwd()
