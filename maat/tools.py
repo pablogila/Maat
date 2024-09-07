@@ -81,12 +81,11 @@ def normalize_area(spectra:Spectra):
     xmax = scale_range.xmax
 
     df0 = df0[(df0[df0.columns[0]] >= xmin) & (df0[df0.columns[0]] <= xmax)]
-    area_df0 = area_under_peak(df0, peak=[xmin,xmax])
+    area_df0, _ = area_under_peak(sdata, peak=[xmin,xmax], df_index=df_index)
     normalized_dataframes = []
-    for df in sdata.dataframe:
-        df_range = df[(df[df.columns[0]] >= xmin) & (df[df.columns[0]] <= xmax)]
-        area_df = area_under_peak(df_range, peak=[xmin,xmax])
-        scaling = area_df0[0] / area_df[0]
+    for df in enumerate(sdata.dataframe, df_i):
+        area_df, _ = area_under_peak(sdata, peak=[xmin,xmax], df_index=df_i)
+        scaling = area_df0 / area_df
         df[df.columns[1]] =  df[df.columns[1]] * scaling
         normalized_dataframes.append(df)
     sdata.dataframe = normalized_dataframes
