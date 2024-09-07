@@ -5,6 +5,8 @@ from . import tools
 def spectra(spectrum:Spectra):
 
     strings_to_delete_from_name = ['.csv', '.dat', '.txt', '_INS', '_ATR', '_FTIR', '_temp', '_RAMAN', '_Raman', '/data/', 'data/', '/INS/', 'INS/', '/FTIR/', 'FTIR/', '/ATR/', 'ATR/', '_smooth', '_smoothed', '_subtracted', '_cellsubtracted']
+    normalize_area_keys = ['area', 'a', 'A']
+    normalize_height_keys = ['height', 'y', 'Y', True]
 
     sdata = deepcopy(spectrum)
     scale_factor = sdata.plotting.scale_factor if hasattr(sdata, 'plotting') and sdata.plotting.scale_factor else 1.0
@@ -14,8 +16,10 @@ def spectra(spectrum:Spectra):
     else:
         fig, ax = plt.subplots()
 
-    if sdata.plotting.normalize is True:
+    if sdata.plotting.normalize in normalize_height_keys:
         sdata = tools.normalize(sdata)
+    elif sdata.plotting.normalize in normalize_area_keys:
+        sdata = tools.normalize_area(sdata)
     normalized_dataframes = sdata.dataframe
 
     all_y_values = []

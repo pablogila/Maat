@@ -21,7 +21,7 @@ def area_under_peak(spectra:Spectra, peak:list, df_index:int=0, errors_as_in_bas
     to be the same as the baseline error if `errors_as_in_baseline = True`,\n
     otherwise it is assumed to be zero.\n
     If `min_as_baseline = True` and baseline=0, the baseline is assumed to be the minimum value.\n
-    Also, if `min_as_baseline=True` and there are negative areas after applying the baseline,\n
+    Also, if `min_as_baseline=True` and there are negative areas even after applying the baseline,\n
     the baseline will be set to the minimum value.
     '''
     if len(peak) < 2:
