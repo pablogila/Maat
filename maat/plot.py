@@ -73,10 +73,12 @@ def spectra(spectrum:Spectra):
         if hasattr(sdata, 'plotting') and hasattr(sdata.plotting, 'legend') and sdata.plotting.legend is not None:
             if len(sdata.plotting.legend) == len(sdata.filename):
                 clean_name = sdata.plotting.legend[sdata.filename.index(name)]
+            elif len(sdata.plotting.legend) == len(sdata.dataframe):
+                clean_name = sdata.plotting.legend[sdata.dataframe.index(df)]
             elif len(sdata.plotting.legend) == 1:
                 clean_name = sdata.plotting.legend[0]
             else:
-                raise ValueError("len(Spectra.plotting.legend) does not match len(Spectra.filename)")
+                raise ValueError("len(Spectra.plotting.legend) does not match len(Spectra.filename) nor len(Spectra.dataframe).")
         df.plot(x=df.columns[0], y=df.columns[1], label=clean_name, ax=ax)
 
         # TO-ADD: horizontal lines
