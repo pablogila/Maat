@@ -76,7 +76,7 @@ def spectra(spectrum:Spectra):
             for i, df in enumerate(sdata.dataframe):
                 df.plot(x=df.columns[0], y=df.columns[1], label=clean_name, ax=ax)
     elif len(sdata.filename) == len(sdata.dataframe):
-        for df, name in zip(sdata.dataframe, sdata.filename)
+        for df, name in zip(sdata.dataframe, sdata.filename):
             clean_name = name
             for string in strings_to_delete_from_name:
                 clean_name = clean_name.replace(string, '')
