@@ -65,20 +65,22 @@ def spectra(spectrum:Spectra):
         for i, df in enumerate(sdata.dataframe):
             df[df.columns[1]] = df[df.columns[1]] + sdata.plotting.offset
 
-    for df, name in zip(sdata.dataframe, sdata.filename):
-        clean_name = name
-        for string in strings_to_delete_from_name:
-            clean_name = clean_name.replace(string, '')
-        clean_name = clean_name.replace('_', ' ')
-        if hasattr(sdata, 'plotting') and hasattr(sdata.plotting, 'legend') and sdata.plotting.legend is not None:
-            if len(sdata.plotting.legend) == len(sdata.filename):
-                clean_name = sdata.plotting.legend[sdata.filename.index(name)]
-            elif len(sdata.plotting.legend) == len(sdata.dataframe):
-                clean_name = sdata.plotting.legend[sdata.dataframe.index(df)]
-            elif len(sdata.plotting.legend) == 1:
-                clean_name = sdata.plotting.legend[0]
-            else:
-                raise ValueError("len(Spectra.plotting.legend) does not match len(Spectra.filename) nor len(Spectra.dataframe).")
+    
+    if hasattr(sdata, 'plotting') and hasattr(sdata.plotting, 'legend') and sdata.plotting.legend is not None:
+        if len(sdata.plotting.legend) == len(sdata.dataframe):
+            for i, df in enumerate(sdata.plotting.dataframe):
+                clean_name = sdata.plotting.legend[i]
+                df.plot(x=df.columns[0], y=df.columns[1], label=clean_name, ax=ax)
+        elif len(sdata.plotting.legend) == 1:
+            clean_name = sdata.plotting.legend[0]
+            for i, df in enumerate(sdata.plotting.dataframe):
+                df.plot(x=df.columns[0], y=df.columns[1], label=clean_name, ax=ax)
+    else:  # If no legend is provided, use the filename instead
+        for name in sdata.filename:
+            clean_name = name
+            for string in strings_to_delete_from_name:
+                clean_name = clean_name.replace(string, '')
+            clean_name = clean_name.replace('_', ' ')
         df.plot(x=df.columns[0], y=df.columns[1], label=clean_name, ax=ax)
 
         # TO-ADD: horizontal lines
