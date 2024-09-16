@@ -4,7 +4,7 @@ from . import tools
 
 def spectra(spectrum:Spectra):
 
-    strings_to_delete_from_name = ['.csv', '.dat', '.txt', '_INS', '_ATR', '_FTIR', '_temp', '_RAMAN', '_Raman', '/data/', 'data/', '/INS/', 'INS/', '/FTIR/', 'FTIR/', '/ATR/', 'ATR/', '_smooth', '_smoothed', '_subtracted', '_cellsubtracted']
+    strings_to_delete_from_name = ['.csv', '.dat', '.txt', '_INS', '_ATR', '_FTIR', '_temp', '_RAMAN', '_Raman', '/data/', 'data/', '/csv/', 'csv/', '/INS/', 'INS/', '/FTIR/', 'FTIR/', '/ATR/', 'ATR/', '_smooth', '_smoothed', '_subtracted', '_cellsubtracted']
     normalize_area_keys = ['area', 'a', 'A']
     normalize_height_keys = ['height', 'y', 'Y', True]
 
@@ -66,22 +66,28 @@ def spectra(spectrum:Spectra):
             df[df.columns[1]] = df[df.columns[1]] + sdata.plotting.offset
 
     
-    if hasattr(sdata, 'plotting') and hasattr(sdata.plotting, 'legend') and sdata.plotting.legend is not None:
-        if len(sdata.plotting.legend) == len(sdata.dataframe):
-            for i, df in enumerate(sdata.dataframe):
-                clean_name = sdata.plotting.legend[i]
+    if hasattr(sdata, 'plotting') and hasattr(sdata.plotting, 'legend'):
+        if sdata.plotting.legend == False:
+            for df in sdata.dataframe:
+                df.plot(x=df.columns[0], y=df.columns[1], ax=ax)
+        elif sdata.plotting.legend != None:
+            if len(sdata.plotting.legend) == len(sdata.dataframe):
+                for i, df in enumerate(sdata.dataframe):
+                    if sdata.plotting.legend[i] == False:
+                        continue  # Skip plots with False in the legend
+                    clean_name = sdata.plotting.legend[i]
+                    df.plot(x=df.columns[0], y=df.columns[1], label=clean_name, ax=ax)
+            elif len(sdata.plotting.legend) == 1:
+                clean_name = sdata.plotting.legend[0]
+                for i, df in enumerate(sdata.dataframe):
+                    df.plot(x=df.columns[0], y=df.columns[1], label=clean_name, ax=ax)
+        elif sdata.plotting.legend == None and len(sdata.filename) == len(sdata.dataframe):
+            for df, name in zip(sdata.dataframe, sdata.filename):
+                clean_name = name
+                for string in strings_to_delete_from_name:
+                    clean_name = clean_name.replace(string, '')
+                clean_name = clean_name.replace('_', ' ')
                 df.plot(x=df.columns[0], y=df.columns[1], label=clean_name, ax=ax)
-        elif len(sdata.plotting.legend) == 1:
-            clean_name = sdata.plotting.legend[0]
-            for i, df in enumerate(sdata.dataframe):
-                df.plot(x=df.columns[0], y=df.columns[1], label=clean_name, ax=ax)
-    elif len(sdata.filename) == len(sdata.dataframe):
-        for df, name in zip(sdata.dataframe, sdata.filename):
-            clean_name = name
-            for string in strings_to_delete_from_name:
-                clean_name = clean_name.replace(string, '')
-            clean_name = clean_name.replace('_', ' ')
-            df.plot(x=df.columns[0], y=df.columns[1], label=clean_name, ax=ax)
 
         # TO-ADD: horizontal lines
 
@@ -105,7 +111,7 @@ def spectra(spectrum:Spectra):
             ax.set_xscale('log')
         if not sdata.plotting.show_yticks:
             ax.set_yticks([])
-        if sdata.plotting.legend is not False:
+        if sdata.plotting.legend != False:
             ax.legend(title=sdata.plotting.legend_title, fontsize=sdata.plotting.legend_size)
         else:
             ax.legend().set_visible(False)

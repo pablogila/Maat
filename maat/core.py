@@ -17,7 +17,7 @@ import time
 This module contains the core classes and functions.
 '''
 
-version = 'v1.3.2'
+version = 'v1.3.3'
 
 
 class ScaleRange:
@@ -103,7 +103,7 @@ class Plotting:
         self.normalize = normalize
         '''`True` or `y` or `Y` to normalize the heights, `area` or `a` or `A` to normalize the areas.'''
         self.show_yticks = show_yticks
-        if not isinstance(legend, list) and legend is not None:
+        if not isinstance(legend, list) and legend is not None and legend != False:
             legend = [legend]
         self.legend = legend
         self.legend_title = legend_title
