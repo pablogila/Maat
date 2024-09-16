@@ -89,15 +89,6 @@ def spectra(spectrum:Spectra):
                 clean_name = clean_name.replace('_', ' ')
                 df.plot(x=df.columns[0], y=df.columns[1], label=clean_name, ax=ax)
 
-        # TO-ADD: horizontal lines
-
-    if hasattr(sdata, 'plotting') and sdata.plotting.vline is not None and sdata.plotting.vline_error is not None:
-        for vline, vline_error in zip(sdata.plotting.vline, sdata.plotting.vline_error):
-            ax.fill_betweeb(df[df.columns[0]], vline - vline_error, vline + vline_error, color='gray', alpha=0.5)
-    elif hasattr(sdata, 'plotting') and sdata.plotting.vline is not None:
-        for vline in sdata.plotting.vline:
-            ax.axvline(x=vline, color='gray', alpha=0.5, linestyle='--')
-
     plt.title(sdata.title)
     plt.xlabel(df.columns[0])
     plt.ylabel(df.columns[1])
@@ -116,10 +107,22 @@ def spectra(spectrum:Spectra):
         else:
             ax.legend().set_visible(False)
     
-    ax.set_ylim(bottom=low_ylim-add_low_ylim)
-    ax.set_ylim(top=top_ylim+add_top_ylim)
+    low_ylim = low_ylim - add_low_ylim
+    top_ylim = top_ylim + add_top_ylim
+
+    ax.set_ylim(bottom=low_ylim)
+    ax.set_ylim(top=top_ylim)
     ax.set_xlim(left=low_xlim)
     ax.set_xlim(right=top_xlim)
+
+    if hasattr(sdata, 'plotting') and sdata.plotting.vline is not None and sdata.plotting.vline_error is not None:
+        for vline, vline_error in zip(sdata.plotting.vline, sdata.plotting.vline_error):
+            lower_bound = vline - vline_error
+            upper_bound = vline + vline_error
+            ax.fill_between([lower_bound, upper_bound], low_ylim, top_ylim, color='gray', alpha=0.1)
+    elif hasattr(sdata, 'plotting') and sdata.plotting.vline is not None:
+        for vline in sdata.plotting.vline:
+            ax.axvline(x=vline, color='gray', alpha=0.5, linestyle='--')
 
     if sdata.save_as:
         root = os.getcwd()
