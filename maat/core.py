@@ -17,7 +17,7 @@ import time
 This module contains the core classes and functions.
 '''
 
-version = 'v1.3.5'
+version = 'v1.4.0'
 
 
 class ScaleRange:
@@ -73,7 +73,6 @@ class Plotting:
                  figsize:tuple=None,
                  log_xscale:bool=False,
                  offset=True,
-                 scale_factor:float=1.0,
                  zoom_range:bool=False,
                  normalize:bool=False,
                  show_yticks:bool=False,
@@ -98,7 +97,6 @@ class Plotting:
         self.figsize = figsize
         self.log_xscale = log_xscale
         self.offset = offset
-        self.scale_factor = scale_factor
         self.zoom_range = zoom_range
         self.normalize = normalize
         '''`True` or `y` or `Y` to normalize the heights, `area` or `a` or `A` to normalize the areas.'''

@@ -9,7 +9,6 @@ def spectra(spectrum:Spectra):
     normalize_height_keys = ['height', 'y', 'Y', True]
 
     sdata = deepcopy(spectrum)
-    scale_factor = sdata.plotting.scale_factor if hasattr(sdata, 'plotting') and sdata.plotting.scale_factor else 1.0
 
     if hasattr(sdata, 'plotting') and sdata.plotting.figsize:
         fig, ax = plt.subplots(figsize=sdata.plotting.figsize)
@@ -20,30 +19,8 @@ def spectra(spectrum:Spectra):
         sdata = tools.normalize(sdata)
     elif sdata.plotting.normalize in normalize_area_keys:
         sdata = tools.normalize_area(sdata)
-    normalized_dataframes = sdata.dataframe
 
-    all_y_values = []
-    for df in normalized_dataframes:
-        df_trim = df
-        if hasattr(sdata, 'plotting') and sdata.plotting.low_xlim is not None:
-            df_trim = df_trim[(df_trim[df_trim.columns[0]] >= sdata.plotting.low_xlim)]
-        if hasattr(sdata, 'plotting') and sdata.plotting.top_xlim is not None:
-            df_trim = df_trim[(df_trim[df_trim.columns[0]] <= sdata.plotting.top_xlim)]
-        all_y_values.extend(df_trim[df_trim.columns[1]].tolist())
-    calculated_low_ylim = min(all_y_values)
-    calculated_top_ylim = max(all_y_values) / scale_factor
-
-    ymax_on_range = None
-    if hasattr(sdata, 'scale_range') and sdata.scale_range is not None:
-        df_index = sdata.scale_range.index if sdata.scale_range.index else 0
-        df0 = sdata.dataframe[df_index]
-        if sdata.scale_range.xmin:
-            df0 = df0[(df0[df0.columns[0]] >= sdata.scale_range.xmin)]
-        if sdata.scale_range.xmax:
-            df0 = df0[(df0[df0.columns[0]] <= sdata.scale_range.xmax)]
-        ymax_on_range = df0[df0.columns[1]].max()
-    if sdata.plotting.zoom_range and ymax_on_range is not None:
-        calculated_top_ylim = ymax_on_range / scale_factor
+    calculated_low_ylim, calculated_top_ylim = _get_ylimits(sdata)
 
     low_ylim = calculated_low_ylim if not hasattr(sdata, 'plotting') or sdata.plotting.low_ylim is None else sdata.plotting.low_ylim
     top_ylim = calculated_top_ylim if not hasattr(sdata, 'plotting') or sdata.plotting.top_ylim is None else sdata.plotting.top_ylim
@@ -54,18 +31,20 @@ def spectra(spectrum:Spectra):
         low_xlim = sdata.plotting.low_xlim
         top_xlim = sdata.plotting.top_xlim
 
+    number_of_plots = len(sdata.dataframe)
+    height = top_ylim - low_ylim
     if hasattr(sdata, 'plotting') and sdata.plotting.offset is True:
-        number_of_plots = len(sdata.dataframe)
-        height = top_ylim - low_ylim
-        top_ylim = height * (number_of_plots - 1) + (top_ylim * scale_factor - low_ylim)
         for i, df in enumerate(sdata.dataframe):
             reverse_i = (number_of_plots - 1) - i
             df[df.columns[1]] = df[df.columns[1]] + (reverse_i * height)
-    elif hasattr(sdata, 'plotting') and isinstance(sdata.plotting.offset, float):
+    elif hasattr(sdata, 'plotting') and (isinstance(sdata.plotting.offset, float) or isinstance(sdata.plotting.offset, int)):
+        offset = sdata.plotting.offset
         for i, df in enumerate(sdata.dataframe):
-            df[df.columns[1]] = df[df.columns[1]] + sdata.plotting.offset
+            reverse_i = (number_of_plots - 1) - i
+            df[df.columns[1]] = df[df.columns[1]] + (reverse_i * offset)
+    _, calculated_top_ylim = _get_ylimits(sdata)
+    top_ylim = calculated_top_ylim if not hasattr(sdata, 'plotting') or sdata.plotting.top_ylim is None else sdata.plotting.top_ylim
 
-    
     if hasattr(sdata, 'plotting') and hasattr(sdata.plotting, 'legend'):
         if sdata.plotting.legend == False:
             for df in sdata.dataframe:
@@ -130,4 +109,31 @@ def spectra(spectrum:Spectra):
         plt.savefig(save_name)
     
     plt.show()
+
+
+def _get_ylimits(spectrum:Spectra) -> tuple[float, float]:
+    all_y_values = []
+    for df in spectrum.dataframe:
+        df_trim = df
+        if hasattr(spectrum, 'plotting') and spectrum.plotting.low_xlim is not None:
+            df_trim = df_trim[(df_trim[df_trim.columns[0]] >= spectrum.plotting.low_xlim)]
+        if hasattr(spectrum, 'plotting') and spectrum.plotting.top_xlim is not None:
+            df_trim = df_trim[(df_trim[df_trim.columns[0]] <= spectrum.plotting.top_xlim)]
+        all_y_values.extend(df_trim[df_trim.columns[1]].tolist())
+    calculated_low_ylim = min(all_y_values)
+    calculated_top_ylim = max(all_y_values)
+
+    ymax_on_range = None
+    if hasattr(spectrum, 'scale_range') and spectrum.scale_range is not None:
+        df_index = spectrum.scale_range.index if spectrum.scale_range.index else 0
+        df0 = spectrum.dataframe[df_index]
+        if spectrum.scale_range.xmin:
+            df0 = df0[(df0[df0.columns[0]] >= spectrum.scale_range.xmin)]
+        if spectrum.scale_range.xmax:
+            df0 = df0[(df0[df0.columns[0]] <= spectrum.scale_range.xmax)]
+        ymax_on_range = df0[df0.columns[1]].max()
+    if hasattr(spectrum, 'plotting') and spectrum.plotting.zoom_range and ymax_on_range is not None:
+        calculated_top_ylim = ymax_on_range
+
+    return calculated_low_ylim, calculated_top_ylim
 
