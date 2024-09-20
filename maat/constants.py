@@ -4,9 +4,9 @@ import numpy as np
 This module contains constants and conversion factors.
 '''
 
-#################################################
-##  CONVERSION FACTORS                         ##
-#################################################
+#############################
+##   CONVERSION FACTORS    ##
+#############################
 ## Energy
 eV_to_meV   = 1000.0
 meV_to_eV   = 0.001
@@ -57,6 +57,23 @@ hbar_eV = h_eV / (2 * np.pi)
 
 
 #############################
+##      ATOMIC MASSES      ##
+#############################
+m_H = 1.00784   # H amu (atomic mass units)
+m_H_kg = m_H_amu * amu_to_kg
+m_D = 2.014102  # D amu
+m_D_kg = m_D_amu * amu_to_kg
+m_C = 12.0107  # C amu
+m_C_kg = m_C * amu_to_kg
+m_N = 14.0067  # N amu
+m_N_kg = m_N * amu_to_kg
+m_I = 126.90447  # I amu
+m_I_kg = m_I * amu_to_kg
+m_Pb = 207.2  # Pb amu
+m_Pb_kg = m_Pb * amu_to_kg
+
+
+#############################
 ##  MATERIAL COMPOSITIONS  ##
 #############################
 MAPI_atoms =      {'Pb': 1, 'I': 1, 'C': 1, 'N': 1, 'H': 6}
@@ -75,7 +92,7 @@ MAPI_peaks = {
     'h3d3' : [28.8, 30.7],
 }
 '''
-Experimental values of the partially-deuterated peaks\n
+Experimental values of the partially-deuterated amine peaks\n
 for the disrotatory mode of MAPbI3's methylammonium.\n
 Measured at TOSCA, ISIS RAL, UK, May 2024.
 '''
