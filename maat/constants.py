@@ -60,9 +60,9 @@ hbar_eV = h_eV / (2 * np.pi)
 ##      ATOMIC MASSES      ##
 #############################
 m_H = 1.00784   # H amu (atomic mass units)
-m_H_kg = m_H_amu * amu_to_kg
+m_H_kg = m_H * amu_to_kg
 m_D = 2.014102  # D amu
-m_D_kg = m_D_amu * amu_to_kg
+m_D_kg = m_D * amu_to_kg
 m_C = 12.0107  # C amu
 m_C_kg = m_C * amu_to_kg
 m_N = 14.0067  # N amu

@@ -17,7 +17,7 @@ import time
 This module contains the core classes and functions.
 '''
 
-version = 'v1.4.2'
+version = 'v1.4.3'
 
 
 class ScaleRange:
