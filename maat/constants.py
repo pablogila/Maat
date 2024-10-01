@@ -59,18 +59,33 @@ hbar_eV = h_eV / (2 * np.pi)
 #############################
 ##      ATOMIC MASSES      ##
 #############################
-m_H = 1.00784   # H amu (atomic mass units)
+# Expressed in atomic mass units (amu) by default
+m_H = 1.00784
+m_D = 2.014102
+m_C = 12.0107
+m_N = 14.0067
+m_I = 126.90447
+m_Pb = 207.2
 m_H_kg = m_H * amu_to_kg
-m_D = 2.014102  # D amu
 m_D_kg = m_D * amu_to_kg
-m_C = 12.0107  # C amu
 m_C_kg = m_C * amu_to_kg
-m_N = 14.0067  # N amu
 m_N_kg = m_N * amu_to_kg
-m_I = 126.90447  # I amu
 m_I_kg = m_I * amu_to_kg
-m_Pb = 207.2  # Pb amu
 m_Pb_kg = m_Pb * amu_to_kg
+
+
+#############################################
+##  TOTAL BOUND SCATTERING CROSS SECTIONS  ##
+#############################################
+# From Felix Fernandez-Alonso 2013 book
+# Expressed in barns (1 b = 100 fm^2)
+cs_H = 81.67
+cs_D = 7.64
+cs_C = 5.551
+cs_N = 11.51
+cs_I = 3.81
+cs_Pb = 11.118
+
 
 
 #############################
