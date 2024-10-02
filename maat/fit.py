@@ -5,13 +5,17 @@ This module contains functions for fitting and analyzing data.
 '''
 
 
-def plateau(spectra:Spectra, cuts:list, df_index:int=0):
+def plateau(spectra:Spectra, low_cut:float, top_cut:float, df_index:int=0):
     '''Fit the mean value of a plateau and its standard deviation.'''
     df = spectra.dataframe[df_index]
-    df_range = df[(df[df.columns[0]] >= cuts[0]) & (df[df.columns[0]] <= cuts[1])]
-    mean = df_range[df.columns[1]].mean()
-    std = df_range[df.columns[1]].std()
-    return mean, std
+    if low_cut is not None:
+        df = df[df[df.columns[0]] >= low_cut]
+    if top_cut is not None:
+        df = df[df[df.columns[0]] <= top_cut]
+    mean = df[df.columns[1]].mean()
+    std = df[df.columns[1]].std()
+    error = std / np.sqrt(len(df))
+    return mean, error
 
 
 def area_under_peak(spectra:Spectra, peak:list, df_index:int=0, errors_as_in_baseline:bool=True, min_as_baseline:bool=False):

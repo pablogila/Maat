@@ -1,5 +1,57 @@
 from .core import *
-from .fit import area_under_peak, ratio_areas
+from .constants import *
+from .fit import area_under_peak, ratio_areas, plateau
+
+
+def impulse_approx(ins: Spectra,
+                   material_H: Material,
+                   material_D: Material,
+                   threshold: float=None,
+                   H_df_index: int=0,
+                   D_df_index: int=1
+                   ):
+    '''
+    Calculate the deuteration levels from INS spectra with the Impulse Approximation.\n
+    See https://www.tandfonline.com/doi/full/10.1080/00018732.2017.1317963.\n
+    Protonated and deuterated materials must be specified as dictionaries, such as:\n
+    CH3NH3 = {'C':1, 'N':1, 'H':6}\n
+    Material mass must be specified in grams.
+    '''
+    ins = deepcopy(ins)
+    material_H = deepcopy(material_H)
+    material_D = deepcopy(material_D)
+    material_H_grams = 1.0 if material_H.grams is None else material_H.grams
+    material_H.grams = material_H_grams
+    material_H.set()
+    material_D_grams = 1.0 if material_D.grams is None else material_D.grams
+    material_D.grams = material_D_grams
+    material_D.set()
+
+    material_H.print()
+    material_D.print()
+
+    # Consider the plateau from this threshold onwards, in meV
+    cut = 500 if threshold is None else threshold
+    # Make sure units are in meV
+    mev_units = ['mev', 'meV', 'MEV']
+    units_in = ins.units
+    if units_in not in mev_units:
+        ins.set_units('meV', units_in)
+
+    # Multiply the y values of the dataframes by the mols of the material, and divide by ???
+    # These seemingly random numbers appear in Pelayo's implementation. Why? Magic, I guess.
+    # Probably those numbers are tuned for MAPI, since it does not work for MAI. I still have to check that.
+    ins.dataframe[H_df_index][ins.dataframe[H_df_index].columns[1]] = ins.dataframe[H_df_index][ins.dataframe[H_df_index].columns[1]] * material_H.mols / 3.17
+    ins.dataframe[D_df_index][ins.dataframe[D_df_index].columns[1]] = ins.dataframe[D_df_index][ins.dataframe[D_df_index].columns[1]] * material_D.mols / 1.284
+
+    plateau_H, plateau_H_error = plateau(ins, cut, None, H_df_index)
+    plateau_D, plateau_D_error = plateau(ins, cut, None, D_df_index)
+
+    deuteration = 1 - (plateau_H / plateau_D) / (material_H.cross_section / material_D.cross_section)
+    deuteration_error = deuteration * np.sqrt((plateau_H_error / plateau_H)**2 + (plateau_D_error / plateau_D)**2 + (material_H.mols_error / material_H.mols)**2 + (material_D.mols_error / material_D.mols)**2)
+
+    print(f"\nDeuteration: {deuteration:.2f} +- {deuteration_error:.2f}\n")
+    return round(deuteration,2), round(deuteration_error,2)
 
 
 def peaks_mapi(ins:Spectra,

@@ -4,6 +4,87 @@ import numpy as np
 This module contains constants and conversion factors.
 '''
 
+
+#############################
+##     MATERIAL CLASS      ##
+#############################
+# To play around with the composition of materials.
+# Defined here, to set some default values.
+class Material:
+    def __init__(self,
+                 atoms:dict,
+                 name:str=None,
+                 grams:float=None,
+                 grams_error:float=None,
+                 mols:float=None,
+                 mols_error:float=None,
+                 molar_mass:float=None,
+                 cross_section:float=None,
+                 ):
+        self.atoms = atoms
+        '''Dict of atoms in the material'''
+        self.name = name
+        self.grams = grams
+        '''mass in grams'''
+        self.grams_error = grams_error
+        '''error of the measured mass in grams'''
+        self.mols = mols
+        '''number of moles'''
+        self.mols_error = mols_error
+        '''error of the number of moles'''
+        self.molar_mass = molar_mass
+        self.cross_section = cross_section
+
+    def set_grams_error(self):
+        if self.grams is None:
+            return
+        decimal_accuracy = len(str(self.grams).split('.')[1])
+        # Calculate the error in grams
+        self.grams_error = 10**(-decimal_accuracy)
+
+    def set_mass(self):
+        '''Set the molar mass of the material.\n
+        If `self.grams` is not `None`, the number of moles will be calculated and overwritten.'''
+        material_grams_per_mol = 0.0
+        for key in self.atoms:
+            material_grams_per_mol += self.atoms[key] * mass[key]
+        self.molar_mass = material_grams_per_mol
+        if self.grams is not None:
+            self.set_grams_error()
+            self.mols = self.grams / material_grams_per_mol
+            self.mols_error = self.mols * np.sqrt((self.grams_error / self.grams)**2)
+    
+    def set_cross_section(self):
+        total_cross_section = 0.0
+        for key in self.atoms:
+            total_cross_section += self.atoms[key] * cross_section[key]
+        self.cross_section = total_cross_section
+
+    def set(self):
+        self.set_mass()
+        self.set_cross_section()
+
+    def print(self):
+        print('\nMATERIAL')
+        if self.name is not None:
+            print(f'Name: {self.name}')
+        if self.grams is not None and self.grams_error is not None:
+            print(f'Grams: {self.grams} +- {self.grams_error} g')
+        elif self.grams is not None:
+            print(f'Grams: {self.grams} g')
+        if self.mols is not None and self.mols_error is not None:
+            print(f'Moles: {self.mols} +- {self.mols_error} mol')
+        elif self.mols is not None:
+            print(f'Moles: {self.mols} mol')
+        if self.molar_mass is not None:
+            print(f'Molar mass: {self.molar_mass} g/mol')
+        if self.cross_section is not None:
+            print(f'Cross section: {self.cross_section} barns')
+        if self.atoms is not None:
+            print(f'Atoms: {self.atoms}')
+        print('')
+
+
 #############################
 ##   CONVERSION FACTORS    ##
 #############################
@@ -60,6 +141,20 @@ hbar_eV = h_eV / (2 * np.pi)
 ##      ATOMIC MASSES      ##
 #############################
 # Expressed in atomic mass units (amu) by default
+mass = {
+    'H' : 1.00784,
+    'D' : 2.014102,
+    'C' : 12.0107,
+    'N' : 14.0067,
+    'I' : 126.90447,
+    'Pb': 207.2
+}
+
+mass_kg = {}
+for key in mass:
+    mass_kg[key] = mass[key] * amu_to_kg
+
+# DEPRECATED: individual masses
 m_H = 1.00784
 m_D = 2.014102
 m_C = 12.0107
@@ -79,22 +174,54 @@ m_Pb_kg = m_Pb * amu_to_kg
 #############################################
 # From Felix Fernandez-Alonso 2013 book
 # Expressed in barns (1 b = 100 fm^2)
-cs_H = 81.67
-cs_D = 7.64
-cs_C = 5.551
-cs_N = 11.51
-cs_I = 3.81
-cs_Pb = 11.118
-
+cross_section = {
+    'H' : 81.67,
+    'D' : 7.64,
+    'C' : 5.551,
+    'N' : 11.51,
+    'I' : 3.81,
+    'Pb': 11.118
+}
 
 
 #############################
 ##  MATERIAL COMPOSITIONS  ##
 #############################
-MAPI_atoms =      {'Pb': 1, 'I': 1, 'C': 1, 'N': 1, 'H': 6}
-MAPI_CDND_atoms = {'Pb': 1, 'I': 1, 'C': 1, 'N': 1, 'D': 6}
-MAPI_ND_atoms =   {'Pb': 1, 'I': 1, 'C': 1, 'N': 1, 'H': 3, 'D': 3}
-MAPI_CD_atoms =   {'Pb': 1, 'I': 1, 'C': 1, 'N': 1, 'H': 3, 'D': 3}
+MAPI = Material(
+    atoms={'Pb': 1, 'I': 3, 'C': 1, 'N': 1, 'H': 6},
+    name='MAPbI3'
+    )
+MAPI.set()
+
+MAPI_CDND = Material(
+    atoms={'Pb': 1, 'I': 3, 'C': 1, 'N': 1, 'D': 6},
+    name='CD3ND3PbI3'
+    )
+MAPI_CDND.set()
+
+MAPI_ND = Material(
+    atoms={'Pb': 1, 'I': 3, 'C': 1, 'N': 1, 'H': 3, 'D': 3},
+    name='CH3ND3PbI3'
+    )
+MAPI_ND.set()
+
+MAPI_CD = Material(
+    atoms={'Pb': 1, 'I': 3, 'C': 1, 'N': 1, 'H': 3, 'D': 3},
+    name='CD3NH3PbI3'
+    )
+MAPI_CD.set()
+
+CH3NH3I = Material(
+    atoms={'C' : 1, 'N': 1, 'H': 6},
+    name='CH3NH3'
+    )
+CH3NH3I.set()
+
+CH3ND3I = Material(
+    atoms={'C' : 1, 'N': 1, 'H': 3, 'D': 3},
+    name='CH3ND3'
+    )
+CH3ND3I.set()
 
 
 ###########################

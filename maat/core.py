@@ -17,7 +17,7 @@ import time
 This module contains the core classes and functions.
 '''
 
-version = 'v1.4.4'
+version = 'v2.0.0-rc1'
 
 
 class ScaleRange:
@@ -42,7 +42,6 @@ class ScaleRange:
         self.ymin = ymin
         self.ymax = ymax
         '''If `plotting.normalize=True`, normalize the plots according to the y-values provided.'''
-
     def x(self, xmin:float=None, xmax:float=None):
         self.xmin = xmin
         self.xmax = xmax
@@ -58,7 +57,7 @@ class ScaleRange:
 
 
 class Plotting:
-
+    '''Plotting options. To be used inside the `Spectra` class.'''
     def __init__(self,
                  low_xlim=0,
                  top_xlim=50,
@@ -135,7 +134,6 @@ class Spectra:
         self.units = None
         self = self.set_units(units, units_in)
 
-
     def set_type(self, type):
         ins = ['INS', 'ins']
         atr = ['ATR', 'atr', 'FTIR', 'ftir']
@@ -149,7 +147,6 @@ class Spectra:
         else:
             self.type = type
         return self
-
 
     def set_dataframe(self, filename, dataframe):
         if isinstance(filename, list):
@@ -166,7 +163,6 @@ class Spectra:
         else:
             self.dataframe = [self.read_dataframe(file) for file in self.filename]
         return self
-
 
     def set_units(
             self,
@@ -268,7 +264,6 @@ class Spectra:
                 self.dataframe[i].columns = [f'Raman shift / {E_units}', 'Counts']
 
         return self
-
 
     def read_dataframe(self, filename):
         root = os.getcwd()
