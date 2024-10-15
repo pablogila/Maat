@@ -1,6 +1,21 @@
 from .core import *
 
 
+# DEPRECATED: individual masses
+m_H = 1.00784
+m_D = 2.014102
+m_C = 12.0107
+m_N = 14.0067
+m_I = 126.90447
+m_Pb = 207.2
+m_H_kg = m_H * amu_to_kg
+m_D_kg = m_D * amu_to_kg
+m_C_kg = m_C * amu_to_kg
+m_N_kg = m_N * amu_to_kg
+m_I_kg = m_I * amu_to_kg
+m_Pb_kg = m_Pb * amu_to_kg
+
+
 def plot_ins(ins:INS):
     fig, ax = plt.subplots()
 

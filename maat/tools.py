@@ -1,9 +1,19 @@
 from .core import *
 from .fit import *
+from .constants import *
 
 '''
 This module contains functions to manipulate data.
 '''
+
+
+def normalize_unit_str(unit:str):
+    for key, value in unit_dict.items():
+        if unit in value:
+            return key
+    print(f"WARNING: Unknown unit '{unit}'")
+    return unit
+
 
 def normalize(spectra:Spectra):
     sdata = deepcopy(spectra)
