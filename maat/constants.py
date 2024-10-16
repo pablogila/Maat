@@ -1,88 +1,12 @@
 import numpy as np
 
+
 '''
 This module contains constants and conversion factors.
 '''
 
 
-#############################
-##     MATERIAL CLASS      ##
-#############################
-# To play around with the composition of materials.
-# Defined here, to set some default values.
-class Material:
-    def __init__(self,
-                 atoms:dict,
-                 name:str=None,
-                 grams:float=None,
-                 grams_error:float=None,
-                 mols:float=None,
-                 mols_error:float=None,
-                 molar_mass:float=None,
-                 cross_section:float=None,
-                 ):
-        self.atoms = atoms
-        '''Dict of atoms in the material'''
-        self.name = name
-        self.grams = grams
-        '''mass in grams'''
-        self.grams_error = grams_error
-        '''error of the measured mass in grams'''
-        self.mols = mols
-        '''number of moles'''
-        self.mols_error = mols_error
-        '''error of the number of moles'''
-        self.molar_mass = molar_mass
-        self.cross_section = cross_section
-
-    def set_grams_error(self):
-        if self.grams is None:
-            return
-        decimal_accuracy = len(str(self.grams).split('.')[1])
-        # Calculate the error in grams
-        self.grams_error = 10**(-decimal_accuracy)
-
-    def set_mass(self):
-        '''Set the molar mass of the material.\n
-        If `self.grams` is not `None`, the number of moles will be calculated and overwritten.'''
-        material_grams_per_mol = 0.0
-        for key in self.atoms:
-            material_grams_per_mol += self.atoms[key] * mass[key]
-        self.molar_mass = material_grams_per_mol
-        if self.grams is not None:
-            self.set_grams_error()
-            self.mols = self.grams / material_grams_per_mol
-            self.mols_error = self.mols * np.sqrt((self.grams_error / self.grams)**2)
-    
-    def set_cross_section(self):
-        total_cross_section = 0.0
-        for key in self.atoms:
-            total_cross_section += self.atoms[key] * cross_section[key]
-        self.cross_section = total_cross_section
-
-    def set(self):
-        self.set_mass()
-        self.set_cross_section()
-
-    def print(self):
-        print('\nMATERIAL')
-        if self.name is not None:
-            print(f'Name: {self.name}')
-        if self.grams is not None and self.grams_error is not None:
-            print(f'Grams: {self.grams} +- {self.grams_error} g')
-        elif self.grams is not None:
-            print(f'Grams: {self.grams} g')
-        if self.mols is not None and self.mols_error is not None:
-            print(f'Moles: {self.mols} +- {self.mols_error} mol')
-        elif self.mols is not None:
-            print(f'Moles: {self.mols} mol')
-        if self.molar_mass is not None:
-            print(f'Molar mass: {self.molar_mass} g/mol')
-        if self.cross_section is not None:
-            print(f'Cross section: {self.cross_section} barns')
-        if self.atoms is not None:
-            print(f'Atoms: {self.atoms}')
-        print('')
+version = 'v2.0.0'
 
 
 #############################
@@ -173,7 +97,7 @@ cross_section = {
 #############################
 ##   USER INPUT STRINGS    ##
 #############################
-# Used to correct and normalise user inputs
+# Units, used to correct and normalise user inputs
 unit_keys = {
     'mol'  : ['mol', 'mols', 'mole', 'moles', 'Mol', 'Mols', 'Mole', 'Moles', 'MOL', 'MOLS', 'MOLE', 'MOLES'],
     'g'    : ['g', 'gram', 'grams', 'G', 'Gram', 'Grams', 'GRAM', 'GRAMS'],
@@ -185,6 +109,7 @@ unit_keys = {
     'cal'  : ['cal', 'Cal', 'CAL', 'calorie', 'calories', 'Calorie', 'Calories', 'CALORIE', 'CALORIES'],
     'kcal' : ['kcal', 'Kcal', 'KCAL', 'kilocalorie', 'kilocalories', 'Kilocalorie', 'Kilocalories', 'KILOCALORIE', 'KILOCALORIES'],
     'Ry'   : ['Ry', 'ry', 'RY', 'rydberg', 'rydbergs', 'Rydberg', 'Rydbergs', 'RYDBERG', 'RYDBERGS'],
+    'cm-1' : ['cm^{-1}', 'cm1', 'cm-1', 'cm^-1', 'Cm1', 'Cm-1', 'Cm^-1', 'Cm^{-1}', 'CM1', 'CM-1', 'CM^-1', 'CM^{-1}'],
     'cm'   : ['cm', 'CM', 'Cm', 'centimeter', 'centimeters', 'Centimeter', 'Centimeters', 'CENTIMETER', 'CENTIMETERS'],
     'A'    : ['A', 'a', 'AA', 'aa', 'angstrom', 'angstroms', 'Angstrom', 'Angstroms', 'ANGSTROM', 'ANGSTROMS'],
     'bohr' : ['bohr', 'Bohr', 'BOHR', 'bohr', 'Bohr', 'BOHR', 'bohrradii', 'Bohrradii', 'BOHRRADII'],
@@ -198,60 +123,10 @@ unit_keys = {
     's'    : ['s', 'S', 'second', 'seconds', 'Second', 'Seconds', 'SECOND', 'SECONDS'],
     'H'    : ['H', 'h', 'hour', 'hours', 'Hour', 'Hours', 'HOUR', 'HOURS'],
 }
-
-
-#############################
-##  MATERIAL COMPOSITIONS  ##
-#############################
-MAPI = Material(
-    atoms={'Pb': 1, 'I': 3, 'C': 1, 'N': 1, 'H': 6},
-    name='MAPbI3'
-    )
-MAPI.set()
-
-MAPI_CDND = Material(
-    atoms={'Pb': 1, 'I': 3, 'C': 1, 'N': 1, 'D': 6},
-    name='CD3ND3PbI3'
-    )
-MAPI_CDND.set()
-
-MAPI_ND = Material(
-    atoms={'Pb': 1, 'I': 3, 'C': 1, 'N': 1, 'H': 3, 'D': 3},
-    name='CH3ND3PbI3'
-    )
-MAPI_ND.set()
-
-MAPI_CD = Material(
-    atoms={'Pb': 1, 'I': 3, 'C': 1, 'N': 1, 'H': 3, 'D': 3},
-    name='CD3NH3PbI3'
-    )
-MAPI_CD.set()
-
-CH3NH3I = Material(
-    atoms={'C' : 1, 'N': 1, 'H': 6},
-    name='CH3NH3'
-    )
-CH3NH3I.set()
-
-CH3ND3I = Material(
-    atoms={'C' : 1, 'N': 1, 'H': 3, 'D': 3},
-    name='CH3ND3'
-    )
-CH3ND3I.set()
-
-
-###########################
-##  EXPERIMENTAL VALUES  ##
-###########################
-MAPI_peaks = {
-    'h6d0' : [36.0, 39.0],
-    'h5d1' : [33.0, 35.0],
-    'h4d2' : [30.7, 33.0],
-    'h3d3' : [28.8, 30.7],
+# Spectra types
+spectra_type_keys = {
+    'INS' : ['INS', 'ins', 'Ins', 'InelasticNeutronScattering'],
+    'ATR' : ['ATR', 'atr', 'FTIR', 'ftir', 'AttenuatedTotalReflection'],
+    'RAMAN' : ['RAMAN', 'raman', 'Raman'],
 }
-'''
-Experimental values of the partially-deuterated amine peaks\n
-for the disrotatory mode of MAPbI3's methylammonium.\n
-Measured at TOSCA, ISIS RAL, UK, May 2024.
-'''
 

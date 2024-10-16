@@ -1,9 +1,11 @@
 import os
 import sys
 
+
 '''
 This module contains utility functions.
 '''
+
 
 def run_here():
     '''Run the script from anywhere with mt.run_here().'''

@@ -1,6 +1,10 @@
-from .core import *
 from .constants import *
+from .classes import *
 from .fit import area_under_peak, ratio_areas, plateau
+from copy import deepcopy
+
+
+'''This module contains different methods to calculate deuteration levels from spectra.'''
 
 
 def impulse_approx(ins: Spectra,
@@ -33,21 +37,22 @@ def impulse_approx(ins: Spectra,
     # Consider the plateau from this threshold onwards, in meV
     cut = 500 if threshold is None else threshold
     # Make sure units are in meV
-    mev_units = ['mev', 'meV', 'MEV']
     units_in = ins.units
-    if units_in not in mev_units:
+    if units_in not in unit_keys['meV']:
         ins.set_units('meV', units_in)
 
-    # Multiply the y values of the dataframes by the mols of the material, and divide by ???
-    # These seemingly random numbers appear in Pelayo's implementation. Why? Magic, I guess.
-    # Probably those numbers are tuned for MAPI, since it does not work for MAI. I still have to check that.
-    ins.dataframe[H_df_index][ins.dataframe[H_df_index].columns[1]] = ins.dataframe[H_df_index][ins.dataframe[H_df_index].columns[1]] * material_H.mols / 3.17
-    ins.dataframe[D_df_index][ins.dataframe[D_df_index].columns[1]] = ins.dataframe[D_df_index][ins.dataframe[D_df_index].columns[1]] * material_D.mols / 1.284
+    # Divide the y values of the dataframes by the mols of the material.
+    ins.dataframe[H_df_index][ins.dataframe[H_df_index].columns[1]] = ins.dataframe[H_df_index][ins.dataframe[H_df_index].columns[1]] / material_H.mols
+    ins.dataframe[D_df_index][ins.dataframe[D_df_index].columns[1]] = ins.dataframe[D_df_index][ins.dataframe[D_df_index].columns[1]] / material_D.mols
 
     plateau_H, plateau_H_error = plateau(ins, cut, None, H_df_index)
     plateau_D, plateau_D_error = plateau(ins, cut, None, D_df_index)
 
-    deuteration = 1 - (plateau_H / plateau_D) / (material_H.cross_section / material_D.cross_section)
+    # ratio if fully protonated = 1.0
+    ratio = plateau_D / plateau_H  # ratio_ideal < ratio < 1.0
+    ratio_ideal = material_D.cross_section / material_H.cross_section  # 0.0 < ratio_ideal < 1.0
+
+    deuteration = (1 - ratio) / (1 - ratio_ideal)
     deuteration_error = deuteration * np.sqrt((plateau_H_error / plateau_H)**2 + (plateau_D_error / plateau_D)**2 + (material_H.mols_error / material_H.mols)**2 + (material_D.mols_error / material_D.mols)**2)
 
     print(f"\nDeuteration: {deuteration:.2f} +- {deuteration_error:.2f}\n")

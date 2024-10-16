@@ -1,4 +1,7 @@
-from .core import *
+from .classes import *
+import scipy
+import numpy as np
+
 
 '''
 This module contains functions for fitting and analyzing data.

@@ -1,26 +1,27 @@
-from .core import *
+from .classes import *
 from .fit import *
 from .constants import *
 
+
 '''
-This module contains functions to manipulate data.
+This module contains functions to normalize data and other variables.
 '''
 
 
-def normalize_unit_str(unit:str):
-    for key, value in unit_dict.items():
+def unit_str(unit:str):
+    for key, value in unit_keys.items():
         if unit in value:
             return key
     print(f"WARNING: Unknown unit '{unit}'")
     return unit
 
 
-def normalize(spectra:Spectra):
+def spectra(spectra:Spectra):
     sdata = deepcopy(spectra)
     if hasattr(sdata, 'scale_range') and sdata.scale_range is not None:
         scale_range = sdata.scale_range
         if scale_range.ymax:
-            return _normalize_y(sdata)
+            return _spectra_y(sdata)
     else:
         scale_range = ScaleRange()
 
@@ -49,7 +50,7 @@ def normalize(spectra:Spectra):
     return sdata
 
 
-def _normalize_y(sdata:Spectra):
+def _spectra_y(sdata:Spectra):
     if not len(sdata.scale_range.ymax) == len(sdata.dataframe):
         raise ValueError("normalize: len(ymax) does not match len(dataframe)")
     scale_range = sdata.scale_range
@@ -68,7 +69,7 @@ def _normalize_y(sdata:Spectra):
     return sdata
 
 
-def normalize_area(spectra:Spectra):
+def area(spectra:Spectra):
     sdata = deepcopy(spectra)
     if hasattr(sdata, 'scale_range') and sdata.scale_range is not None:
         scale_range = sdata.scale_range

@@ -1,5 +1,8 @@
-from .core import *
+from .classes import *
 from . import tools
+
+
+'''This module manages the plotting of data.'''
 
 
 def spectra(spectrum:Spectra):
@@ -16,9 +19,9 @@ def spectra(spectrum:Spectra):
         fig, ax = plt.subplots()
 
     if sdata.plotting.normalize in normalize_height_keys:
-        sdata = tools.normalize(sdata)
+        sdata = normalize.spectra(sdata)
     elif sdata.plotting.normalize in normalize_area_keys:
-        sdata = tools.normalize_area(sdata)
+        sdata = normalize.area(sdata)
 
     calculated_low_ylim, calculated_top_ylim = _get_ylimits(sdata)
 

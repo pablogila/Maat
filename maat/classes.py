@@ -2,22 +2,13 @@ from .constants import *
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-import scipy
-from scipy.sparse import diags
-from scipy.sparse.linalg import eigsh
-from scipy.interpolate import CubicSpline
 from copy import deepcopy
 import os
-import gzip
-import shutil
-import json
-import time
+
 
 '''
-This module contains the core classes and functions.
+This module contains the core classes and their functions.
 '''
-
-version = 'v2.0.0-rc2'
 
 
 class ScaleRange:
@@ -135,14 +126,11 @@ class Spectra:
         self = self.set_units(units, units_in)
 
     def set_type(self, type):
-        ins = ['INS', 'ins']
-        atr = ['ATR', 'atr', 'FTIR', 'ftir']
-        raman = ['RAMAN', 'raman', 'Raman']
-        if type in ins:
+        if type in spectra_type_keys['INS']:
             self.type = 'INS'
-        elif type in atr:
+        elif type in spectra_type_keys['ATR']:
             self.type = 'ATR'
-        elif type in raman:
+        elif type in spectra_type_keys['RAMAN']:
             self.type = 'RAMAN'
         else:
             self.type = type
@@ -274,4 +262,80 @@ class Spectra:
         print(f'\nNew dataframe from {file}')
         print(df.head(),'\n')
         return df
+
+
+class Material:
+    '''Material class. To play around with different material compositions.'''
+    def __init__(self,
+                 atoms:dict,
+                 name:str=None,
+                 grams:float=None,
+                 grams_error:float=None,
+                 mols:float=None,
+                 mols_error:float=None,
+                 molar_mass:float=None,
+                 cross_section:float=None,
+                 ):
+        self.atoms = atoms
+        '''Dict of atoms in the material'''
+        self.name = name
+        self.grams = grams
+        '''mass in grams'''
+        self.grams_error = grams_error
+        '''error of the measured mass in grams'''
+        self.mols = mols
+        '''number of moles'''
+        self.mols_error = mols_error
+        '''error of the number of moles'''
+        self.molar_mass = molar_mass
+        self.cross_section = cross_section
+
+    def set_grams_error(self):
+        if self.grams is None:
+            return
+        decimal_accuracy = len(str(self.grams).split('.')[1])
+        # Calculate the error in grams
+        self.grams_error = 10**(-decimal_accuracy)
+
+    def set_mass(self):
+        '''Set the molar mass of the material.\n
+        If `self.grams` is not `None`, the number of moles will be calculated and overwritten.'''
+        material_grams_per_mol = 0.0
+        for key in self.atoms:
+            material_grams_per_mol += self.atoms[key] * mass[key]
+        self.molar_mass = material_grams_per_mol
+        if self.grams is not None:
+            self.set_grams_error()
+            self.mols = self.grams / material_grams_per_mol
+            self.mols_error = self.mols * np.sqrt((self.grams_error / self.grams)**2)
+    
+    def set_cross_section(self):
+        total_cross_section = 0.0
+        for key in self.atoms:
+            total_cross_section += self.atoms[key] * cross_section[key]
+        self.cross_section = total_cross_section
+
+    def set(self):
+        self.set_mass()
+        self.set_cross_section()
+
+    def print(self):
+        print('\nMATERIAL')
+        if self.name is not None:
+            print(f'Name: {self.name}')
+        if self.grams is not None and self.grams_error is not None:
+            print(f'Grams: {self.grams} +- {self.grams_error} g')
+        elif self.grams is not None:
+            print(f'Grams: {self.grams} g')
+        if self.mols is not None and self.mols_error is not None:
+            print(f'Moles: {self.mols} +- {self.mols_error} mol')
+        elif self.mols is not None:
+            print(f'Moles: {self.mols} mol')
+        if self.molar_mass is not None:
+            print(f'Molar mass: {self.molar_mass} g/mol')
+        if self.cross_section is not None:
+            print(f'Cross section: {self.cross_section} barns')
+        if self.atoms is not None:
+            print(f'Atoms: {self.atoms}')
+        print('')
 
