@@ -6,7 +6,7 @@ This module contains constants and conversion factors.
 '''
 
 
-version = 'v2.0.0'
+version = 'v2.0.1'
 
 
 #############################

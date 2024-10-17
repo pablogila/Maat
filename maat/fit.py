@@ -17,8 +17,7 @@ def plateau(spectra:Spectra, low_cut:float, top_cut:float, df_index:int=0):
         df = df[df[df.columns[0]] <= top_cut]
     mean = df[df.columns[1]].mean()
     std = df[df.columns[1]].std()
-    error = std / np.sqrt(len(df))
-    return mean, error
+    return mean, std
 
 
 def area_under_peak(spectra:Spectra, peak:list, df_index:int=0, errors_as_in_baseline:bool=True, min_as_baseline:bool=False):

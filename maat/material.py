@@ -49,10 +49,12 @@ CH3ND3I.set()
 ##  EXPERIMENTAL VALUES  ##
 ###########################
 MAPI_peaks = {
-    'h6d0' : [36.0, 39.0],
-    'h5d1' : [33.0, 35.0],
-    'h4d2' : [30.7, 33.0],
-    'h3d3' : [28.8, 30.7],
+    'baseline'       : None,
+    'baseline_error' : None,
+    'h6d0'           : [36.0, 39.0],
+    'h5d1'           : [33.0, 35.0],
+    'h4d2'           : [30.7, 33.0],
+    'h3d3'           : [28.8, 30.7],
 }
 '''
 Experimental values of the partially-deuterated amine peaks\n

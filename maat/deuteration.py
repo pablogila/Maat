@@ -10,7 +10,7 @@ from copy import deepcopy
 def impulse_approx(ins: Spectra,
                    material_H: Material,
                    material_D: Material,
-                   threshold: float=None,
+                   threshold: float=600,
                    H_df_index: int=0,
                    D_df_index: int=1
                    ):
@@ -34,26 +34,36 @@ def impulse_approx(ins: Spectra,
     material_H.print()
     material_D.print()
 
-    # Consider the plateau from this threshold onwards, in meV
-    cut = 500 if threshold is None else threshold
     # Make sure units are in meV
     units_in = ins.units
     if units_in not in unit_keys['meV']:
         ins.set_units('meV', units_in)
 
     # Divide the y values of the dataframes by the mols of the material.
-    ins.dataframe[H_df_index][ins.dataframe[H_df_index].columns[1]] = ins.dataframe[H_df_index][ins.dataframe[H_df_index].columns[1]] / material_H.mols
-    ins.dataframe[D_df_index][ins.dataframe[D_df_index].columns[1]] = ins.dataframe[D_df_index][ins.dataframe[D_df_index].columns[1]] / material_D.mols
+    ins.dataframe[H_df_index][ins.dataframe[H_df_index].columns[1]] = ins.dataframe[H_df_index][ins.dataframe[H_df_index].columns[1]]
+    ins.dataframe[D_df_index][ins.dataframe[D_df_index].columns[1]] = ins.dataframe[D_df_index][ins.dataframe[D_df_index].columns[1]]
 
-    plateau_H, plateau_H_error = plateau(ins, cut, None, H_df_index)
-    plateau_D, plateau_D_error = plateau(ins, cut, None, D_df_index)
+    plateau_H, plateau_H_error = plateau(ins, threshold, None, H_df_index)
+    plateau_D, plateau_D_error = plateau(ins, threshold, None, D_df_index)
+
+    plateau_H_normalized = plateau_H / material_H.mols
+    plateau_H_normalized_error = plateau_H_normalized * np.sqrt((plateau_H_error / plateau_H)**2 + (material_H.mols_error / material_H.mols)**2)
+    plateau_D_normalized = plateau_D / material_D.mols
+    plateau_D_normalized_error = plateau_D_normalized * np.sqrt((plateau_D_error / plateau_D)**2 + (material_D.mols_error / material_D.mols)**2)
 
     # ratio if fully protonated = 1.0
-    ratio = plateau_D / plateau_H  # ratio_ideal < ratio < 1.0
+    ratio = plateau_D_normalized / plateau_H_normalized  # ratio_ideal < ratio < 1.0
     ratio_ideal = material_D.cross_section / material_H.cross_section  # 0.0 < ratio_ideal < 1.0
 
+    ratio_error = ratio * np.sqrt((plateau_H_normalized_error / plateau_H_normalized)**2 + (plateau_D_normalized_error / plateau_D_normalized)**2)
+
     deuteration = (1 - ratio) / (1 - ratio_ideal)
-    deuteration_error = deuteration * np.sqrt((plateau_H_error / plateau_H)**2 + (plateau_D_error / plateau_D)**2 + (material_H.mols_error / material_H.mols)**2 + (material_D.mols_error / material_D.mols)**2)
+    deuteration_error = deuteration * np.sqrt((ratio_error / ratio)**2)
+
+    print(f'Plateau H:                 {plateau_H_normalized} +- {plateau_H_normalized_error}')
+    print(f'Plateau D:                 {plateau_D_normalized} +- {plateau_D_normalized_error}')
+    print(f'Ratio D/H plateaus:        {ratio} +- {ratio_error}')
+    print(f'Ratio D/H cross sections:  {ratio_ideal}')
 
     print(f"\nDeuteration: {deuteration:.2f} +- {deuteration_error:.2f}\n")
     return round(deuteration,2), round(deuteration_error,2)
