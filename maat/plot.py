@@ -1,5 +1,5 @@
 from .classes import *
-from . import tools
+from . import normalize
 
 
 '''This module manages the plotting of data.'''

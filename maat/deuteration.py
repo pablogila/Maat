@@ -43,8 +43,8 @@ def impulse_approx(ins: Spectra,
     ins.dataframe[H_df_index][ins.dataframe[H_df_index].columns[1]] = ins.dataframe[H_df_index][ins.dataframe[H_df_index].columns[1]]
     ins.dataframe[D_df_index][ins.dataframe[D_df_index].columns[1]] = ins.dataframe[D_df_index][ins.dataframe[D_df_index].columns[1]]
 
-    plateau_H, plateau_H_error = plateau(ins, threshold, None, H_df_index)
-    plateau_D, plateau_D_error = plateau(ins, threshold, None, D_df_index)
+    plateau_H, plateau_H_error = plateau(ins, [threshold, None], H_df_index)
+    plateau_D, plateau_D_error = plateau(ins, [threshold, None], D_df_index)
 
     plateau_H_normalized = plateau_H / material_H.mols
     plateau_H_normalized_error = plateau_H_normalized * np.sqrt((plateau_H_error / plateau_H)**2 + (material_H.mols_error / material_H.mols)**2)

@@ -2,6 +2,7 @@ from .constants import *
 from .classes import *
 import scipy
 import numpy as np
+from copy import deepcopy
 
 
 '''
@@ -9,9 +10,27 @@ This module contains functions for fitting and analyzing data.
 '''
 
 
-def plateau(spectra:Spectra, low_cut:float, top_cut:float, df_index:int=0):
-    '''Fit the mean value of a plateau and its standard deviation.'''
-    df = spectra.dataframe[df_index]
+def plateau(spectra:Spectra, cuts, df_index:int=0):
+    '''
+    Fit the mean value of a plateau and its standard deviation.\n
+    `mt.fit.plateau(spectra, cuts=[low_cut, high_cut], df_index=0)`\n
+    `cuts`, `low_cut` and/or `top_cut` can be set to None.
+    '''
+    df = deepcopy(spectra.dataframe[df_index])
+    if isinstance(cuts, list):
+        low_cut = cuts[0]
+        if len(cuts) > 1:
+            top_cut = cuts[1]
+        else:
+            top_cut = None
+    elif isinstance(cuts, float):  # If cuts is a float, it is considered as low_cut
+        low_cut = cuts
+        top_cut = None
+    elif cuts is None:
+        low_cut = None
+        top_cut = None
+    else:
+        raise ValueError("plateau: cuts must be a float for the low_cut, or a list")
     if low_cut is not None:
         df = df[df[df.columns[0]] >= low_cut]
     if top_cut is not None:
@@ -45,7 +64,7 @@ def area_under_peak(spectra:Spectra, peak:list, df_index:int=0, errors_as_in_bas
     baseline = peak[2] if len(peak) >= 3 else 0.0
     baseline_error = peak[3] if len(peak) >= 4 else 0.0
 
-    df = spectra.dataframe[df_index]
+    df = deepcopy(spectra.dataframe[df_index])
     df_range = df[(df[df.columns[0]] >= xmin) & (df[df.columns[0]] <= xmax)]
     x = df_range[df.columns[0]].to_numpy()
     y = df_range[df.columns[1]].to_numpy()
