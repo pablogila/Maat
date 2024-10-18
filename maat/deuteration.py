@@ -17,8 +17,7 @@ def impulse_approx(ins: Spectra,
     '''
     Calculate the deuteration levels from INS spectra with the Impulse Approximation.\n
     See https://www.tandfonline.com/doi/full/10.1080/00018732.2017.1317963.\n
-    Protonated and deuterated materials must be specified as dictionaries, such as:\n
-    CH3NH3 = {'C':1, 'N':1, 'H':6}\n
+    Protonated and deuterated materials must be specified as Material objects.\n
     Material mass must be specified in grams.
     '''
     ins = deepcopy(ins)
