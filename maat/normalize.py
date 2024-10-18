@@ -1,11 +1,11 @@
-from .classes import *
-from .fit import *
-from .constants import *
-
-
 '''
 This module contains functions to normalize data and other variables.
 '''
+
+
+from .classes import *
+from .fit import *
+from .constants import *
 
 
 def unit_str(unit:str):

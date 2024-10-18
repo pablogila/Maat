@@ -1,12 +1,12 @@
-import numpy as np
-
-
 '''
 This module contains constants and conversion factors.
 '''
 
 
-version = 'v2.1.0'
+import numpy as np
+
+
+version = 'v2.1.1'
 
 
 #############################

@@ -1,10 +1,10 @@
+'''This module contains different methods to calculate deuteration levels from spectra.'''
+
+
 from .constants import *
 from .classes import *
 from .fit import area_under_peak, ratio_areas, plateau
 from copy import deepcopy
-
-
-'''This module contains different methods to calculate deuteration levels from spectra.'''
 
 
 def impulse_approx(ins: Spectra,

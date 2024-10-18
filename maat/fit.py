@@ -1,13 +1,13 @@
+'''
+This module contains functions for fitting and analyzing data.
+'''
+
+
 from .constants import *
 from .classes import *
 import scipy
 import numpy as np
 from copy import deepcopy
-
-
-'''
-This module contains functions for fitting and analyzing data.
-'''
 
 
 def plateau(spectra:Spectra, cuts, df_index:int=0):

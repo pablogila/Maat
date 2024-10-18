@@ -1,8 +1,8 @@
+'''This module contains premade examples of material compositions and other experimental values.'''
+
+
 from .constants import *
 from .classes import *
-
-
-'''This module contains premade examples of material compositions and other experimental values.'''
 
 
 #############################

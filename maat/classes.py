@@ -1,14 +1,14 @@
+'''
+This module contains the core classes and their functions.
+'''
+
+
 from .constants import *
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from copy import deepcopy
 import os
-
-
-'''
-This module contains the core classes and their functions.
-'''
 
 
 class ScaleRange:

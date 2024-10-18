@@ -1,8 +1,8 @@
+'''This module manages the plotting of data.'''
+
+
 from .classes import *
 from . import normalize
-
-
-'''This module manages the plotting of data.'''
 
 
 def spectra(spectrum:Spectra):

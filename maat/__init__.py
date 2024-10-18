@@ -1,3 +1,8 @@
+'''
+.. include:: ../README.md
+'''
+
+
 from .constants import *
 from .classes import *
 from .utils import *

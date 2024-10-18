@@ -1,10 +1,10 @@
-import os
-import sys
-
-
 '''
 This module contains utility functions.
 '''
+
+
+import os
+import sys
 
 
 def run_here():
