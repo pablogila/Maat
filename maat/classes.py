@@ -126,11 +126,11 @@ class Spectra:
         self = self.set_units(units, units_in)
 
     def set_type(self, type):
-        if type in spectra_type_keys['INS']:
+        if type in spectra_keys['INS']:
             self.type = 'INS'
-        elif type in spectra_type_keys['ATR']:
+        elif type in spectra_keys['ATR']:
             self.type = 'ATR'
-        elif type in spectra_type_keys['RAMAN']:
+        elif type in spectra_keys['RAMAN']:
             self.type = 'RAMAN'
         else:
             self.type = type

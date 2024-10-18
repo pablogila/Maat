@@ -55,13 +55,13 @@ def impulse_approx(ins: Spectra,
     ratio = plateau_D_normalized / plateau_H_normalized  # ratio_ideal < ratio < 1.0
     ratio_ideal = material_D.cross_section / material_H.cross_section  # 0.0 < ratio_ideal < 1.0
 
-    ratio_error = ratio * np.sqrt((plateau_H_normalized_error / plateau_H_normalized)**2 + (plateau_D_normalized_error / plateau_D_normalized)**2)
+    ratio_error = abs(ratio * np.sqrt((plateau_H_normalized_error / plateau_H_normalized)**2 + (plateau_D_normalized_error / plateau_D_normalized)**2))
 
     deuteration = (1 - ratio) / (1 - ratio_ideal)
-    deuteration_error = deuteration * np.sqrt((ratio_error / ratio)**2)
+    deuteration_error = abs(deuteration * np.sqrt((ratio_error / ratio)**2))
 
-    print(f'Plateau H:                 {plateau_H_normalized} +- {plateau_H_normalized_error}')
-    print(f'Plateau D:                 {plateau_D_normalized} +- {plateau_D_normalized_error}')
+    print(f'Normalized plateau H:      {plateau_H_normalized} +- {plateau_H_normalized_error}')
+    print(f'Normalized plateau D:      {plateau_D_normalized} +- {plateau_D_normalized_error}')
     print(f'Ratio D/H plateaus:        {ratio} +- {ratio_error}')
     print(f'Ratio D/H cross sections:  {ratio_ideal}')
 

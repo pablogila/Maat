@@ -6,7 +6,7 @@ This module contains constants and conversion factors.
 '''
 
 
-version = 'v2.0.1'
+version = 'v2.0.2'
 
 
 #############################
@@ -124,9 +124,12 @@ unit_keys = {
     'H'    : ['H', 'h', 'hour', 'hours', 'Hour', 'Hours', 'HOUR', 'HOURS'],
 }
 # Spectra types
-spectra_type_keys = {
+spectra_keys = {
     'INS' : ['INS', 'ins', 'Ins', 'InelasticNeutronScattering'],
     'ATR' : ['ATR', 'atr', 'FTIR', 'ftir', 'AttenuatedTotalReflection'],
     'RAMAN' : ['RAMAN', 'raman', 'Raman'],
+}
+file_keys = {
+    'Error' : ['Error', 'error', 'ERROR', 'Errors', 'errors', 'ERRORS'],
 }
 

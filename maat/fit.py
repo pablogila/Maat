@@ -1,3 +1,4 @@
+from .constants import *
 from .classes import *
 import scipy
 import numpy as np
@@ -16,7 +17,14 @@ def plateau(spectra:Spectra, low_cut:float, top_cut:float, df_index:int=0):
     if top_cut is not None:
         df = df[df[df.columns[0]] <= top_cut]
     mean = df[df.columns[1]].mean()
-    std = df[df.columns[1]].std()
+    std_mean = df[df.columns[1]].std()
+    error_column = next((col for col in file_keys['Error'] if col in df.columns), None)  # Get the error column title
+    if error_column:
+        errors = df[error_column].to_numpy()
+        std_data = np.sqrt(np.sum(errors**2)) / len(errors)
+        std = np.sqrt(std_data**2 + std_mean**2)
+    else:
+        std = std_mean
     return mean, std
 
 
@@ -50,8 +58,9 @@ def area_under_peak(spectra:Spectra, peak:list, df_index:int=0, errors_as_in_bas
 
     area = scipy.integrate.simpson(y, x=x)
 
-    if 'Error' in df_range.columns:
-        point_errors = df_range['Error'].to_numpy()
+    error_column = next((col for col in file_keys['Error'] if col in df_range.columns), None)  # Get the error column title
+    if error_column:
+        point_errors = df_range[error_column].to_numpy()
     else: # Assume the error in each point is the same as the baseline error
         if errors_as_in_baseline == True:
             point_errors = np.full_like(y, baseline_error)
