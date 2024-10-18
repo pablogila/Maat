@@ -91,11 +91,14 @@ class Plotting:
         self.normalize = normalize
         '''`True` or `y` or `Y` to normalize the heights, `area` or `a` or `A` to normalize the areas.'''
         self.show_yticks = show_yticks
+        '''Show or not the yticks on the plot.'''
         if not isinstance(legend, list) and legend is not None and legend != False:
             legend = [legend]
         self.legend = legend
         self.legend_title = legend_title
+        '''Title of the legend.'''
         self.legend_size = legend_size
+        '''Size of the legend, as in matplotlib.'''
 
 
 class Spectra:
@@ -108,24 +111,34 @@ class Spectra:
                  units=None,
                  units_in=None,
                  scale_range:ScaleRange=ScaleRange(),
-                 plotting:Plotting=Plotting(),
-                 atoms:dict=None,
-                 atoms_ref:dict=None,
+                 plotting:Plotting=Plotting()
                  ):
+
+        self.type = None
+        '''Type of the spectra: `INS`, `ATR`, or `RAMAN`.'''
         self.title = title
+        '''Title of the plot.'''
         self.save_as = save_as
+        '''Filename to save the plot.'''
+        self.filename = None
+        '''List containing the filenames with the spectral data.'''
+        self.dataframe = None
+        '''List containing the pandas dataframes with the spectral data.'''
+        self.units = None
+        '''Target units of the spectral data.'''
+        self.units_in = None
+        '''Input units of the spectral data.'''
         self.scale_range = scale_range
+        '''ScaleRange object, used to set the normalization parameters.'''
         self.plotting = plotting
-        self.atoms = atoms
-        '''Dict of atoms in the material'''
-        self.atoms_ref = atoms_ref
-        ''''Dict of atoms used as reference'''
+        '''Plotting object, used to set the plotting options.'''
+
         self = self.set_type(type)
         self = self.set_dataframe(filename, dataframe)
-        self.units = None
         self = self.set_units(units, units_in)
 
     def set_type(self, type):
+        '''Set and normalize the type of the spectra: `INS`, `ATR`, or `RAMAN`.'''
         if type in spectra_keys['INS']:
             self.type = 'INS'
         elif type in spectra_keys['ATR']:
@@ -137,6 +150,7 @@ class Spectra:
         return self
 
     def set_dataframe(self, filename, dataframe):
+        '''Set the dataframes, from the given files or dataframes.'''
         if isinstance(filename, list):
             self.filename = filename
         elif isinstance(filename, str):
@@ -158,7 +172,7 @@ class Spectra:
             units_in=None,
             default_unit='cm-1',
             ):
-        ''''ALWAYS use this method to change units.'''
+        ''''Method to change units. ALWAYS use this method to do that.'''
 
         mev = 'meV'
         cm = 'cm-1'
@@ -254,6 +268,7 @@ class Spectra:
         return self
 
     def read_dataframe(self, filename):
+        '''Read the dataframes from the files.'''
         root = os.getcwd()
         file = os.path.join(root, filename)
         df = pd.read_csv(file, comment='#')
@@ -277,20 +292,24 @@ class Material:
                  cross_section:float=None,
                  ):
         self.atoms = atoms
-        '''Dict of atoms in the material'''
+        '''Dict of atoms in the material.'''
         self.name = name
+        '''Name of the material.'''
         self.grams = grams
-        '''mass in grams'''
+        '''Mass, in grams.'''
         self.grams_error = grams_error
-        '''error of the measured mass in grams'''
+        '''Error of the measured mass in grams. Set automatically with `self.set_mass()`.'''
         self.mols = mols
-        '''number of moles'''
+        '''Number of moles. Set automatically with `self.set_mass()`.'''
         self.mols_error = mols_error
-        '''error of the number of moles'''
+        '''Error of the number of moles. Set automatically with `self.set_mass()`.'''
         self.molar_mass = molar_mass
+        '''Molar mass of the material, in mol/g. Calculated automatically with `self.set_mass()`.'''
         self.cross_section = cross_section
+        '''Cross section of the material, in barns. Calculated automatically with `self.set_cross_section()`.'''
 
     def set_grams_error(self):
+        '''Set the error in grams, based on the number of decimal places.'''
         if self.grams is None:
             return
         decimal_accuracy = len(str(self.grams).split('.')[1])
@@ -310,16 +329,19 @@ class Material:
             self.mols_error = self.mols * np.sqrt((self.grams_error / self.grams)**2)
     
     def set_cross_section(self):
+        '''Set the cross section of the material, based on the atoms dict.'''
         total_cross_section = 0.0
         for key in self.atoms:
             total_cross_section += self.atoms[key] * cross_section[key]
         self.cross_section = total_cross_section
 
     def set(self):
+        '''Set the molar mass, cross section and errors of the material.'''
         self.set_mass()
         self.set_cross_section()
 
     def print(self):
+        '''Print a summary with the material information.'''
         print('\nMATERIAL')
         if self.name is not None:
             print(f'Name: {self.name}')
