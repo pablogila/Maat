@@ -4,7 +4,7 @@
 
 This Python package makes my life easier when analyzing INS, FTIR and Raman CSV data files, among others.  
 
-Check the latest documentation [here](https://pablogila.github.io/Maat/).  
+Check the latest documentation [here](https://pablogila.github.io/Maat/). An offline version is available at `/docs/maat.html` folder.  
 
 ## Install
 

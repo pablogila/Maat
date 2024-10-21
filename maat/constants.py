@@ -6,13 +6,13 @@ This module contains constants and conversion factors.
 import numpy as np
 
 
-version = 'v2.1.2'
+version = 'v2.1.3'
 
 
-#############################
-##   CONVERSION FACTORS    ##
-#############################
-## Energy
+'''---
+# Conversion factors
+## Energy conversion
+'''
 eV_to_meV   = 1000.0
 meV_to_eV   = 0.001
 meV_to_cm   = 8.0655
@@ -27,17 +27,23 @@ cal_to_J    = 4.184
 J_to_cal    = 1 / cal_to_J
 kcal_to_J   = cal_to_J * 1000.0
 J_to_kcal   = 1 / kcal_to_J
-## Distance
+'''---
+## Distance conversion
+'''
 A_to_m      = 1.0e-10
 m_to_A      = 1.0 / A_to_m
 bohr_to_m   = 5.29177210544e-11
 m_to_bohr   = 1.0 / bohr_to_m
 A_to_bohr   = A_to_m * m_to_bohr
 bohr_to_A   = 1.0 / A_to_bohr
-## Mass
+'''---
+## Mass conversion
+'''
 amu_to_kg   = 1.66053906660e-27
 kg_to_amu   = 1.0 / amu_to_kg
-# Pressure
+'''---
+## Pressure conversion
+'''
 GPa_to_Pa   = 1.0e9
 Pa_to_GPa   = 1.0 / GPa_to_Pa
 kbar_to_bar = 1000.0
@@ -46,15 +52,17 @@ Pa_to_bar   = 1.0e-5
 bar_to_Pa   = 1.0 / Pa_to_bar
 GPa_to_kbar = GPa_to_Pa * Pa_to_bar * bar_to_kbar
 kbar_to_GPa = 1.0 / GPa_to_kbar
-## Time
+'''---
+## Time conversion
+'''
 H_to_s      = 3600.0
 s_to_H      = 1.0 / H_to_s
 
 
-#############################
-##   UNIVERSAL CONSTANTS   ##
-#############################
-# Given in SI units unless stated otherwise
+'''---
+# Universal constants
+Given in SI units unless stated otherwise
+'''
 h = 6.62607015e-34      # J s
 h_eV = h * J_to_eV
 hbar = h / (2 * np.pi)  # J s
@@ -64,7 +72,6 @@ hbar_eV = h_eV / (2 * np.pi)
 #############################
 ##      ATOMIC MASSES      ##
 #############################
-# Expressed in atomic mass units (amu) by default
 mass = {
     'H' : 1.00784,
     'D' : 2.014102,
@@ -73,17 +80,21 @@ mass = {
     'I' : 126.90447,
     'Pb': 207.2,
 }
+'''
+Atomic masses, in atomic mass units (amu) by default
+'''
 
 mass_kg = {}
 for key in mass:
     mass_kg[key] = mass[key] * amu_to_kg
+'''
+Atomic masses, in kilograms
+'''
 
 
 #############################################
 ##  TOTAL BOUND SCATTERING CROSS SECTIONS  ##
 #############################################
-# From Felix Fernandez-Alonso 2013 book
-# Expressed in barns (1 b = 100 fm^2)
 cross_section = {
     'H' : 81.67,
     'D' : 7.64,
@@ -92,12 +103,20 @@ cross_section = {
     'I' : 3.81,
     'Pb': 11.118,
 }
+'''
+Total bound scattering cross sections, in barns (1 b = 100 fm$^2$).
+From Felix Fernandez-Alonso 2013 book.
+
+---
+
+## String dictionaries
+To be used in the input correction functions.
+'''
 
 
 #############################
 ##   USER INPUT STRINGS    ##
 #############################
-# Units, used to correct and normalise user inputs
 unit_keys = {
     'mol'  : ['mol', 'mols', 'mole', 'moles', 'Mol', 'Mols', 'Mole', 'Moles', 'MOL', 'MOLS', 'MOLE', 'MOLES'],
     'g'    : ['g', 'gram', 'grams', 'G', 'Gram', 'Grams', 'GRAM', 'GRAMS'],
@@ -123,13 +142,24 @@ unit_keys = {
     's'    : ['s', 'S', 'second', 'seconds', 'Second', 'Seconds', 'SECOND', 'SECONDS'],
     'H'    : ['H', 'h', 'hour', 'hours', 'Hour', 'Hours', 'HOUR', 'HOURS'],
 }
+'''
+Strings with the name of the units, used to correct and normalise user inputs.
+'''
+
 # Spectra types
 spectra_keys = {
     'INS' : ['INS', 'ins', 'Ins', 'InelasticNeutronScattering'],
     'ATR' : ['ATR', 'atr', 'FTIR', 'ftir', 'AttenuatedTotalReflection'],
     'RAMAN' : ['RAMAN', 'raman', 'Raman'],
 }
+'''
+Strings with the name of the spectra types, to correct user inputs.
+'''
+
 file_keys = {
     'Error' : ['Error', 'error', 'ERROR', 'Errors', 'errors', 'ERRORS'],
 }
+'''
+Strings with the name of the file types, to correct user inputs.
+'''
 
