@@ -6,6 +6,7 @@ from . import normalize
 
 
 def spectra(spectrum:Spectra):
+    '''Plot the given spectra, with optional `maat.classes.Plotting` and `maat.classes.ScaleRange` attributes.'''
 
     strings_to_delete_from_name = ['.csv', '.dat', '.txt', '_INS', '_ATR', '_FTIR', '_temp', '_RAMAN', '_Raman', '/data/', 'data/', '/csv/', 'csv/', '/INS/', 'INS/', '/FTIR/', 'FTIR/', '/ATR/', 'ATR/', '_smooth', '_smoothed', '_subtracted', '_cellsubtracted']
     normalize_area_keys = ['area', 'a', 'A']
@@ -75,11 +76,11 @@ def spectra(spectrum:Spectra):
     plt.xlabel(df.columns[0])
     plt.ylabel(df.columns[1])
 
-    add_top_ylim = 0
-    add_low_ylim = 0
+    add_top = 0
+    add_low = 0
     if hasattr(sdata, 'plotting'):
-        add_top_ylim = sdata.plotting.add_top_ylim
-        add_low_ylim = sdata.plotting.add_low_ylim
+        add_top = sdata.plotting.add_top
+        add_low = sdata.plotting.add_low
         if sdata.plotting.log_xscale:
             ax.set_xscale('log')
         if not sdata.plotting.show_yticks:
@@ -89,8 +90,8 @@ def spectra(spectrum:Spectra):
         else:
             ax.legend().set_visible(False)
     
-    low_ylim = low_ylim - add_low_ylim
-    top_ylim = top_ylim + add_top_ylim
+    low_ylim = low_ylim - add_low
+    top_ylim = top_ylim + add_top
 
     ax.set_ylim(bottom=low_ylim)
     ax.set_ylim(top=top_ylim)
@@ -135,8 +136,8 @@ def _get_ylimits(spectrum:Spectra) -> tuple[float, float]:
         if spectrum.scale_range.xmax:
             df0 = df0[(df0[df0.columns[0]] <= spectrum.scale_range.xmax)]
         ymax_on_range = df0[df0.columns[1]].max()
-    if hasattr(spectrum, 'plotting') and spectrum.plotting.zoom_range and ymax_on_range is not None:
-        calculated_top_ylim = ymax_on_range
+        if spectrum.scale_range.zoom and ymax_on_range is not None:
+            calculated_top_ylim = ymax_on_range
 
     return calculated_low_ylim, calculated_top_ylim
 

@@ -61,9 +61,11 @@
 
             <h2>Contents</h2>
             <ul>
-  <li><a href="#maat">Maat</a>
+  <li><a href="#maat-v220">Maat v2.2.0</a>
   <ul>
-    <li><a href="#install">Install</a></li>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#documentation">Documentation</a></li>
+    <li><a href="#license">License</a></li>
   </ul></li>
 </ul>
 
@@ -74,14 +76,14 @@
                     <li><a href="maat/constants.html">constants</a></li>
                     <li><a href="maat/deuteration.html">deuteration</a></li>
                     <li><a href="maat/fit.html">fit</a></li>
-                    <li><a href="maat/material.html">material</a></li>
                     <li><a href="maat/normalize.html">normalize</a></li>
                     <li><a href="maat/plot.html">plot</a></li>
+                    <li><a href="maat/sample.html">sample</a></li>
                     <li><a href="maat/utils.html">utils</a></li>
             </ul>
 
 
-            <footer>Maat v2.1.2 documentation</footer>
+            <footer>Maat v2.2.0 documentation</footer>
 
         <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
             built with <span class="visually-hidden">pdoc</span><img
@@ -95,22 +97,61 @@
                     <h1 class="modulename">
 maat    </h1>
 
-                        <div class="docstring"><h1 id="maat">Maat</h1>
+                        <div class="docstring"><h1 id="maat-v220">Maat v2.2.0</h1>
 
-<p><strong>M</strong>y <strong>A</strong>n<strong>A</strong>lysis <strong>T</strong>ools; or just <strong>Maat</strong>, as the Egyptian goddess of truth, order, and justice.  </p>
+<p>Welcome to <strong>M</strong>y <strong>A</strong>n<strong>A</strong>lysis <strong>T</strong>ools; or just <strong>Maat</strong>, as the Egyptian goddess of truth, order, and justice.  </p>
 
-<p>This Python package makes my life easier when analyzing INS, FTIR and Raman CSV data files, among others.  </p>
+<p>Just as an egyptian goddess fallen from the sky, this Python package makes my life easier when analyzing INS, FTIR and Raman CSV data files, among others.
+Bear in mind that, as any egyptian god, Maat is not perfect and may be full of bugs. Please report any issues you may find.  </p>
 
-<p>Check the latest documentation <a href="https://pablogila.github.io/Maat/">here</a>. An offline version is available at <code>/docs/maat.html</code> folder.  </p>
+<h2 id="installation">Installation</h2>
 
-<h2 id="install">Install</h2>
+<p>As always, it is strongly recommended to install this package inside a Python virtual environment.  </p>
 
-<p>To install, clone the repository from <a href="https://github.com/pablogila/Maat/">GitHub</a> and run:  </p>
+<p>Install the required dependencies by running:  </p>
+
+<div class="pdoc-code codehilite">
+<pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>numpy<span class="w"> </span>pandas<span class="w"> </span>matplotlib<span class="w"> </span>scipy
+</code></pre>
+</div>
+
+<p>To install Maat, clone the repository from <a href="https://github.com/pablogila/Maat/">GitHub</a> and run:  </p>
 
 <div class="pdoc-code codehilite">
 <pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>.
 </code></pre>
 </div>
+
+<h2 id="documentation">Documentation</h2>
+
+<p><a href="https://pablogila.github.io/Maat/">Check the latest documentation online</a>. You can also check the documentation offline at <code>/docs/maat.html</code>.   </p>
+
+<p>The documentation can be compiled automatically using <a href="https://pdoc.dev/">pdoc</a>, by running:</p>
+
+<div class="pdoc-code codehilite">
+<pre><span></span><code><span class="nb">source</span><span class="w"> </span>pdoc.sh
+</code></pre>
+</div>
+
+<h2 id="license">License</h2>
+
+<div class="alert note">
+<em>Note</em>
+<p>TL;DR:
+  Do what you want with this, as long as you share the source code of your modifications, also under GNU AGPLv3.  </p>
+</div>
+
+<p>Copyright (C) 2024  Pablo Gila-Herranz</p>
+
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the attached GNU Affero General Public License for more details.</p>
 </div>
 
                         <input id="mod-maat-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
@@ -125,12 +166,11 @@ maat    </h1>
 </span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="o">*</span>
 </span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="kn">from</span> <span class="nn">.classes</span> <span class="kn">import</span> <span class="o">*</span>
 </span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="o">*</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">material</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">sample</span>
 </span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">normalize</span>
 </span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">fit</span>
 </span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">plot</span>
 </span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">deuteration</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="c1">#from . import deprecated</span>
 </span></pre></div>
 
 

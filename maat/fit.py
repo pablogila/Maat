@@ -12,9 +12,9 @@ from copy import deepcopy
 
 def plateau(spectra:Spectra, cuts, df_index:int=0):
     '''
-    Fit the mean value of a plateau and its standard deviation.\n
-    `mt.fit.plateau(spectra, cuts=[low_cut, high_cut], df_index=0)`\n
-    `cuts`, `low_cut` and/or `top_cut` can be set to None.
+    Fit the mean value of a plateau and its standard deviation.
+    Use as `maat.fit.plateau(spectra, cuts=[low_cut, high_cut], df_index=0)`.
+    Note that `cuts`, `low_cut` and/or `top_cut` can be set to None.
     '''
     df = deepcopy(spectra.dataframe[df_index])
     if isinstance(cuts, list):
@@ -47,15 +47,22 @@ def plateau(spectra:Spectra, cuts, df_index:int=0):
     return mean, std
 
 
-def area_under_peak(spectra:Spectra, peak:list, df_index:int=0, errors_as_in_baseline:bool=True, min_as_baseline:bool=False):
+def area_under_peak(
+    spectra:Spectra,
+    peak:list,
+    df_index:int=0,
+    errors_as_in_baseline:bool=True,
+    min_as_baseline:bool=False
+    ):
     '''
-    peak:list=[xmin, xmax, baseline=0, baseline_error=0]\n
-    If the dataset has no 'Error' column, the error in each point is assumed\n
-    to be the same as the baseline error if `errors_as_in_baseline = True`,\n
-    otherwise it is assumed to be zero.\n
-    If `min_as_baseline = True` and baseline=0, the baseline is assumed to be the minimum value.\n
-    Also, if `min_as_baseline=True` and there are negative areas even after applying the baseline,\n
-    the baseline will be set to the minimum value.
+    Calculate the area under a given peak.
+
+    Peaks must be defined as `peak:list=[xmin, xmax, baseline=0, baseline_error=0]`.
+    If the dataset has no `Error` column, the error for each point is assumed to be the same
+    as the baseline error if `errors_as_in_baseline=True`, otherwise it is assumed to be zero.
+    If `min_as_baseline=True` and `baseline=0`, the baseline is assumed to be the minimum value.
+    Also, if `min_as_baseline=True` and there are negative areas even after applying the baseline,
+    the baseline will be corrected to the minimum value.
     '''
     if len(peak) < 2:
         raise ValueError("area_under_peak: peak must have at least two values: [xmin, xmax]")
@@ -91,12 +98,18 @@ def area_under_peak(spectra:Spectra, peak:list, df_index:int=0, errors_as_in_bas
     return area, area_error
 
 
-def ratio_areas(area:float, area_total:float, area_error:float=0.0, area_total_error:float=0.0, inverse_ratio:bool=False):
+def ratio_areas(
+    area:float,
+    area_total:float,
+    area_error:float=0.0,
+    area_total_error:float=0.0,
+    inverse_ratio:bool=False
+):
     '''
-    To check the ratio between two areas, e.g. to estimate deuteration levels from ATR data.\n
-    The ratio is calculated as `area / area_total`. This behavior is modified if `inverse_ratio = True`,\n
-    so that the ratio is calculated as `(area_total - area) / area_total`.\n
-    Notice that changing the ratio calculation also affects the error propagation.
+    Check the ratio between two areas, e.g. to estimate deuteration levels from ATR data.
+    The ratio is calculated as `area / area_total`. This behavior is modified if `inverse_ratio = True`,
+    so that the ratio is calculated as `(area_total - area) / area_total`.
+    Note that changing the ratio calculation also affects the error propagation.
     '''
     if inverse_ratio:
         ratio = (area_total - area) / area_total
@@ -112,13 +125,4 @@ def ratio_areas(area:float, area_total:float, area_error:float=0.0, area_total_e
             ratio_error = None
     
     return ratio, ratio_error
-
-
-def mean_with_errors(values, errors):
-    '''Calculate the mean value and corresponding errors.'''
-    values = np.array(values)
-    errors = np.array(errors)
-    mean_value = np.mean(values)
-    total_error = np.sqrt(np.sum(np.square(errors)))
-    return mean_value, total_error
 

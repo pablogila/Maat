@@ -9,6 +9,7 @@ from .constants import *
 
 
 def unit_str(unit:str):
+    '''Normalize a given unit string to a standarized unit string, following `maat.constants.unit_keys`.'''
     for key, value in unit_keys.items():
         if unit in value:
             return key
@@ -17,6 +18,7 @@ def unit_str(unit:str):
 
 
 def spectra(spectra:Spectra):
+    '''Normalize the given spectra by height, with optional `maat.classes.ScaleRange` attributes.'''
     sdata = deepcopy(spectra)
     if hasattr(sdata, 'scale_range') and sdata.scale_range is not None:
         scale_range = sdata.scale_range
@@ -70,6 +72,7 @@ def _spectra_y(sdata:Spectra):
 
 
 def area(spectra:Spectra):
+    '''Normalize the given spectra by the area under the datasets, with optional `maat.classes.ScaleRange` attributes.'''
     sdata = deepcopy(spectra)
     if hasattr(sdata, 'scale_range') and sdata.scale_range is not None:
         scale_range = sdata.scale_range

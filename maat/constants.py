@@ -6,12 +6,11 @@ This module contains constants and conversion factors.
 import numpy as np
 
 
-version = 'v2.1.3'
+version = 'v2.2.0'
 
 
 '''---
-# Conversion factors
-## Energy conversion
+# Energy conversion factors
 '''
 eV_to_meV   = 1000.0
 meV_to_eV   = 0.001
@@ -28,7 +27,8 @@ J_to_cal    = 1 / cal_to_J
 kcal_to_J   = cal_to_J * 1000.0
 J_to_kcal   = 1 / kcal_to_J
 '''---
-## Distance conversion
+# Distance conversion factors
+Note that `A` refers to Angstroms.
 '''
 A_to_m      = 1.0e-10
 m_to_A      = 1.0 / A_to_m
@@ -37,12 +37,12 @@ m_to_bohr   = 1.0 / bohr_to_m
 A_to_bohr   = A_to_m * m_to_bohr
 bohr_to_A   = 1.0 / A_to_bohr
 '''---
-## Mass conversion
+# Mass conversion factors
 '''
 amu_to_kg   = 1.66053906660e-27
 kg_to_amu   = 1.0 / amu_to_kg
 '''---
-## Pressure conversion
+# Pressure conversion factors
 '''
 GPa_to_Pa   = 1.0e9
 Pa_to_GPa   = 1.0 / GPa_to_Pa
@@ -53,7 +53,8 @@ bar_to_Pa   = 1.0 / Pa_to_bar
 GPa_to_kbar = GPa_to_Pa * Pa_to_bar * bar_to_kbar
 kbar_to_GPa = 1.0 / GPa_to_kbar
 '''---
-## Time conversion
+# Time conversion factors
+Note that `H` refers to hours.
 '''
 H_to_s      = 3600.0
 s_to_H      = 1.0 / H_to_s
@@ -61,12 +62,16 @@ s_to_H      = 1.0 / H_to_s
 
 '''---
 # Universal constants
-Given in SI units unless stated otherwise
+Given in SI units unless stated otherwise.
 '''
 h = 6.62607015e-34      # J s
+'''Planck constant, in J·s.'''
 h_eV = h * J_to_eV
+'''Planck constant, in eV·s.'''
 hbar = h / (2 * np.pi)  # J s
+'''Reduced Planck constant, in J·s.'''
 hbar_eV = h_eV / (2 * np.pi)
+'''Reduced Planck constant, in eV·s.'''
 
 
 #############################
@@ -81,15 +86,15 @@ mass = {
     'Pb': 207.2,
 }
 '''
-Atomic masses, in atomic mass units (amu) by default
+Atomic masses, in atomic mass units (amu) by default.
 '''
 
 mass_kg = {}
+'''
+Atomic masses, in kilograms.
+'''
 for key in mass:
     mass_kg[key] = mass[key] * amu_to_kg
-'''
-Atomic masses, in kilograms
-'''
 
 
 #############################################
@@ -109,7 +114,7 @@ From Felix Fernandez-Alonso 2013 book.
 
 ---
 
-## String dictionaries
+# String dictionaries
 To be used in the input correction functions.
 '''
 

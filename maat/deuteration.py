@@ -15,10 +15,15 @@ def impulse_approx(ins: Spectra,
                    D_df_index: int=1
                    ):
     '''
-    Calculate the deuteration levels from INS spectra with the Impulse Approximation.\n
-    See https://www.tandfonline.com/doi/full/10.1080/00018732.2017.1317963.\n
-    Protonated and deuterated materials must be specified as Material objects.\n
-    Material mass must be specified in grams.
+    Calculate the deuteration levels from INS spectra with the *Impulse Approximation*,
+    see https://www.tandfonline.com/doi/full/10.1080/00018732.2017.1317963.
+
+    Protonated and deuterated materials must be specified as `maat.classes.Material` objects.
+    The threshold controls the start of the plateau (in meV) to consider Deep Inelastic Neutron Scattering (DINS).
+    The protonated and deuterated dataframe indexes are specified by `H_df_index` and `D_df_index`, respectively.
+
+    > [!WARNING]
+    > This approximation is very sensitive to the mass sample, specified by `maat.classes.Material.grams`.
     '''
     ins = deepcopy(ins)
     material_H = deepcopy(material_H)
@@ -73,12 +78,10 @@ def peaks_mapi(ins:Spectra,
          df_index:int=0,
          ):
     '''
-    Calculate the deuteration of MAPI by integrating the INS disrotatory peaks.\n
-    'peaks' must be a dictionary with the peak limits and the baseline.\n
-    Peak keywords required for partial deuteration: h6d0, h5d1, h4d2, h3d3\n
-    Additional peak keywords required for total deuteration: h2d4, h1d5, h0d6\n
-    If some peak is not present, just set the limits to a small baseline plateau.\n
-    Peaks example:\n
+    Calculate the deuteration of your CH$_3$NH$_3$PbI$_3$ samples by integrating the INS disrotatory peaks,
+    which appear at around 38 meV for the fully protonated sample.
+    Note that `peaks` must be a dictionary with the peak limits and the baseline, as in the example below:
+    ```python
     peaks = {
         'baseline' : None,
         'baseline_error' : None,
@@ -90,6 +93,10 @@ def peaks_mapi(ins:Spectra,
         'h1d5' : [28.0, 30.5],
         'h0d6' : [26.5, 28.0],
         }
+    ```
+    Peak keywords required for partial deuteration: `h6d0`, `h5d1`, `h4d2`, `h3d3`.
+    Additional peak keywords required for total deuteration: `h2d4`, `h1d5`, `h0d6`.
+    If some peak is not present in your sample, just set the limits to a small baseline plateau.
     '''
 
     peak_data = deepcopy(ins)
