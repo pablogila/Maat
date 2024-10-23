@@ -6,7 +6,7 @@ This module contains constants and conversion factors.
 import numpy as np
 
 
-version = 'v2.3.0'
+version = 'v2.3.1'
 
 
 '''---

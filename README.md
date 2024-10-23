@@ -1,4 +1,4 @@
-# Maat v2.3.0
+# Maat v2.3.1
 
 Welcome to **M**y **A**n**A**lysis **T**ools; or just **Maat**, as the Egyptian goddess of truth, order, and justice.  
 
@@ -27,7 +27,7 @@ Install the required dependencies by running:
 pip install numpy pandas matplotlib scipy
 ```
 
-To install Maat, clone the repository from [GitHub](https://github.com/pablogila/Maat/) and run:  
+To install Maat, clone the repository from [GitHub](https://github.com/pablogila/Maat/) or download it as a ZIP and run:  
 ```shell
 pip install .
 ```
@@ -35,8 +35,7 @@ pip install .
 
 ## License
 
-> [!NOTE]TL;DR:
-> Do what you want with this, as long as you share the source code of your modifications, also under GNU AGPLv3.  
+> TL;DR: Do what you want with this, as long as you share the source code of your modifications, also under GNU AGPLv3.  
 
 Copyright (C) 2024  Pablo Gila-Herranz
 
