@@ -11,6 +11,107 @@ from copy import deepcopy
 import os
 
 
+class Plotting:
+    '''
+    Stores plotting options.
+    Mainly to be used inside the `Spectra` class, but it can also be exported and used in other codes.
+    Read by `maat.plot.spectra(Spectra)`.
+    '''
+    def __init__(self,
+                 title:str=None,
+                 low_xlim=None,
+                 top_xlim=None,
+                 low_ylim=None,
+                 top_ylim=None,
+                 add_top:float=0,
+                 add_low:float=0,
+                 offset=True,
+                 normalize:bool=False,
+                 vline:list=None,
+                 vline_error:list=None,
+                 hline:list=None,
+                 hline_error:list=None,
+                 figsize:tuple=None,
+                 log_xscale:bool=False,
+                 show_yticks:bool=False,
+                 xlabel:str=None,
+                 ylabel:str=None,
+                 legend=None,
+                 legend_title:str=None,
+                 legend_size='medium',
+                 legend_loc='best',
+                 ):
+        '''Default values can be overwritten when initializing the Plotting object.'''
+        self.title = title
+        '''Title of the plot. Set it to an empty string to remove the title.'''
+        self.low_xlim = low_xlim
+        '''Minimum x-value to plot.'''
+        self.top_xlim = top_xlim
+        '''Maximum x-value to plot.'''
+        self.low_ylim = low_ylim
+        '''Minimum y-value to plot.'''
+        self.top_ylim = top_ylim
+        '''Maximum y-value to plot.'''
+        self.add_top = add_top
+        '''Add a space on top of the plot.'''
+        self.add_low = add_low
+        '''Add a space on the bottom of the plot.'''
+        self.offset = offset
+        '''
+        If `True`, the plots will be separated automatically.
+        It can be set to a float, to equally offset the plots by a given value.
+        '''
+        self.normalize = normalize
+        '''
+        Normalize or not the plotted spectra.
+        `True` or `'y'` or `'Y'` to normalize the heights, `'area'` or `'a'` or `'A'` to normalize the areas.
+        '''
+        if vline is not None and not isinstance(vline, list):
+            vline = [vline]
+        self.vline = vline
+        '''List of vertical lines to plot.'''
+        if vline_error is not None and not isinstance(vline_error, list):
+            vline_error = [vline_error]
+        self.vline_error = vline_error
+        '''
+        If not `None`, it will plot a shaded area of the specified width around the vertical `vlines`.
+        It can be an array of the same length as `vline`, or a single value to be applied to all.
+        '''
+        self.hline = hline
+        '''TODO: implement horizontal lines'''
+        self.hline_error = hline_error
+        '''TODO: implement error for horizontal lines'''
+        self.figsize = figsize
+        '''Tuple with the figure size, as in matplotlib.'''
+        self.log_xscale = log_xscale
+        '''If true, plot the x-axis in logarithmic scale.'''
+        self.show_yticks = show_yticks
+        '''Show or not the yticks on the plot.'''
+        self.xlabel = xlabel
+        '''
+        Custom label of the x-axis. If `None`, the default label will be used.
+        Set to `''` to remove the label of the horizontal axis.
+        '''
+        self.ylabel = ylabel
+        '''
+        Label of the y-axis. If `None`, the default label will be used.
+        Set to `''` to remove the label of the vertical axis.
+        '''
+        if not isinstance(legend, list) and legend is not None and legend != False:
+            legend = [legend]
+        self.legend = legend
+        '''
+        If `None`, the filenames will be used as legend. Can be a bool to show or hide the plot legend.
+        It can also be an array containing the strings to display; in that case, elements set to `False` will not be displayed.
+        '''
+        self.legend_title = legend_title
+        '''Title of the legend. Defaults to `None`.'''
+        self.legend_size = legend_size
+        '''Size of the legend, as in matplotlib. Defaults to `'medium'`.'''
+        self.legend_loc = legend_loc
+        '''Location of the legend, as in matplotlib. Defaults to `'best'`.'''
+
+
 class ScaleRange:
     '''
     The ScaleRange object is used to handle the normalization of the data inside the specified x-range,
@@ -45,9 +146,9 @@ class ScaleRange:
         self.xmax = xmax
         '''Maximum x-value to normalize the plots.'''
         self.ymin = ymin
-        '''Minimum y-value to normalize the plots.'''
+        '''List with minimum y-values to normalize the plots.'''
         self.ymax = ymax
-        '''Minimum y-value to normalize the plots.
+        '''List with minimum y-values to normalize the plots.
         If `plotting.normalize=True`, the plots are normalized according to the y-values provided.
         '''
         self.zoom = zoom
@@ -55,7 +156,6 @@ class ScaleRange:
         Used when plotting with `maat.plot.spectra()`.
         If true, the data inside the range is scaled up to fit the entire plotting window.
         '''
-
     def set_x(self, xmin:float=None, xmax:float=None):
         '''Override with an horizontal range.'''
         self.xmin = xmin
@@ -63,7 +163,6 @@ class ScaleRange:
         self.ymin = None
         self.ymax = None
         return self
-
     def set_y(self, ymin:list=None, ymax:list=None):
         '''Override with a vertical range.'''
         self.xmin = None
@@ -73,111 +172,76 @@ class ScaleRange:
         return self
 
 
-class Plotting:
-    '''Plotting options. To be used inside the `Spectra` class. Read by `maat.plot.spectra()`.'''
-    def __init__(self,
-                 low_xlim=0,
-                 top_xlim=50,
-                 low_ylim=None,
-                 top_ylim=None,
-                 add_top:float=0,
-                 add_low:float=0,
-                 hline:list=None,
-                 hline_error:list=None,
-                 vline:list=None,
-                 vline_error:list=None,
-                 figsize:tuple=None,
-                 log_xscale:bool=False,
-                 offset=True,
-                 normalize:bool=False,
-                 show_yticks:bool=False,
-                 legend=None,
-                 legend_title:str=None,
-                 legend_size='medium',
-                 ):
-        '''Default values can be overwritten when initializing the Plotting object.'''
-        self.low_xlim = low_xlim
-        '''Minimum x-value to plot.'''
-        self.top_xlim = top_xlim
-        '''Maximum x-value to plot.'''
-        self.low_ylim = low_ylim
-        '''Minimum y-value to plot.'''
-        self.top_ylim = top_ylim
-        '''Maximum y-value to plot.'''
-        self.add_top = add_top
-        '''Add a given separation on top of the plot.'''
-        self.add_low = add_low
-        '''Add a given separation on the bottom of the plot.'''
-        self.hline = hline
-        '''TODO: implement horizontal lines'''
-        self.hline_error = hline_error
-        '''TODO: implement error for horizontal lines'''
-        if vline is not None and not isinstance(vline, list):
-            vline = [vline]
-        self.vline = vline
-        '''List of vertical lines to plot.'''
-        if vline_error is not None and not isinstance(vline_error, list):
-            vline_error = [vline_error]
-        self.vline_error = vline_error
-        '''
-        If `vline_error` is not `None`, it will plot a shaded area of the specified width around the vertical lines.
-        It can be an array of the same length as `vline`, or a single value to be applied to all.
-        '''
-        self.figsize = figsize
-        '''Tuple with the figure size, as in matplotlib.'''
-        self.log_xscale = log_xscale
-        '''If true, plot the x-axis in logarithmic scale.'''
-        self.offset = offset
-        '''If `True`, the plots will be separated automatically. It can be set to a float, to offset the plots by a given value.'''
-        self.normalize = normalize
-        '''`True` or `'y'` or `'Y'` to normalize the heights, `'area'` or `'a'` or `'A'` to normalize the areas.'''
-        self.show_yticks = show_yticks
-        '''Show or not the yticks on the plot.'''
-        if not isinstance(legend, list) and legend is not None and legend != False:
-            legend = [legend]
-        self.legend = legend
-        '''
-        If `None`, the filenames will be used as legend. Can be a bool to show or hide the plot legend.
-        It can also be an array containing the strings to display. Elements set to `False` will not be displayed.
-        '''
-        self.legend_title = legend_title
-        '''Title of the legend.'''
-        self.legend_size = legend_size
-        '''Size of the legend, as in matplotlib.'''
-
-
 class Spectra:
+    '''
+    Spectra object. Used to load and process spectral data.
+
+    **Use example:** to load two INS spectra CSV files from MANTID with cm$^{-1}$ as input units,
+    and plot them in meV units, normalizing their heights over the range from 20 to 50 meV:
+    ```python
+    import maat as mt
+    ins = mt.Spectra(
+        type='INS',
+        filename=['example_1.csv', 'example_2.csv'],
+        units_in='cm-1',
+        units='meV',
+        plotting=mt.Plotting(
+            title='Calculated INS',
+            normalize=True,
+            ),
+        scale_range=mt.ScaleRange(
+            xmin=20,
+            xmax=50,
+            ),
+        )
+    mt.plot.spectra(ins)
+    ```
+
+    Check more use examples in the '/examples/' folder.
+    '''
     def __init__(self,
                  type:str=None,
-                 title:str=None,
+                 comment:str=None,
                  save_as:str=None,
                  filename=None,
                  dataframe=None,
                  units=None,
                  units_in=None,
+                 plotting:Plotting=Plotting(),
                  scale_range:ScaleRange=ScaleRange(),
-                 plotting:Plotting=Plotting()
                  ):
         '''All values can be set when initializing the Spectra object.'''
-
         self.type = None
-        '''Type of the spectra: `INS`, `ATR`, or `RAMAN`.'''
-        self.title = title
-        '''Title of the plot.'''
+        '''Type of the spectra: `'INS'`, `'ATR'`, or `'RAMAN'`.'''
+        self.comment = comment
+        '''Custom comment. If `Plotting.title` is None,  Title of the plot.'''
         self.save_as = save_as
         '''Filename to save the plot.'''
         self.filename = None
-        '''List containing the filenames with the spectral data.'''
+        '''
+        List containing the filenames with the spectral data.
+        Loaded automatically with Pandas at initialization.
+        In order for Pandas to read the files properly, note that the column lines must start by `#`.
+        Any additional line that is not data must be removed or commented with `#`.
+        CSV files must be formatted with the first column as the energy or energy transfer,
+        and the second column with the intensity or absorbance, depending on the case. An additional third `'Error'` column can be used.
+        '''
         self.dataframe = None
-        '''List containing the pandas dataframes with the spectral data.'''
+        '''
+        List containing the pandas dataframes with the spectral data.
+        Loaded automatically from the filenames at initialization.
+        '''
         self.units = None
-        '''Target units of the spectral data.'''
+        '''Target units of the spectral data. Can be `'meV'` or `'cm-1'`.'''
         self.units_in = None
-        '''Input units of the spectral data.'''
-        self.scale_range = scale_range
-        '''`ScaleRange` object, used to set the normalization parameters.'''
+        '''
+        Input units of the spectral data, used in the input CSV files. Can be `'meV'` or `'cm-1'`.
+        If the input CSV files have different units, it can also be set as a list, eg. `['meV', 'cm-1', 'cm-1']`.
+        '''
         self.plotting = plotting
         '''`Plotting` object, used to set the plotting options.'''
+        self.scale_range = scale_range
+        '''`ScaleRange` object, used to set the normalization parameters.'''
 
         self = self._set_type(type)
         self = self._set_dataframe(filename, dataframe)
@@ -229,15 +293,19 @@ class Spectra:
             units_in=None,
             default_unit='cm-1',
             ):
-        ''''Method to change units. ALWAYS use this method to do that.'''
-
+        '''
+        Method to change between spectral units. ALWAYS use this method to do that.
+        For example, to change from cm-1 to meV:
+        ```python
+        Spectra.set_units('meV', 'cm-1')
+        ```
+        '''
         mev = 'meV'
         cm = 'cm-1'
         unit_format={
-                mev: ['mev', 'meV', 'MEV'],
-                cm: ['cm', 'CM', 'cm-1', 'cm^-1'],
+                mev: unit_keys['meV'],
+                cm: unit_keys['cm-1'] + unit_keys['cm'],
             }
-
         if self.units is not None:
             units_in = deepcopy(self.units)
             self.units = units
@@ -250,7 +318,6 @@ class Spectra:
         elif units is None and units_in is not None:
             units_in = None
             self.units = deepcopy(units_in)
-
         if isinstance(units_in, list):
             for i, unit_in in enumerate(units_in):
                 for key, value in unit_format.items():
@@ -261,14 +328,12 @@ class Spectra:
                 units_in = units_in * len(self.filename)
             elif len(units_in) != len(self.filename):
                 raise ValueError("units_in must be a list of the same length as filenames.")
-
         if isinstance(units_in, str):
             for key, value in unit_format.items():
                 if units_in in value:
                     units_in = key
                     break
             units_in = [units_in] * len(self.filename)
-        
         if isinstance(self.units, list):
             for i, unit in enumerate(self.units):
                 for key, value in unit_format.items():
@@ -279,14 +344,12 @@ class Spectra:
                 self.units = self.units * len(self.filename)
             elif len(self.units) != len(self.filename):
                 raise ValueError("units_in must be a list of the same length as filenames.")
-
         if isinstance(self.units, str):
             for key, value in unit_format.items():
                 if self.units in value:
                     self.units = key
                     break
             self.units = [self.units] * len(self.filename)
-        
         if units_in is None:
             return self
         # Otherwise, convert the dataframes
@@ -301,7 +364,6 @@ class Spectra:
                 self.dataframe[i][self.dataframe[i].columns[0]] = self.dataframe[i][self.dataframe[i].columns[0]] * meV_to_cm
             else:
                 raise ValueError(f"Unit conversion error between '{unit}' and '{units_in[i]}'")
-
         # Rename dataframe columns
         E_units = None
         for i, df in enumerate(self.dataframe):
@@ -311,7 +373,6 @@ class Spectra:
                 E_units = 'cm-1'
             else:
                 E_units = self.units[i]
-
             if self.type == 'INS':
                 if self.dataframe[i].shape[1] == 3:
                     self.dataframe[i].columns = [f'Energy transfer / {E_units}', 'S(Q,E)', 'Error']
@@ -321,12 +382,15 @@ class Spectra:
                 self.dataframe[i].columns = [f'Wavenumber / {E_units}', 'Absorbance']
             elif self.type == 'RAMAN':
                 self.dataframe[i].columns = [f'Raman shift / {E_units}', 'Counts']
-
         return self
 
 
 class Material:
-    '''Material class. To play around with different material compositions.'''
+    '''
+    Material class.
+    Used to calculate molar masses and cross sections,
+    and to pass data to different analysis functions such as `Maat.deuteration.impulse_approx().`
+    '''
     def __init__(self,
                  atoms:dict,
                  name:str=None,
@@ -348,15 +412,15 @@ class Material:
         self.grams = grams
         '''Mass, in grams.'''
         self.grams_error = grams_error
-        '''Error of the measured mass in grams. Set automatically with `self.set_mass()`.'''
+        '''Error of the measured mass in grams. Set automatically with `self.set()`.'''
         self.mols = mols
-        '''Number of moles. Set automatically with `self.set_mass()`.'''
+        '''Number of moles. Set automatically with `self.set()`.'''
         self.mols_error = mols_error
-        '''Error of the number of moles. Set automatically with `self.set_mass()`.'''
+        '''Error of the number of moles. Set automatically with `self.set()`.'''
         self.molar_mass = molar_mass
-        '''Molar mass of the material, in mol/g. Calculated automatically with `self.set_mass()`.'''
+        '''Molar mass of the material, in mol/g. Calculated automatically with `self.set()`.'''
         self.cross_section = cross_section
-        '''Cross section of the material, in barns. Calculated automatically with `self.set_cross_section()`.'''
+        '''Cross section of the material, in barns. Calculated automatically with `self.set()`.'''
 
     def _set_grams_error(self):
         '''Set the error in grams, based on the number of decimal places.'''

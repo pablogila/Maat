@@ -1,9 +1,21 @@
-# Maat v2.2.0
+# Maat v2.3.0
 
 Welcome to **M**y **A**n**A**lysis **T**ools; or just **Maat**, as the Egyptian goddess of truth, order, and justice.  
 
 Just as an egyptian goddess fallen from the sky, this Python package makes my life easier when analyzing INS, FTIR and Raman CSV data files, among others.
 Bear in mind that, as any egyptian god, Maat is not perfect and may be full of bugs. Please report any issues you may find.  
+
+
+## Documentation
+
+[Check the latest documentation online](https://pablogila.github.io/Maat/).
+You can also check the documentation offline at `/docs/maat.html`.
+Usage examples are available in the `/examples/` folder.  
+
+The documentation can be compiled automatically using [pdoc](https://pdoc.dev/), by running:
+```shell
+source pdoc.sh
+```
 
 
 ## Installation
@@ -18,16 +30,6 @@ pip install numpy pandas matplotlib scipy
 To install Maat, clone the repository from [GitHub](https://github.com/pablogila/Maat/) and run:  
 ```shell
 pip install .
-```
-
-
-## Documentation
-
-[Check the latest documentation online](https://pablogila.github.io/Maat/). You can also check the documentation offline at `/docs/maat.html`.   
-
-The documentation can be compiled automatically using [pdoc](https://pdoc.dev/), by running:
-```shell
-source pdoc.sh
 ```
 
 

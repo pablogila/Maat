@@ -31,9 +31,14 @@ def spectra(spectrum:Spectra):
     
     low_xlim = None
     top_xlim = None
-    if hasattr(sdata, 'plotting') and sdata.plotting is not None:
+    if getattr(sdata, 'plotting', None) is not None:
+        title = sdata.plotting.title
         low_xlim = sdata.plotting.low_xlim
         top_xlim = sdata.plotting.top_xlim
+        xlabel = sdata.plotting.xlabel if sdata.plotting.xlabel is not None else sdata.dataframe[0].columns[0]
+        ylabel = sdata.plotting.ylabel if sdata.plotting.ylabel is not None else sdata.dataframe[0].columns[1]
+    else:
+        title = sdata.comment
 
     number_of_plots = len(sdata.dataframe)
     height = top_ylim - low_ylim
@@ -72,9 +77,9 @@ def spectra(spectrum:Spectra):
                 clean_name = clean_name.replace('_', ' ')
                 df.plot(x=df.columns[0], y=df.columns[1], label=clean_name, ax=ax)
 
-    plt.title(sdata.title)
-    plt.xlabel(df.columns[0])
-    plt.ylabel(df.columns[1])
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
 
     add_top = 0
     add_low = 0
@@ -86,7 +91,7 @@ def spectra(spectrum:Spectra):
         if not sdata.plotting.show_yticks:
             ax.set_yticks([])
         if sdata.plotting.legend != False:
-            ax.legend(title=sdata.plotting.legend_title, fontsize=sdata.plotting.legend_size)
+            ax.legend(title=sdata.plotting.legend_title, fontsize=sdata.plotting.legend_size, loc=sdata.plotting.legend_loc)
         else:
             ax.legend().set_visible(False)
     
