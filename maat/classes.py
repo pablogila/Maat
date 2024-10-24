@@ -1,5 +1,23 @@
 '''
+## Description
 This module contains the core classes and their functions.
+These are the objects that allow you to load and manipulate data.
+Any class can be instantiated directly: for example, to create a new
+`Spectra` class for your data, you just need to call `maat.Spectra(options)` as described below:
+```python
+import maat as mt
+ins = mt.Spectra(
+    # Options here
+    )
+```
+
+## Index
+- `Spectra`: The main class used by Maat, is used to load and process spectral data.
+- `Plotting`: Stores plotting options. Used inside `Spectra.plotting`. This class can also be exported to be used in other codes.
+- `ScaleRange`: Used to handle the normalization of the data inside the specified range of values. Used inside `Spectra.scale_range`.
+- `Material`: Used to store and calculate material parameters, such as molar masses and cross sections.
+
+---
 '''
 
 
@@ -19,18 +37,13 @@ class Plotting:
     '''
     def __init__(self,
                  title:str=None,
-                 low_xlim=None,
-                 top_xlim=None,
-                 low_ylim=None,
-                 top_ylim=None,
-                 add_top:float=0,
-                 add_low:float=0,
+                 xlim=None,
+                 ylim=None,
+                 margins=None,
                  offset=True,
                  normalize:bool=False,
                  vline:list=None,
                  vline_error:list=None,
-                 hline:list=None,
-                 hline_error:list=None,
                  figsize:tuple=None,
                  log_xscale:bool=False,
                  show_yticks:bool=False,
@@ -40,22 +53,17 @@ class Plotting:
                  legend_title:str=None,
                  legend_size='medium',
                  legend_loc='best',
+                 extra:dict=None,
                  ):
         '''Default values can be overwritten when initializing the Plotting object.'''
         self.title = title
         '''Title of the plot. Set it to an empty string to remove the title.'''
-        self.low_xlim = low_xlim
-        '''Minimum x-value to plot.'''
-        self.top_xlim = top_xlim
-        '''Maximum x-value to plot.'''
-        self.low_ylim = low_ylim
-        '''Minimum y-value to plot.'''
-        self.top_ylim = top_ylim
-        '''Maximum y-value to plot.'''
-        self.add_top = add_top
-        '''Add a space on top of the plot.'''
-        self.add_low = add_low
-        '''Add a space on the bottom of the plot.'''
+        self.xlim = self._set_limits(xlim)
+        '''List with the x-limits of the plot, as in `[xlim_low, xlim_top]`.'''
+        self.ylim = self._set_limits(ylim)
+        '''List with the y-limits of the plot, as in `[ylim_low, ylim_top]`.'''
+        self.margins = self._set_limits(margins)
+        '''List with additional margins at the bottom and top of the plot, as in `[low_margin, top_margin]`.'''
         self.offset = offset
         '''
         If `True`, the plots will be separated automatically.
@@ -69,18 +77,14 @@ class Plotting:
         if vline is not None and not isinstance(vline, list):
             vline = [vline]
         self.vline = vline
-        '''List of vertical lines to plot.'''
+        '''Vertical line/s to plot. Can be an int or float with the x-position, or a list with several ones.'''
         if vline_error is not None and not isinstance(vline_error, list):
             vline_error = [vline_error]
         self.vline_error = vline_error
         '''
-        If not `None`, it will plot a shaded area of the specified width around the vertical `vlines`.
+        If not `None`, it will plot a shaded area of the specified width around the vertical lines specified at `vline`.
         It can be an array of the same length as `vline`, or a single value to be applied to all.
         '''
-        self.hline = hline
-        '''TODO: implement horizontal lines'''
-        self.hline_error = hline_error
-        '''TODO: implement error for horizontal lines'''
         self.figsize = figsize
         '''Tuple with the figure size, as in matplotlib.'''
         self.log_xscale = log_xscale
@@ -110,6 +114,28 @@ class Plotting:
         '''Size of the legend, as in matplotlib. Defaults to `'medium'`.'''
         self.legend_loc = legend_loc
         '''Location of the legend, as in matplotlib. Defaults to `'best'`.'''
+        self.extra = extra
+        '''Dictionary with extra options to be passed to a custom plotting function, eg. `{'color':'red'}`, etc.'''
+
+    def _set_limits(self, limits) -> list:
+        '''Set the x and y limits of the plot.'''
+        if limits is None:
+            return [None, None]
+        if isinstance(limits, tuple):
+            limits = list(limits)
+        if isinstance(limits, list):
+            if len(limits) == 0:
+                return [None, None]
+            if len(limits) == 1:
+                return [None, limits[0]]
+            if len(limits) == 2:
+                return limits
+            else:
+                return limits[:2]
+        if isinstance(limits, int) or isinstance(limits, float):
+            return [None, limits]
+        else:
+            raise ValueError(f"Unknown plotting limits: Must be specified as a list of two elements, as [low_limit, high_limit]. Got: {limits}")
 
 
 class ScaleRange:
@@ -406,9 +432,9 @@ class Material:
         to only set the atoms and the grams (and the name), and calculate the rest with `Material.set()`.
         '''
         self.atoms = atoms
-        '''Dict of atoms in the material.'''
+        '''Dict of atoms in the material, as in `{H: 6, C:1, N:1}`.'''
         self.name = name
-        '''Name of the material.'''
+        '''String with the name of the material.'''
         self.grams = grams
         '''Mass, in grams.'''
         self.grams_error = grams_error

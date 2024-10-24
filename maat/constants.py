@@ -1,16 +1,33 @@
 '''
-This module contains constants and conversion factors.
+## Description
+This module contains useful constants and conversion factors.
+Any value from this module can be acessed directly by calling it as `maat.value`.
+For example, to call the planck constant in eV·s, you can use:
+```python
+import maat as mt
+h_eV = mt.h_eV
+```
+
+## Index
+- [Energy conversion factors](#energy-conversion-factors)
+- [Distance conversion factors](#distance-conversion-factors)
+- [Mass conversion factors](#mass-conversion-factors)
+- [Pressure conversion factors](#pressure-conversion-factors)
+- [Time conversion factors](#time-conversion-factors)
+- [Universal constants](#universal-constants)
+
+---
 '''
 
 
 import numpy as np
 
 
-version = 'v2.3.1'
+version = 'v2.4.0'
 
 
 '''---
-# Energy conversion factors
+## Energy conversion factors
 '''
 eV_to_meV   = 1000.0
 meV_to_eV   = 0.001
@@ -26,8 +43,9 @@ cal_to_J    = 4.184
 J_to_cal    = 1 / cal_to_J
 kcal_to_J   = cal_to_J * 1000.0
 J_to_kcal   = 1 / kcal_to_J
+
 '''---
-# Distance conversion factors
+## Distance conversion factors
 Note that `A` refers to Angstroms.
 '''
 A_to_m      = 1.0e-10
@@ -36,13 +54,15 @@ bohr_to_m   = 5.29177210544e-11
 m_to_bohr   = 1.0 / bohr_to_m
 A_to_bohr   = A_to_m * m_to_bohr
 bohr_to_A   = 1.0 / A_to_bohr
+
 '''---
-# Mass conversion factors
+## Mass conversion factors
 '''
 amu_to_kg   = 1.66053906660e-27
 kg_to_amu   = 1.0 / amu_to_kg
+
 '''---
-# Pressure conversion factors
+## Pressure conversion factors
 '''
 GPa_to_Pa   = 1.0e9
 Pa_to_GPa   = 1.0 / GPa_to_Pa
@@ -52,16 +72,16 @@ Pa_to_bar   = 1.0e-5
 bar_to_Pa   = 1.0 / Pa_to_bar
 GPa_to_kbar = GPa_to_Pa * Pa_to_bar * bar_to_kbar
 kbar_to_GPa = 1.0 / GPa_to_kbar
+
 '''---
-# Time conversion factors
+## Time conversion factors
 Note that `H` refers to hours.
 '''
 H_to_s      = 3600.0
 s_to_H      = 1.0 / H_to_s
 
-
 '''---
-# Universal constants
+## Universal constants
 Given in SI units unless stated otherwise.
 '''
 h = 6.62607015e-34      # J s
@@ -73,10 +93,7 @@ hbar = h / (2 * np.pi)  # J s
 hbar_eV = h_eV / (2 * np.pi)
 '''Reduced Planck constant, in eV·s.'''
 
-
-#############################
-##      ATOMIC MASSES      ##
-#############################
+# Atomic masses
 mass = {
     'H' : 1.00784,
     'D' : 2.014102,
@@ -88,7 +105,6 @@ mass = {
 '''
 Atomic masses, in atomic mass units (amu) by default.
 '''
-
 mass_kg = {}
 '''
 Atomic masses, in kilograms.
@@ -96,10 +112,7 @@ Atomic masses, in kilograms.
 for key in mass:
     mass_kg[key] = mass[key] * amu_to_kg
 
-
-#############################################
-##  TOTAL BOUND SCATTERING CROSS SECTIONS  ##
-#############################################
+# Total bound scattering cross sections
 cross_section = {
     'H' : 81.67,
     'D' : 7.64,
@@ -114,14 +127,10 @@ From Felix Fernandez-Alonso 2013 book.
 
 ---
 
-# String dictionaries
+## String dictionaries
 To be used in the input correction functions.
 '''
 
-
-#############################
-##   USER INPUT STRINGS    ##
-#############################
 unit_keys = {
     'mol'  : ['mol', 'mols', 'mole', 'moles', 'Mol', 'Mols', 'Mole', 'Moles', 'MOL', 'MOLS', 'MOLE', 'MOLES'],
     'g'    : ['g', 'gram', 'grams', 'G', 'Gram', 'Grams', 'GRAM', 'GRAMS'],

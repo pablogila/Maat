@@ -26,15 +26,15 @@ def spectra(spectrum:Spectra):
 
     calculated_low_ylim, calculated_top_ylim = _get_ylimits(sdata)
 
-    low_ylim = calculated_low_ylim if not hasattr(sdata, 'plotting') or sdata.plotting.low_ylim is None else sdata.plotting.low_ylim
-    top_ylim = calculated_top_ylim if not hasattr(sdata, 'plotting') or sdata.plotting.top_ylim is None else sdata.plotting.top_ylim
+    low_ylim = calculated_low_ylim if not hasattr(sdata, 'plotting') or sdata.plotting.ylim[0] is None else sdata.plotting.ylim[0]
+    top_ylim = calculated_top_ylim if not hasattr(sdata, 'plotting') or sdata.plotting.ylim[1] is None else sdata.plotting.ylim[1]
     
     low_xlim = None
     top_xlim = None
     if getattr(sdata, 'plotting', None) is not None:
         title = sdata.plotting.title
-        low_xlim = sdata.plotting.low_xlim
-        top_xlim = sdata.plotting.top_xlim
+        low_xlim = sdata.plotting.xlim[0]
+        top_xlim = sdata.plotting.xlim[1]
         xlabel = sdata.plotting.xlabel if sdata.plotting.xlabel is not None else sdata.dataframe[0].columns[0]
         ylabel = sdata.plotting.ylabel if sdata.plotting.ylabel is not None else sdata.dataframe[0].columns[1]
     else:
@@ -52,7 +52,7 @@ def spectra(spectrum:Spectra):
             reverse_i = (number_of_plots - 1) - i
             df[df.columns[1]] = df[df.columns[1]] + (reverse_i * offset)
     _, calculated_top_ylim = _get_ylimits(sdata)
-    top_ylim = calculated_top_ylim if not hasattr(sdata, 'plotting') or sdata.plotting.top_ylim is None else sdata.plotting.top_ylim
+    top_ylim = calculated_top_ylim if not hasattr(sdata, 'plotting') or sdata.plotting.ylim[1] is None else sdata.plotting.ylim[1]
 
     if hasattr(sdata, 'plotting') and hasattr(sdata.plotting, 'legend'):
         if sdata.plotting.legend == False:
@@ -84,8 +84,8 @@ def spectra(spectrum:Spectra):
     add_top = 0
     add_low = 0
     if hasattr(sdata, 'plotting'):
-        add_top = sdata.plotting.add_top
-        add_low = sdata.plotting.add_low
+        add_low = sdata.plotting.margins[0]
+        add_top = sdata.plotting.margins[1]
         if sdata.plotting.log_xscale:
             ax.set_xscale('log')
         if not sdata.plotting.show_yticks:
@@ -124,10 +124,10 @@ def _get_ylimits(spectrum:Spectra) -> tuple[float, float]:
     all_y_values = []
     for df in spectrum.dataframe:
         df_trim = df
-        if hasattr(spectrum, 'plotting') and spectrum.plotting.low_xlim is not None:
-            df_trim = df_trim[(df_trim[df_trim.columns[0]] >= spectrum.plotting.low_xlim)]
-        if hasattr(spectrum, 'plotting') and spectrum.plotting.top_xlim is not None:
-            df_trim = df_trim[(df_trim[df_trim.columns[0]] <= spectrum.plotting.top_xlim)]
+        if hasattr(spectrum, 'plotting') and spectrum.plotting.xlim[0] is not None:
+            df_trim = df_trim[(df_trim[df_trim.columns[0]] >= spectrum.plotting.xlim[0])]
+        if hasattr(spectrum, 'plotting') and spectrum.plotting.xlim[1] is not None:
+            df_trim = df_trim[(df_trim[df_trim.columns[0]] <= spectrum.plotting.xlim[1])]
         all_y_values.extend(df_trim[df_trim.columns[1]].tolist())
     calculated_low_ylim = min(all_y_values)
     calculated_top_ylim = max(all_y_values)
