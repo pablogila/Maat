@@ -1,4 +1,4 @@
-# Maat v2.4.0
+# Maat v2.4.1
 
 Welcome to **M**y **A**n**A**lysis **T**ools; or just **Maat**, as the Egyptian goddess of truth, order, and justice.  
 
@@ -23,20 +23,20 @@ pip install .
 
 ## Usage
 
-You can check the latest documentation [online](https://pablogila.github.io/Maat/).
-An offline copy is also available [here](docs/maat.html).
+You can [check the latest documentation online](https://pablogila.github.io/Maat/).
+An offline copy is also available in `/docs/maat.html`.
 Note that code examples are also provided in the `/examples/` folder.  
 
 Maat has the following submodules:
 
-- [Classes](docs/maat/classes.html). Here are the objects that allow you to work with the data. Loaded directly as `maat.Class(options)`.
-- [Constants](docs/maat/constants.html). Common constants and conversion factors. Loaded directly as `maat.value`.
-- [Fit](docs/maat/fit.html). Fitting operations.
-- [Normalize](docs/maat/normalize.html). Normalization operations.
-- [Plot](docs/maat/plot.html). Plotting operations.
-- [Deuteration](docs/maat/deuteration.html). Deuteration estimation.
-- [Sample](docs/maat/sample.html). Sample data for testing.
-- [Utils](docs/maat/utils.html). Utility functions to make things easier.
+- [Classes](https://pablogila.github.io/Maat/maat/classes.html). Here are the objects that allow you to work with the data. Loaded directly as `maat.Class(options)`.
+- [Constants](https://pablogila.github.io/Maat/maat/constants.html). Common constants and conversion factors. Loaded directly as `maat.value`.
+- [Fit](https://pablogila.github.io/Maat/maat/fit.html). Fitting operations.
+- [Normalize](https://pablogila.github.io/Maat/maat/normalize.html). Normalization operations.
+- [Plot](https://pablogila.github.io/Maat/maat/plot.html). Plotting operations.
+- [Deuteration](https://pablogila.github.io/Maat/maat/deuteration.html). Deuteration estimation.
+- [Sample](https://pablogila.github.io/Maat/maat/sample.html). Sample data for testing.
+- [Utils](https://pablogila.github.io/Maat/maat/utils.html). Utility functions to make things easier.
 
 The documentation can be compiled automatically using [pdoc](https://pdoc.dev/), by running:
 ```shell

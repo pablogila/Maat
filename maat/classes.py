@@ -201,6 +201,7 @@ class ScaleRange:
 class Spectra:
     '''
     Spectra object. Used to load and process spectral data.
+    Most functions present in Maat receive this object as input.
 
     **Use example:** to load two INS spectra CSV files from MANTID with cm$^{-1}$ as input units,
     and plot them in meV units, normalizing their heights over the range from 20 to 50 meV:
@@ -223,7 +224,9 @@ class Spectra:
     mt.plot.spectra(ins)
     ```
 
-    Check more use examples in the '/examples/' folder.
+    Check more use examples in the `/examples/` folder.
+
+    Below is a list of the available parameters for the Spectra object, along with their descriptions.
     '''
     def __init__(self,
                  type:str=None,

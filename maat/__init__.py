@@ -4,8 +4,8 @@
 
 ## Usage
 
-You can check the latest documentation [online](https://pablogila.github.io/Maat/).
-An offline copy is also available [here](./maat.html).
+You can [check the latest documentation online](https://pablogila.github.io/Maat/).
+An offline copy is also available in `/docs/maat.html`.
 Note that code examples are also provided in the `/examples/` folder.  
 
 Maat has the following submodules:
