@@ -1,5 +1,13 @@
 '''
+# Description
 This module contains functions to normalize data and other variables.
+
+# Index
+- `unit_str()`
+- `spectra()`
+- `area()`
+
+---
 '''
 
 

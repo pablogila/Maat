@@ -64,6 +64,11 @@
             <input type="search" placeholder="Search..." role="searchbox" aria-label="search"
                    pattern=".+" required>
 
+            <h2>Contents</h2>
+            <ul>
+  <li><a href="#description">Description</a></li>
+</ul>
+
 
 
             <h2>API Documentation</h2>
@@ -74,7 +79,7 @@
     </ul>
 
 
-            <footer>Maat v2.4.1 documentation</footer>
+            <footer>Maat v2.4.2 documentation</footer>
 
         <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
             built with <span class="visually-hidden">pdoc</span><img
@@ -88,7 +93,11 @@
                     <h1 class="modulename">
 <a href="./../maat.html">maat</a><wbr>.utils    </h1>
 
-                        <div class="docstring"><p>This module contains utility functions.</p>
+                        <div class="docstring"><h2 id="description">Description</h2>
+
+<p>This module contains utility functions.</p>
+
+<hr />
 </div>
 
                         <input id="mod-utils-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
@@ -96,22 +105,25 @@
                         <label class="view-source-button" for="mod-utils-view-source"><span>View Source</span></label>
 
                         <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="sd">&#39;&#39;&#39;</span>
-</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="sd">This module contains utility functions.</span>
-</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="sd">&#39;&#39;&#39;</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="sd">## Description</span>
+</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="sd">This module contains utility functions.</span>
 </span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="kn">import</span> <span class="nn">os</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="kn">import</span> <span class="nn">sys</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="sd">---</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="sd">&#39;&#39;&#39;</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>
 </span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="k">def</span> <span class="nf">run_here</span><span class="p">():</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="sd">    Run from the same directory as the current script, with `maat.run_here()`.</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="sd">    Useful to run scripts from the VSCode terminal, etc.</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="sd">    &#39;&#39;&#39;</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="n">caller</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">caller</span><span class="p">)</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>    <span class="k">return</span> <span class="n">caller</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="kn">import</span> <span class="nn">os</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="kn">import</span> <span class="nn">sys</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="k">def</span> <span class="nf">run_here</span><span class="p">():</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="sd">    Run from the same directory as the current script, with `maat.run_here()`.</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="sd">    Useful to run scripts from the VSCode terminal, etc.</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="sd">    &#39;&#39;&#39;</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>    <span class="n">caller</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">caller</span><span class="p">)</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="k">return</span> <span class="n">caller</span>
 </span></pre></div>
 
 
@@ -127,14 +139,14 @@
 
     </div>
     <a class="headerlink" href="#run_here"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="run_here-11"><a href="#run_here-11"><span class="linenos">11</span></a><span class="k">def</span> <span class="nf">run_here</span><span class="p">():</span>
-</span><span id="run_here-12"><a href="#run_here-12"><span class="linenos">12</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-</span><span id="run_here-13"><a href="#run_here-13"><span class="linenos">13</span></a><span class="sd">    Run from the same directory as the current script, with `maat.run_here()`.</span>
-</span><span id="run_here-14"><a href="#run_here-14"><span class="linenos">14</span></a><span class="sd">    Useful to run scripts from the VSCode terminal, etc.</span>
-</span><span id="run_here-15"><a href="#run_here-15"><span class="linenos">15</span></a><span class="sd">    &#39;&#39;&#39;</span>
-</span><span id="run_here-16"><a href="#run_here-16"><span class="linenos">16</span></a>    <span class="n">caller</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
-</span><span id="run_here-17"><a href="#run_here-17"><span class="linenos">17</span></a>    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">caller</span><span class="p">)</span>
-</span><span id="run_here-18"><a href="#run_here-18"><span class="linenos">18</span></a>    <span class="k">return</span> <span class="n">caller</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="run_here-14"><a href="#run_here-14"><span class="linenos">14</span></a><span class="k">def</span> <span class="nf">run_here</span><span class="p">():</span>
+</span><span id="run_here-15"><a href="#run_here-15"><span class="linenos">15</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+</span><span id="run_here-16"><a href="#run_here-16"><span class="linenos">16</span></a><span class="sd">    Run from the same directory as the current script, with `maat.run_here()`.</span>
+</span><span id="run_here-17"><a href="#run_here-17"><span class="linenos">17</span></a><span class="sd">    Useful to run scripts from the VSCode terminal, etc.</span>
+</span><span id="run_here-18"><a href="#run_here-18"><span class="linenos">18</span></a><span class="sd">    &#39;&#39;&#39;</span>
+</span><span id="run_here-19"><a href="#run_here-19"><span class="linenos">19</span></a>    <span class="n">caller</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+</span><span id="run_here-20"><a href="#run_here-20"><span class="linenos">20</span></a>    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">caller</span><span class="p">)</span>
+</span><span id="run_here-21"><a href="#run_here-21"><span class="linenos">21</span></a>    <span class="k">return</span> <span class="n">caller</span>
 </span></pre></div>
 
 

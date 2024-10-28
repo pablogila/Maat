@@ -1,5 +1,13 @@
 '''
+## Description
 This module contains functions for fitting and analyzing data.
+
+## Index
+- `plateau()`
+- `area_under_peak()`
+- `ratio_areas()`
+
+---
 '''
 
 

@@ -1,4 +1,13 @@
-'''This module contains different methods to calculate deuteration levels from spectra.'''
+'''
+## Description
+This module contains different methods to calculate deuteration levels from spectra.
+
+## Index
+- `impulse_approx()`
+- `peaks_mapi()`
+
+---
+'''
 
 
 from .constants import *

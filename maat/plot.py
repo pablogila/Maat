@@ -1,4 +1,12 @@
-'''This module manages the plotting of data.'''
+'''
+## Description
+This module manages the plotting of data.
+
+## Index
+- `spectra()`
+
+--- 
+'''
 
 
 from .classes import *

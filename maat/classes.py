@@ -53,7 +53,6 @@ class Plotting:
                  legend_title:str=None,
                  legend_size='medium',
                  legend_loc='best',
-                 extra:dict=None,
                  ):
         '''Default values can be overwritten when initializing the Plotting object.'''
         self.title = title
@@ -114,8 +113,6 @@ class Plotting:
         '''Size of the legend, as in matplotlib. Defaults to `'medium'`.'''
         self.legend_loc = legend_loc
         '''Location of the legend, as in matplotlib. Defaults to `'best'`.'''
-        self.extra = extra
-        '''Dictionary with extra options to be passed to a custom plotting function, eg. `{'color':'red'}`, etc.'''
 
     def _set_limits(self, limits) -> list:
         '''Set the x and y limits of the plot.'''
@@ -175,7 +172,7 @@ class ScaleRange:
         '''List with minimum y-values to normalize the plots.'''
         self.ymax = ymax
         '''List with minimum y-values to normalize the plots.
-        If `plotting.normalize=True`, the plots are normalized according to the y-values provided.
+        If `Plotting.normalize=True`, the plots are normalized according to the y-values provided.
         '''
         self.zoom = zoom
         '''
@@ -324,8 +321,10 @@ class Spectra:
             ):
         '''
         Method to change between spectral units. ALWAYS use this method to do that.
+
         For example, to change from cm-1 to meV:
         ```python
+        # Spectra.set_units(desired_units, units_input)
         Spectra.set_units('meV', 'cm-1')
         ```
         '''
@@ -418,7 +417,7 @@ class Material:
     '''
     Material class.
     Used to calculate molar masses and cross sections,
-    and to pass data to different analysis functions such as `Maat.deuteration.impulse_approx().`
+    and to pass data to different analysis functions such as `maat.deuteration.impulse_approx().`
     '''
     def __init__(self,
                  atoms:dict,
@@ -479,12 +478,12 @@ class Material:
         self.cross_section = total_cross_section
 
     def set(self):
-        '''Set the molar mass, cross section and errors of the material.'''
+        '''Set the molar mass, cross section and errors of the material. Use as `Material.set()`.'''
         self._set_mass()
         self._set_cross_section()
 
     def print(self):
-        '''Print a summary with the material information.'''
+        '''Print a summary with the material information. Use as `Material.print()`.'''
         print('\nMATERIAL')
         if self.name is not None:
             print(f'Name: {self.name}')
