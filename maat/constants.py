@@ -23,7 +23,7 @@ h_eV = mt.h_eV
 import numpy as np
 
 
-version = 'v2.4.2'
+version = 'v2.4.3'
 
 
 '''---
@@ -95,7 +95,9 @@ hbar_eV = h_eV / (2 * np.pi)
 
 # Atomic masses
 mass = {
+    'H1': 1.00784,
     'H' : 1.00784,
+    'H2': 2.014102,
     'D' : 2.014102,
     'C' : 12.0107,
     'N' : 14.0067,
@@ -114,7 +116,9 @@ for key in mass:
 
 # Total bound scattering cross sections
 cross_section = {
+    'H1': 81.67,
     'H' : 81.67,
+    'H2': 7.64,
     'D' : 7.64,
     'C' : 5.551,
     'N' : 11.51,
