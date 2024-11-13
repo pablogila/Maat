@@ -1,4 +1,4 @@
-# Maat v2.4.2
+# Maat v2.4.4
 
 Welcome to **M**y **A**n**A**lysis **T**ools; or just **Maat**, as the Egyptian goddess of truth, order, and justice.  
 
