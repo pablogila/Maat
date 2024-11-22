@@ -23,7 +23,7 @@ h_eV = mt.h_eV
 import numpy as np
 
 
-version = 'v2.4.4'
+version = 'v2.4.5'
 
 
 '''---
@@ -184,5 +184,13 @@ file_keys = {
 }
 '''
 Strings with the name of the file types, to correct user inputs.
+'''
+
+confirmation_keys = {
+    'yes' : ['yes', 'YES', 'Yes', 'Y', 'y'],
+    'no'  : ['no', 'NO', 'No', 'N', 'n'],
+}
+'''
+Strings with confirmations such as 'yes' / 'no', to correct user inputs.
 '''
 

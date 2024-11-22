@@ -215,10 +215,13 @@
             <li>
                     <a class="variable" href="#file_keys">file_keys</a>
             </li>
+            <li>
+                    <a class="variable" href="#confirmation_keys">confirmation_keys</a>
+            </li>
     </ul>
 
 
-            <footer>Maat v2.4.4 documentation</footer>
+            <footer>Maat v2.4.5 documentation</footer>
 
         <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
             built with <span class="visually-hidden">pdoc</span><img
@@ -287,7 +290,7 @@ For example, to call the planck constant in eV·s, you can use:</p>
 </span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a>
 </span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a>
-</span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a><span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;v2.4.4&#39;</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a><span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;v2.4.5&#39;</span>
 </span><span id="L-27"><a href="#L-27"><span class="linenos"> 27</span></a>
 </span><span id="L-28"><a href="#L-28"><span class="linenos"> 28</span></a>
 </span><span id="L-29"><a href="#L-29"><span class="linenos"> 29</span></a><span class="sd">&#39;&#39;&#39;---</span>
@@ -449,6 +452,14 @@ For example, to call the planck constant in eV·s, you can use:</p>
 </span><span id="L-185"><a href="#L-185"><span class="linenos">185</span></a><span class="sd">&#39;&#39;&#39;</span>
 </span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a><span class="sd">Strings with the name of the file types, to correct user inputs.</span>
 </span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a><span class="sd">&#39;&#39;&#39;</span>
+</span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a>
+</span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a><span class="n">confirmation_keys</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a>    <span class="s1">&#39;yes&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="s1">&#39;YES&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">],</span>
+</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a>    <span class="s1">&#39;no&#39;</span>  <span class="p">:</span> <span class="p">[</span><span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;NO&#39;</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">],</span>
+</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a><span class="p">}</span>
+</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a><span class="sd">&#39;&#39;&#39;</span>
+</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a><span class="sd">Strings with confirmations such as &#39;yes&#39; / &#39;no&#39;, to correct user inputs.</span>
+</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a><span class="sd">&#39;&#39;&#39;</span>
 </span></pre></div>
 
 
@@ -456,7 +467,7 @@ For example, to call the planck constant in eV·s, you can use:</p>
                 <section id="version">
                     <div class="attr variable">
             <span class="name">version</span>        =
-<span class="default_value">&#39;v2.4.4&#39;</span>
+<span class="default_value">&#39;v2.4.5&#39;</span>
 
         
     </div>
@@ -1076,6 +1087,20 @@ From Felix Fernandez-Alonso 2013 book.</p>
     <a class="headerlink" href="#file_keys"></a>
     
             <div class="docstring"><p>Strings with the name of the file types, to correct user inputs.</p>
+</div>
+
+
+                </section>
+                <section id="confirmation_keys">
+                    <div class="attr variable">
+            <span class="name">confirmation_keys</span>        =
+<span class="default_value">{&#39;yes&#39;: [&#39;yes&#39;, &#39;YES&#39;, &#39;Yes&#39;, &#39;Y&#39;, &#39;y&#39;], &#39;no&#39;: [&#39;no&#39;, &#39;NO&#39;, &#39;No&#39;, &#39;N&#39;, &#39;n&#39;]}</span>
+
+        
+    </div>
+    <a class="headerlink" href="#confirmation_keys"></a>
+    
+            <div class="docstring"><p>Strings with confirmations such as 'yes' / 'no', to correct user inputs.</p>
 </div>
 
 
