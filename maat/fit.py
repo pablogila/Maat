@@ -3,6 +3,7 @@
 This module contains functions for fitting and analyzing data.
 
 ## Index
+- `mean_std()`
 - `plateau()`
 - `area_under_peak()`
 - `ratio_areas()`
@@ -18,9 +19,28 @@ import numpy as np
 from copy import deepcopy
 
 
-def plateau(spectra:Spectra, cuts, df_index:int=0):
+def mean_std(list:list) -> tuple:
     '''
-    Fit the mean value of a plateau and its standard deviation.
+    Takes a `list` of values (int or float),
+    and returns a tuple with the mean and standard deviation,
+    calculated with numpy as:\n
+    $\\sigma_{x}=\\sqrt{\\frac{\\sum{(x_{i}-{\\overline{x}})^2}}{n}}$
+    '''
+    for item in list:
+        if item is not int or item is not float:
+            raise ValueError(f'mean_std(list) requires float or int values. The following value is not valid: {item}')
+    array = np.asarray(list)
+    mean = array.mean()
+    std = array.std()
+    return mean, std
+
+
+def plateau(spectra:Spectra, cuts=None, df_index:int=0):
+    '''
+    Fit the mean value and the error of a plateau in a `maat.classes.Spectra` object.
+    If `maat.classes.Spectra.dataframe[df_index]` has an 'Error' column, those errors are also taken into account
+    along with the standard deviation of the mean, else only the standard deviation is considered.
+    The 'Error' column title can be any string in `maat.constants.file_keys['Error']`.\n
     Use as `maat.fit.plateau(spectra, cuts=[low_cut, high_cut], df_index=0)`.
     Note that `cuts`, `low_cut` and/or `top_cut` can be set to None.
     '''

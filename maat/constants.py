@@ -15,6 +15,7 @@ h_eV = mt.h_eV
 - [Pressure conversion factors](#pressure-conversion-factors)
 - [Time conversion factors](#time-conversion-factors)
 - [Universal constants](#universal-constants)
+- [String dictionaries](#string-dictionaries)
 
 ---
 '''
@@ -23,7 +24,7 @@ h_eV = mt.h_eV
 import numpy as np
 
 
-version = 'v2.4.5'
+version = 'v2.4.6'
 
 
 '''---
