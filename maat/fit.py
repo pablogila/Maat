@@ -12,6 +12,7 @@ This module contains functions for fitting and analyzing data.
 '''
 
 
+import math
 from .constants import *
 from .classes import *
 import scipy
@@ -19,20 +20,31 @@ import numpy as np
 from copy import deepcopy
 
 
-def mean_std(list:list) -> tuple:
+def mean_std(array:list, rounded:bool=True, degrees_of_freedom=0) -> tuple:
     '''
-    Takes a `list` of values (int or float),
+    Takes an `array` of numerical values
     and returns a tuple with the mean and standard deviation,
     calculated with numpy as:\n
-    $\\sigma_{x}=\\sqrt{\\frac{\\sum{(x_{i}-{\\overline{x}})^2}}{n}}$
+    $\\sigma_{x}=\\sqrt{\\frac{\\sum{(x_{i}-{\\overline{x}})^2}}{N-\\text{ddof}}}$\n
+    where ddof are the delta `degrees_of_freedom`, zero by default.
+    Set it to `1` for a corrected sample standard deviation (low N cases),
+    see more details [here](https://en.wikipedia.org/wiki/Standard_deviation#Corrected_sample_standard_deviation).\n
+    The mean is rounded up to the order of the error by default. To override this behaviour, set `rounded=False`.
     '''
-    for item in list:
-        if item is not int or item is not float:
-            raise ValueError(f'mean_std(list) requires float or int values. The following value is not valid: {item}')
-    array = np.asarray(list)
-    mean = array.mean()
-    std = array.std()
-    return mean, std
+    if not all(isinstance(x, (int, float, np.ndarray)) for x in array):
+        raise ValueError("mean_std(list) requires numerical values (int, float, or numpy.ndarray).")
+    data = np.asarray(array)
+    mean = float(data.mean())
+    error = float(data.std(ddof=degrees_of_freedom))
+    if not rounded or error == 0:
+        return mean, error
+    exponent = int(math.floor(math.log10(abs(error))))
+    first_three_digits = int(100*abs(error) / 10**exponent)
+    if 104 < first_three_digits < 195:
+        exponent -= 1
+    rounded_mean = round(mean, -exponent)
+    rounded_error = round(error, -exponent)
+    return rounded_mean, rounded_error
 
 
 def plateau(spectra:Spectra, cuts=None, df_index:int=0):
