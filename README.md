@@ -1,4 +1,4 @@
-# Maat v2.4.8
+# Maat v2.5.0
 
 Welcome to **M**y **A**n**A**lysis **T**ools; or just **Maat**, as the Egyptian goddess of truth, order, and justice.  
 
@@ -36,7 +36,6 @@ Maat has the following submodules:
 - [Plot](https://pablogila.github.io/Maat/maat/plot.html). Plotting operations.
 - [Deuteration](https://pablogila.github.io/Maat/maat/deuteration.html). Deuteration estimation.
 - [Sample](https://pablogila.github.io/Maat/maat/sample.html). Sample data for testing.
-- [Utils](https://pablogila.github.io/Maat/maat/utils.html). Utility functions to make things easier.
 
 The documentation can be compiled automatically using [pdoc](https://pdoc.dev/), by running:
 ```shell

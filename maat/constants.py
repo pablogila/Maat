@@ -24,7 +24,7 @@ h_eV = mt.h_eV
 import numpy as np
 
 
-version = 'v2.4.8'
+version = 'v2.5.0'
 
 
 '''---

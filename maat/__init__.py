@@ -17,7 +17,6 @@ Maat has the following submodules:
 - `maat.plot`. Plotting operations.
 - `maat.deuteration`. Functions to estimate the deuteration level in your samples.
 - `maat.sample`. Sample data for testing.
-- `maat.utils`. Utility functions to make things easier.
 
 The documentation can be compiled automatically using [pdoc](https://pdoc.dev/), by running:
 ```shell
@@ -44,7 +43,6 @@ See the attached GNU Affero General Public License for more details.
 
 from .constants import *
 from .classes import *
-from .utils import *
 from . import sample
 from . import normalize
 from . import fit
