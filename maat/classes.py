@@ -431,7 +431,7 @@ class Material:
                  ):
         '''
         All values can be set when initializing the Material object. However, it is recommended
-        to only set the atoms and the grams (and the name), and calculate the rest with `Material.set()`.
+        to only set the atoms and the grams, and optionally the name, and calculate the rest with `Material.set()`.
         '''
         self.atoms = atoms
         '''Dict of atoms in the material, as in `{H: 6, C:1, N:1}`.'''
@@ -440,15 +440,15 @@ class Material:
         self.grams = grams
         '''Mass, in grams.'''
         self.grams_error = grams_error
-        '''Error of the measured mass in grams. Set automatically with `self.set()`.'''
+        '''Error of the measured mass in grams. Set automatically with `Material.set()`.'''
         self.mols = mols
-        '''Number of moles. Set automatically with `self.set()`.'''
+        '''Number of moles. Set automatically with `Material.set()`.'''
         self.mols_error = mols_error
-        '''Error of the number of moles. Set automatically with `self.set()`.'''
+        '''Error of the number of moles. Set automatically with `Material.set()`.'''
         self.molar_mass = molar_mass
-        '''Molar mass of the material, in mol/g. Calculated automatically with `self.set()`.'''
+        '''Molar mass of the material, in mol/g. Calculated automatically with `Material.set()`.'''
         self.cross_section = cross_section
-        '''Cross section of the material, in barns. Calculated automatically with `self.set()`.'''
+        '''Cross section of the material, in barns. Calculated automatically with `Material.set()`.'''
 
     def _set_grams_error(self):
         '''Set the error in grams, based on the number of decimal places.'''
@@ -460,7 +460,7 @@ class Material:
 
     def _set_mass(self):
         '''Set the molar mass of the material.\n
-        If `self.grams` is not `None`, the number of moles will be calculated and overwritten.'''
+        If `Material.grams` is not `None`, the number of moles will be calculated and overwritten.'''
         material_grams_per_mol = 0.0
         for key in self.atoms:
             material_grams_per_mol += self.atoms[key] * mass[key]
@@ -478,12 +478,12 @@ class Material:
         self.cross_section = total_cross_section
 
     def set(self):
-        '''Set the molar mass, cross section and errors of the material. Use as `Material.set()`.'''
+        '''Set the molar mass, cross section and errors of the material.'''
         self._set_mass()
         self._set_cross_section()
 
     def print(self):
-        '''Print a summary with the material information. Use as `Material.print()`.'''
+        '''Print a summary with the material information.'''
         print('\nMATERIAL')
         if self.name is not None:
             print(f'Name: {self.name}')

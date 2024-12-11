@@ -31,6 +31,15 @@ def impulse_approx(ins: Spectra,
     The threshold controls the start of the plateau (in meV) to consider Deep Inelastic Neutron Scattering (DINS).
     The protonated and deuterated dataframe indexes are specified by `H_df_index` and `D_df_index`, respectively.
 
+    In this approximation, the ideal ratio between the cross-sections and the experimental ratio between the pleteaus at high energies should be the same:
+    $$
+    \\frac{\\text{plateau_D}}{\\text{plateau_H}} \\approx \\frac{\\text{cross_section_D}}{\\text{cross_section_H}}
+    $$
+    Taking this into account, the deuteration is estimated as:
+    $$
+    \\text{Deuteration} = \\frac{1-\\text{real_ratio}}{1-\\text{ideal_ratio}}
+    $$
+
     > [!WARNING]
     > This approximation is very sensitive to the mass sample, specified by `maat.classes.Material.grams`.
     '''

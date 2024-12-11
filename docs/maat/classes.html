@@ -248,7 +248,7 @@
     </ul>
 
 
-            <footer>Maat v2.5.1 documentation</footer>
+            <footer>Maat v2.5.3 documentation</footer>
 
         <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
             built with <span class="visually-hidden">pdoc</span><img
@@ -726,7 +726,7 @@ Any class can be instantiated directly: for example, to create a new
 </span><span id="L-431"><a href="#L-431"><span class="linenos">431</span></a>                 <span class="p">):</span>
 </span><span id="L-432"><a href="#L-432"><span class="linenos">432</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 </span><span id="L-433"><a href="#L-433"><span class="linenos">433</span></a><span class="sd">        All values can be set when initializing the Material object. However, it is recommended</span>
-</span><span id="L-434"><a href="#L-434"><span class="linenos">434</span></a><span class="sd">        to only set the atoms and the grams (and the name), and calculate the rest with `Material.set()`.</span>
+</span><span id="L-434"><a href="#L-434"><span class="linenos">434</span></a><span class="sd">        to only set the atoms and the grams, and optionally the name, and calculate the rest with `Material.set()`.</span>
 </span><span id="L-435"><a href="#L-435"><span class="linenos">435</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="L-436"><a href="#L-436"><span class="linenos">436</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="n">atoms</span>
 </span><span id="L-437"><a href="#L-437"><span class="linenos">437</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Dict of atoms in the material, as in `{H: 6, C:1, N:1}`.&#39;&#39;&#39;</span>
@@ -735,15 +735,15 @@ Any class can be instantiated directly: for example, to create a new
 </span><span id="L-440"><a href="#L-440"><span class="linenos">440</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">grams</span> <span class="o">=</span> <span class="n">grams</span>
 </span><span id="L-441"><a href="#L-441"><span class="linenos">441</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Mass, in grams.&#39;&#39;&#39;</span>
 </span><span id="L-442"><a href="#L-442"><span class="linenos">442</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">grams_error</span> <span class="o">=</span> <span class="n">grams_error</span>
-</span><span id="L-443"><a href="#L-443"><span class="linenos">443</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Error of the measured mass in grams. Set automatically with `self.set()`.&#39;&#39;&#39;</span>
+</span><span id="L-443"><a href="#L-443"><span class="linenos">443</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Error of the measured mass in grams. Set automatically with `Material.set()`.&#39;&#39;&#39;</span>
 </span><span id="L-444"><a href="#L-444"><span class="linenos">444</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">mols</span> <span class="o">=</span> <span class="n">mols</span>
-</span><span id="L-445"><a href="#L-445"><span class="linenos">445</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Number of moles. Set automatically with `self.set()`.&#39;&#39;&#39;</span>
+</span><span id="L-445"><a href="#L-445"><span class="linenos">445</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Number of moles. Set automatically with `Material.set()`.&#39;&#39;&#39;</span>
 </span><span id="L-446"><a href="#L-446"><span class="linenos">446</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">mols_error</span> <span class="o">=</span> <span class="n">mols_error</span>
-</span><span id="L-447"><a href="#L-447"><span class="linenos">447</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Error of the number of moles. Set automatically with `self.set()`.&#39;&#39;&#39;</span>
+</span><span id="L-447"><a href="#L-447"><span class="linenos">447</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Error of the number of moles. Set automatically with `Material.set()`.&#39;&#39;&#39;</span>
 </span><span id="L-448"><a href="#L-448"><span class="linenos">448</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">molar_mass</span> <span class="o">=</span> <span class="n">molar_mass</span>
-</span><span id="L-449"><a href="#L-449"><span class="linenos">449</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Molar mass of the material, in mol/g. Calculated automatically with `self.set()`.&#39;&#39;&#39;</span>
+</span><span id="L-449"><a href="#L-449"><span class="linenos">449</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Molar mass of the material, in mol/g. Calculated automatically with `Material.set()`.&#39;&#39;&#39;</span>
 </span><span id="L-450"><a href="#L-450"><span class="linenos">450</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cross_section</span> <span class="o">=</span> <span class="n">cross_section</span>
-</span><span id="L-451"><a href="#L-451"><span class="linenos">451</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Cross section of the material, in barns. Calculated automatically with `self.set()`.&#39;&#39;&#39;</span>
+</span><span id="L-451"><a href="#L-451"><span class="linenos">451</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Cross section of the material, in barns. Calculated automatically with `Material.set()`.&#39;&#39;&#39;</span>
 </span><span id="L-452"><a href="#L-452"><span class="linenos">452</span></a>
 </span><span id="L-453"><a href="#L-453"><span class="linenos">453</span></a>    <span class="k">def</span> <span class="nf">_set_grams_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-454"><a href="#L-454"><span class="linenos">454</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Set the error in grams, based on the number of decimal places.&#39;&#39;&#39;</span>
@@ -755,7 +755,7 @@ Any class can be instantiated directly: for example, to create a new
 </span><span id="L-460"><a href="#L-460"><span class="linenos">460</span></a>
 </span><span id="L-461"><a href="#L-461"><span class="linenos">461</span></a>    <span class="k">def</span> <span class="nf">_set_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-462"><a href="#L-462"><span class="linenos">462</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Set the molar mass of the material.\n</span>
-</span><span id="L-463"><a href="#L-463"><span class="linenos">463</span></a><span class="sd">        If `self.grams` is not `None`, the number of moles will be calculated and overwritten.&#39;&#39;&#39;</span>
+</span><span id="L-463"><a href="#L-463"><span class="linenos">463</span></a><span class="sd">        If `Material.grams` is not `None`, the number of moles will be calculated and overwritten.&#39;&#39;&#39;</span>
 </span><span id="L-464"><a href="#L-464"><span class="linenos">464</span></a>        <span class="n">material_grams_per_mol</span> <span class="o">=</span> <span class="mf">0.0</span>
 </span><span id="L-465"><a href="#L-465"><span class="linenos">465</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
 </span><span id="L-466"><a href="#L-466"><span class="linenos">466</span></a>            <span class="n">material_grams_per_mol</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">*</span> <span class="n">mass</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
@@ -773,12 +773,12 @@ Any class can be instantiated directly: for example, to create a new
 </span><span id="L-478"><a href="#L-478"><span class="linenos">478</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cross_section</span> <span class="o">=</span> <span class="n">total_cross_section</span>
 </span><span id="L-479"><a href="#L-479"><span class="linenos">479</span></a>
 </span><span id="L-480"><a href="#L-480"><span class="linenos">480</span></a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-481"><a href="#L-481"><span class="linenos">481</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Set the molar mass, cross section and errors of the material. Use as `Material.set()`.&#39;&#39;&#39;</span>
+</span><span id="L-481"><a href="#L-481"><span class="linenos">481</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Set the molar mass, cross section and errors of the material.&#39;&#39;&#39;</span>
 </span><span id="L-482"><a href="#L-482"><span class="linenos">482</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_set_mass</span><span class="p">()</span>
 </span><span id="L-483"><a href="#L-483"><span class="linenos">483</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_set_cross_section</span><span class="p">()</span>
 </span><span id="L-484"><a href="#L-484"><span class="linenos">484</span></a>
 </span><span id="L-485"><a href="#L-485"><span class="linenos">485</span></a>    <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-486"><a href="#L-486"><span class="linenos">486</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Print a summary with the material information. Use as `Material.print()`.&#39;&#39;&#39;</span>
+</span><span id="L-486"><a href="#L-486"><span class="linenos">486</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Print a summary with the material information.&#39;&#39;&#39;</span>
 </span><span id="L-487"><a href="#L-487"><span class="linenos">487</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">MATERIAL&#39;</span><span class="p">)</span>
 </span><span id="L-488"><a href="#L-488"><span class="linenos">488</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="L-489"><a href="#L-489"><span class="linenos">489</span></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Name: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -2124,7 +2124,7 @@ If the input CSV files have different units, it can also be set as a list, eg. <
 </span><span id="Material-432"><a href="#Material-432"><span class="linenos">432</span></a>                 <span class="p">):</span>
 </span><span id="Material-433"><a href="#Material-433"><span class="linenos">433</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 </span><span id="Material-434"><a href="#Material-434"><span class="linenos">434</span></a><span class="sd">        All values can be set when initializing the Material object. However, it is recommended</span>
-</span><span id="Material-435"><a href="#Material-435"><span class="linenos">435</span></a><span class="sd">        to only set the atoms and the grams (and the name), and calculate the rest with `Material.set()`.</span>
+</span><span id="Material-435"><a href="#Material-435"><span class="linenos">435</span></a><span class="sd">        to only set the atoms and the grams, and optionally the name, and calculate the rest with `Material.set()`.</span>
 </span><span id="Material-436"><a href="#Material-436"><span class="linenos">436</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="Material-437"><a href="#Material-437"><span class="linenos">437</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="n">atoms</span>
 </span><span id="Material-438"><a href="#Material-438"><span class="linenos">438</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Dict of atoms in the material, as in `{H: 6, C:1, N:1}`.&#39;&#39;&#39;</span>
@@ -2133,15 +2133,15 @@ If the input CSV files have different units, it can also be set as a list, eg. <
 </span><span id="Material-441"><a href="#Material-441"><span class="linenos">441</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">grams</span> <span class="o">=</span> <span class="n">grams</span>
 </span><span id="Material-442"><a href="#Material-442"><span class="linenos">442</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Mass, in grams.&#39;&#39;&#39;</span>
 </span><span id="Material-443"><a href="#Material-443"><span class="linenos">443</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">grams_error</span> <span class="o">=</span> <span class="n">grams_error</span>
-</span><span id="Material-444"><a href="#Material-444"><span class="linenos">444</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Error of the measured mass in grams. Set automatically with `self.set()`.&#39;&#39;&#39;</span>
+</span><span id="Material-444"><a href="#Material-444"><span class="linenos">444</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Error of the measured mass in grams. Set automatically with `Material.set()`.&#39;&#39;&#39;</span>
 </span><span id="Material-445"><a href="#Material-445"><span class="linenos">445</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">mols</span> <span class="o">=</span> <span class="n">mols</span>
-</span><span id="Material-446"><a href="#Material-446"><span class="linenos">446</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Number of moles. Set automatically with `self.set()`.&#39;&#39;&#39;</span>
+</span><span id="Material-446"><a href="#Material-446"><span class="linenos">446</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Number of moles. Set automatically with `Material.set()`.&#39;&#39;&#39;</span>
 </span><span id="Material-447"><a href="#Material-447"><span class="linenos">447</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">mols_error</span> <span class="o">=</span> <span class="n">mols_error</span>
-</span><span id="Material-448"><a href="#Material-448"><span class="linenos">448</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Error of the number of moles. Set automatically with `self.set()`.&#39;&#39;&#39;</span>
+</span><span id="Material-448"><a href="#Material-448"><span class="linenos">448</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Error of the number of moles. Set automatically with `Material.set()`.&#39;&#39;&#39;</span>
 </span><span id="Material-449"><a href="#Material-449"><span class="linenos">449</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">molar_mass</span> <span class="o">=</span> <span class="n">molar_mass</span>
-</span><span id="Material-450"><a href="#Material-450"><span class="linenos">450</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Molar mass of the material, in mol/g. Calculated automatically with `self.set()`.&#39;&#39;&#39;</span>
+</span><span id="Material-450"><a href="#Material-450"><span class="linenos">450</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Molar mass of the material, in mol/g. Calculated automatically with `Material.set()`.&#39;&#39;&#39;</span>
 </span><span id="Material-451"><a href="#Material-451"><span class="linenos">451</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cross_section</span> <span class="o">=</span> <span class="n">cross_section</span>
-</span><span id="Material-452"><a href="#Material-452"><span class="linenos">452</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Cross section of the material, in barns. Calculated automatically with `self.set()`.&#39;&#39;&#39;</span>
+</span><span id="Material-452"><a href="#Material-452"><span class="linenos">452</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Cross section of the material, in barns. Calculated automatically with `Material.set()`.&#39;&#39;&#39;</span>
 </span><span id="Material-453"><a href="#Material-453"><span class="linenos">453</span></a>
 </span><span id="Material-454"><a href="#Material-454"><span class="linenos">454</span></a>    <span class="k">def</span> <span class="nf">_set_grams_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="Material-455"><a href="#Material-455"><span class="linenos">455</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Set the error in grams, based on the number of decimal places.&#39;&#39;&#39;</span>
@@ -2153,7 +2153,7 @@ If the input CSV files have different units, it can also be set as a list, eg. <
 </span><span id="Material-461"><a href="#Material-461"><span class="linenos">461</span></a>
 </span><span id="Material-462"><a href="#Material-462"><span class="linenos">462</span></a>    <span class="k">def</span> <span class="nf">_set_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="Material-463"><a href="#Material-463"><span class="linenos">463</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Set the molar mass of the material.\n</span>
-</span><span id="Material-464"><a href="#Material-464"><span class="linenos">464</span></a><span class="sd">        If `self.grams` is not `None`, the number of moles will be calculated and overwritten.&#39;&#39;&#39;</span>
+</span><span id="Material-464"><a href="#Material-464"><span class="linenos">464</span></a><span class="sd">        If `Material.grams` is not `None`, the number of moles will be calculated and overwritten.&#39;&#39;&#39;</span>
 </span><span id="Material-465"><a href="#Material-465"><span class="linenos">465</span></a>        <span class="n">material_grams_per_mol</span> <span class="o">=</span> <span class="mf">0.0</span>
 </span><span id="Material-466"><a href="#Material-466"><span class="linenos">466</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
 </span><span id="Material-467"><a href="#Material-467"><span class="linenos">467</span></a>            <span class="n">material_grams_per_mol</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">*</span> <span class="n">mass</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
@@ -2171,12 +2171,12 @@ If the input CSV files have different units, it can also be set as a list, eg. <
 </span><span id="Material-479"><a href="#Material-479"><span class="linenos">479</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cross_section</span> <span class="o">=</span> <span class="n">total_cross_section</span>
 </span><span id="Material-480"><a href="#Material-480"><span class="linenos">480</span></a>
 </span><span id="Material-481"><a href="#Material-481"><span class="linenos">481</span></a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Material-482"><a href="#Material-482"><span class="linenos">482</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Set the molar mass, cross section and errors of the material. Use as `Material.set()`.&#39;&#39;&#39;</span>
+</span><span id="Material-482"><a href="#Material-482"><span class="linenos">482</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Set the molar mass, cross section and errors of the material.&#39;&#39;&#39;</span>
 </span><span id="Material-483"><a href="#Material-483"><span class="linenos">483</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_set_mass</span><span class="p">()</span>
 </span><span id="Material-484"><a href="#Material-484"><span class="linenos">484</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_set_cross_section</span><span class="p">()</span>
 </span><span id="Material-485"><a href="#Material-485"><span class="linenos">485</span></a>
 </span><span id="Material-486"><a href="#Material-486"><span class="linenos">486</span></a>    <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Material-487"><a href="#Material-487"><span class="linenos">487</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Print a summary with the material information. Use as `Material.print()`.&#39;&#39;&#39;</span>
+</span><span id="Material-487"><a href="#Material-487"><span class="linenos">487</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Print a summary with the material information.&#39;&#39;&#39;</span>
 </span><span id="Material-488"><a href="#Material-488"><span class="linenos">488</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">MATERIAL&#39;</span><span class="p">)</span>
 </span><span id="Material-489"><a href="#Material-489"><span class="linenos">489</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="Material-490"><a href="#Material-490"><span class="linenos">490</span></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Name: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -2226,7 +2226,7 @@ and to pass data to different analysis functions such as <code><a href="deuterat
 </span><span id="Material.__init__-432"><a href="#Material.__init__-432"><span class="linenos">432</span></a>                 <span class="p">):</span>
 </span><span id="Material.__init__-433"><a href="#Material.__init__-433"><span class="linenos">433</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 </span><span id="Material.__init__-434"><a href="#Material.__init__-434"><span class="linenos">434</span></a><span class="sd">        All values can be set when initializing the Material object. However, it is recommended</span>
-</span><span id="Material.__init__-435"><a href="#Material.__init__-435"><span class="linenos">435</span></a><span class="sd">        to only set the atoms and the grams (and the name), and calculate the rest with `Material.set()`.</span>
+</span><span id="Material.__init__-435"><a href="#Material.__init__-435"><span class="linenos">435</span></a><span class="sd">        to only set the atoms and the grams, and optionally the name, and calculate the rest with `Material.set()`.</span>
 </span><span id="Material.__init__-436"><a href="#Material.__init__-436"><span class="linenos">436</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="Material.__init__-437"><a href="#Material.__init__-437"><span class="linenos">437</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="n">atoms</span>
 </span><span id="Material.__init__-438"><a href="#Material.__init__-438"><span class="linenos">438</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Dict of atoms in the material, as in `{H: 6, C:1, N:1}`.&#39;&#39;&#39;</span>
@@ -2235,20 +2235,20 @@ and to pass data to different analysis functions such as <code><a href="deuterat
 </span><span id="Material.__init__-441"><a href="#Material.__init__-441"><span class="linenos">441</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">grams</span> <span class="o">=</span> <span class="n">grams</span>
 </span><span id="Material.__init__-442"><a href="#Material.__init__-442"><span class="linenos">442</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Mass, in grams.&#39;&#39;&#39;</span>
 </span><span id="Material.__init__-443"><a href="#Material.__init__-443"><span class="linenos">443</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">grams_error</span> <span class="o">=</span> <span class="n">grams_error</span>
-</span><span id="Material.__init__-444"><a href="#Material.__init__-444"><span class="linenos">444</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Error of the measured mass in grams. Set automatically with `self.set()`.&#39;&#39;&#39;</span>
+</span><span id="Material.__init__-444"><a href="#Material.__init__-444"><span class="linenos">444</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Error of the measured mass in grams. Set automatically with `Material.set()`.&#39;&#39;&#39;</span>
 </span><span id="Material.__init__-445"><a href="#Material.__init__-445"><span class="linenos">445</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">mols</span> <span class="o">=</span> <span class="n">mols</span>
-</span><span id="Material.__init__-446"><a href="#Material.__init__-446"><span class="linenos">446</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Number of moles. Set automatically with `self.set()`.&#39;&#39;&#39;</span>
+</span><span id="Material.__init__-446"><a href="#Material.__init__-446"><span class="linenos">446</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Number of moles. Set automatically with `Material.set()`.&#39;&#39;&#39;</span>
 </span><span id="Material.__init__-447"><a href="#Material.__init__-447"><span class="linenos">447</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">mols_error</span> <span class="o">=</span> <span class="n">mols_error</span>
-</span><span id="Material.__init__-448"><a href="#Material.__init__-448"><span class="linenos">448</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Error of the number of moles. Set automatically with `self.set()`.&#39;&#39;&#39;</span>
+</span><span id="Material.__init__-448"><a href="#Material.__init__-448"><span class="linenos">448</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Error of the number of moles. Set automatically with `Material.set()`.&#39;&#39;&#39;</span>
 </span><span id="Material.__init__-449"><a href="#Material.__init__-449"><span class="linenos">449</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">molar_mass</span> <span class="o">=</span> <span class="n">molar_mass</span>
-</span><span id="Material.__init__-450"><a href="#Material.__init__-450"><span class="linenos">450</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Molar mass of the material, in mol/g. Calculated automatically with `self.set()`.&#39;&#39;&#39;</span>
+</span><span id="Material.__init__-450"><a href="#Material.__init__-450"><span class="linenos">450</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Molar mass of the material, in mol/g. Calculated automatically with `Material.set()`.&#39;&#39;&#39;</span>
 </span><span id="Material.__init__-451"><a href="#Material.__init__-451"><span class="linenos">451</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cross_section</span> <span class="o">=</span> <span class="n">cross_section</span>
-</span><span id="Material.__init__-452"><a href="#Material.__init__-452"><span class="linenos">452</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Cross section of the material, in barns. Calculated automatically with `self.set()`.&#39;&#39;&#39;</span>
+</span><span id="Material.__init__-452"><a href="#Material.__init__-452"><span class="linenos">452</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Cross section of the material, in barns. Calculated automatically with `Material.set()`.&#39;&#39;&#39;</span>
 </span></pre></div>
 
 
             <div class="docstring"><p>All values can be set when initializing the Material object. However, it is recommended
-to only set the atoms and the grams (and the name), and calculate the rest with <code><a href="#Material.set">Material.set()</a></code>.</p>
+to only set the atoms and the grams, and optionally the name, and calculate the rest with <code><a href="#Material.set">Material.set()</a></code>.</p>
 </div>
 
 
@@ -2300,7 +2300,7 @@ to only set the atoms and the grams (and the name), and calculate the rest with 
     </div>
     <a class="headerlink" href="#Material.grams_error"></a>
     
-            <div class="docstring"><p>Error of the measured mass in grams. Set automatically with <code>self.set()</code>.</p>
+            <div class="docstring"><p>Error of the measured mass in grams. Set automatically with <code><a href="#Material.set">Material.set()</a></code>.</p>
 </div>
 
 
@@ -2313,7 +2313,7 @@ to only set the atoms and the grams (and the name), and calculate the rest with 
     </div>
     <a class="headerlink" href="#Material.mols"></a>
     
-            <div class="docstring"><p>Number of moles. Set automatically with <code>self.set()</code>.</p>
+            <div class="docstring"><p>Number of moles. Set automatically with <code><a href="#Material.set">Material.set()</a></code>.</p>
 </div>
 
 
@@ -2326,7 +2326,7 @@ to only set the atoms and the grams (and the name), and calculate the rest with 
     </div>
     <a class="headerlink" href="#Material.mols_error"></a>
     
-            <div class="docstring"><p>Error of the number of moles. Set automatically with <code>self.set()</code>.</p>
+            <div class="docstring"><p>Error of the number of moles. Set automatically with <code><a href="#Material.set">Material.set()</a></code>.</p>
 </div>
 
 
@@ -2339,7 +2339,7 @@ to only set the atoms and the grams (and the name), and calculate the rest with 
     </div>
     <a class="headerlink" href="#Material.molar_mass"></a>
     
-            <div class="docstring"><p>Molar mass of the material, in mol/g. Calculated automatically with <code>self.set()</code>.</p>
+            <div class="docstring"><p>Molar mass of the material, in mol/g. Calculated automatically with <code><a href="#Material.set">Material.set()</a></code>.</p>
 </div>
 
 
@@ -2352,7 +2352,7 @@ to only set the atoms and the grams (and the name), and calculate the rest with 
     </div>
     <a class="headerlink" href="#Material.cross_section"></a>
     
-            <div class="docstring"><p>Cross section of the material, in barns. Calculated automatically with <code>self.set()</code>.</p>
+            <div class="docstring"><p>Cross section of the material, in barns. Calculated automatically with <code><a href="#Material.set">Material.set()</a></code>.</p>
 </div>
 
 
@@ -2369,13 +2369,13 @@ to only set the atoms and the grams (and the name), and calculate the rest with 
     </div>
     <a class="headerlink" href="#Material.set"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Material.set-481"><a href="#Material.set-481"><span class="linenos">481</span></a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Material.set-482"><a href="#Material.set-482"><span class="linenos">482</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Set the molar mass, cross section and errors of the material. Use as `Material.set()`.&#39;&#39;&#39;</span>
+</span><span id="Material.set-482"><a href="#Material.set-482"><span class="linenos">482</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Set the molar mass, cross section and errors of the material.&#39;&#39;&#39;</span>
 </span><span id="Material.set-483"><a href="#Material.set-483"><span class="linenos">483</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_set_mass</span><span class="p">()</span>
 </span><span id="Material.set-484"><a href="#Material.set-484"><span class="linenos">484</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_set_cross_section</span><span class="p">()</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Set the molar mass, cross section and errors of the material. Use as <code><a href="#Material.set">Material.set()</a></code>.</p>
+            <div class="docstring"><p>Set the molar mass, cross section and errors of the material.</p>
 </div>
 
 
@@ -2392,7 +2392,7 @@ to only set the atoms and the grams (and the name), and calculate the rest with 
     </div>
     <a class="headerlink" href="#Material.print"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Material.print-486"><a href="#Material.print-486"><span class="linenos">486</span></a>    <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Material.print-487"><a href="#Material.print-487"><span class="linenos">487</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Print a summary with the material information. Use as `Material.print()`.&#39;&#39;&#39;</span>
+</span><span id="Material.print-487"><a href="#Material.print-487"><span class="linenos">487</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Print a summary with the material information.&#39;&#39;&#39;</span>
 </span><span id="Material.print-488"><a href="#Material.print-488"><span class="linenos">488</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">MATERIAL&#39;</span><span class="p">)</span>
 </span><span id="Material.print-489"><a href="#Material.print-489"><span class="linenos">489</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="Material.print-490"><a href="#Material.print-490"><span class="linenos">490</span></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Name: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -2414,7 +2414,7 @@ to only set the atoms and the grams (and the name), and calculate the rest with 
 </span></pre></div>
 
 
-            <div class="docstring"><p>Print a summary with the material information. Use as <code><a href="#Material.print">Material.print()</a></code>.</p>
+            <div class="docstring"><p>Print a summary with the material information.</p>
 </div>
 
 
