@@ -1,8 +1,8 @@
 '''
 .. include:: ../README.md
-    :end-before: Usage
+    :end-before: Documentation
 
-## Usage
+## Documentation
 
 You can [check the latest documentation online](https://pablogila.github.io/Maat/).
 An offline copy is also available in `/docs/maat.html`.

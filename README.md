@@ -1,4 +1,4 @@
-# Maat v2.5.0
+# Maat v2.5.1
 
 Welcome to **M**y **A**n**A**lysis **T**ools; or just **Maat**, as the Egyptian goddess of truth, order, and justice.  
 
@@ -21,7 +21,7 @@ pip install .
 ```
 
 
-## Usage
+## Documentation
 
 You can [check the latest documentation online](https://pablogila.github.io/Maat/).
 An offline copy is also available in `/docs/maat.html`.
@@ -29,13 +29,13 @@ Note that code examples are also provided in the `/examples/` folder.
 
 Maat has the following submodules:
 
-- [Classes](https://pablogila.github.io/Maat/maat/classes.html). Here are the objects that allow you to work with the data. Loaded directly as `maat.Class(options)`.
-- [Constants](https://pablogila.github.io/Maat/maat/constants.html). Common constants and conversion factors. Loaded directly as `maat.value`.
-- [Fit](https://pablogila.github.io/Maat/maat/fit.html). Fitting operations.
-- [Normalize](https://pablogila.github.io/Maat/maat/normalize.html). Normalization operations.
-- [Plot](https://pablogila.github.io/Maat/maat/plot.html). Plotting operations.
-- [Deuteration](https://pablogila.github.io/Maat/maat/deuteration.html). Deuteration estimation.
-- [Sample](https://pablogila.github.io/Maat/maat/sample.html). Sample data for testing.
+- [classes](https://pablogila.github.io/Maat/maat/classes.html). Here are the objects that allow you to work with the data. Loaded directly as `maat.Class(options)`.
+- [constants](https://pablogila.github.io/Maat/maat/constants.html). Common constants and conversion factors. Loaded directly as `maat.value`.
+- [fit](https://pablogila.github.io/Maat/maat/fit.html). Fitting operations.
+- [normalize](https://pablogila.github.io/Maat/maat/normalize.html). Normalization operations.
+- [plot](https://pablogila.github.io/Maat/maat/plot.html). Plotting operations.
+- [deuteration](https://pablogila.github.io/Maat/maat/deuteration.html). Deuteration estimation.
+- [sample](https://pablogila.github.io/Maat/maat/sample.html). Sample data for testing.
 
 The documentation can be compiled automatically using [pdoc](https://pdoc.dev/), by running:
 ```shell
