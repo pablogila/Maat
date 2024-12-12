@@ -9,15 +9,20 @@ Like the Egyptian goddess, Maat is *married* to [Thoth](https://github.com/pablo
 
 ## Installation
 
-As always, it is strongly recommended to install this package inside a Python virtual environment.  
+As always, it is strongly recommended to install this package inside a Python virtual environment:  
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
 
 Install the required dependencies by running:  
 ```shell
 pip install numpy pandas matplotlib scipy
 ```
-Additionally, you need to install the [Thoth]() python package.
 
-To install Maat, clone the repository from [GitHub](https://github.com/pablogila/Maat/) or download it as a ZIP and run:  
+Additionally, you need to install the [Thoth](https://github.com/pablogila/Thoth) python package to run Maat.  
+
+To install Maat, clone the repository from [GitHub](https://github.com/pablogila/Maat/) or download it as a ZIP and run inside the `/Maat/` directory:  
 ```shell
 pip install .
 ```
