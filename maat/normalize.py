@@ -11,14 +11,15 @@ This module contains functions to normalize data and other variables.
 '''
 
 
+from . import alias
 from .classes import *
 from .fit import *
 from .constants import *
 
 
 def unit_str(unit:str):
-    '''Normalize a given unit string to a standarized unit string, following `maat.constants.unit_keys`.'''
-    for key, value in unit_keys.items():
+    '''Normalize a given unit string to a standarized unit string, following `maat.alias.unit`.'''
+    for key, value in alias.unit.items():
         if unit in value:
             return key
     print(f"WARNING: Unknown unit '{unit}'")

@@ -21,6 +21,7 @@ ins = mt.Spectra(
 '''
 
 
+from . import alias
 from .constants import *
 import numpy as np
 import matplotlib.pyplot as plt
@@ -275,11 +276,11 @@ class Spectra:
 
     def _set_type(self, type):
         '''Set and normalize the type of the spectra: `INS`, `ATR`, or `RAMAN`.'''
-        if type in spectra_keys['INS']:
+        if type in alias.experiment['INS']:
             self.type = 'INS'
-        elif type in spectra_keys['ATR']:
+        elif type in alias.experiment['ATR']:
             self.type = 'ATR'
-        elif type in spectra_keys['RAMAN']:
+        elif type in alias.experiment['RAMAN']:
             self.type = 'RAMAN'
         else:
             self.type = type
@@ -331,8 +332,8 @@ class Spectra:
         mev = 'meV'
         cm = 'cm-1'
         unit_format={
-                mev: unit_keys['meV'],
-                cm: unit_keys['cm-1'] + unit_keys['cm'],
+                mev: alias.unit['meV'],
+                cm: alias.unit['cm-1'] + alias.unit['cm'],
             }
         if self.units is not None:
             units_in = deepcopy(self.units)

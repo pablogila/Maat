@@ -10,6 +10,7 @@ Note that code examples are also provided in the `/examples/` folder.
 
 Maat has the following submodules:
 
+- `maat.alias`. Similar to [thoth.alias](https://pablogila.github.io/Thoth/thoth/alias.html), contains common dictionaries with science-related strings, to correct user inputs.
 - `maat.classes`. Here are the objects that allow you to work with the data.
 - `maat.constants`. Common constants and conversion factors.
 - `maat.fit`. Fitting operations.
@@ -41,6 +42,7 @@ See the attached GNU Affero General Public License for more details.
 '''
 
 
+from . import alias
 from .constants import *
 from .classes import *
 from . import sample

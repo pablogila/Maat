@@ -1,9 +1,10 @@
-# Maat v2.5.3
+# Maat v2.6.0-dev1
 
 Welcome to **M**y **A**n**A**lysis **T**ools; or just **Maat**, as the Egyptian goddess of truth, order, and justice.  
 
-Just as an egyptian goddess fallen from the sky, this Python package makes my life easier when analyzing INS, FTIR and Raman CSV data files, among others.
-Bear in mind that, as any egyptian god, Maat is not perfect and may be full of bugs. Please report any issues you may find.  
+Just as an Egyptian goddess fallen from the sky, this Python package makes my life easier when analyzing scientific data, such as experimental INS, FTIR and Raman CSV data files, among others.
+
+Like the Egyptian goddess, Maat is *married* to [Thoth](https://github.com/pablogila/Thoth), a super useful text file management package. Note that Thoth is required to run Maat. I don't know if this is lore accurate, but seriously, Thoth is a dependency to run the Maat package, so go ahead and install it.  
 
 
 ## Installation
@@ -14,6 +15,7 @@ Install the required dependencies by running:
 ```shell
 pip install numpy pandas matplotlib scipy
 ```
+Additionally, you need to install the [Thoth]() python package.
 
 To install Maat, clone the repository from [GitHub](https://github.com/pablogila/Maat/) or download it as a ZIP and run:  
 ```shell
@@ -29,6 +31,7 @@ Note that code examples are also provided in the `/examples/` folder.
 
 Maat has the following submodules:
 
+- [alias](https://pablogila.github.io/Maat/maat/alias.html). Similar to [thoth.alias](https://pablogila.github.io/Thoth/thoth/alias.html), contains common dictionaries with science-related strings, to correct user inputs.
 - [classes](https://pablogila.github.io/Maat/maat/classes.html). Here are the objects that allow you to work with the data. Loaded directly as `maat.Class(options)`.
 - [constants](https://pablogila.github.io/Maat/maat/constants.html). Common constants and conversion factors. Loaded directly as `maat.value`.
 - [fit](https://pablogila.github.io/Maat/maat/fit.html). Fitting operations.

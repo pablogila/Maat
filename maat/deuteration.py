@@ -10,6 +10,7 @@ This module contains different methods to calculate deuteration levels from spec
 '''
 
 
+from . import alias
 from .constants import *
 from .classes import *
 from .fit import area_under_peak, ratio_areas, plateau
@@ -58,7 +59,7 @@ def impulse_approx(ins: Spectra,
 
     # Make sure units are in meV
     units_in = ins.units
-    if units_in not in unit_keys['meV']:
+    if units_in not in alias.unit['meV']:
         ins.set_units('meV', units_in)
 
     # Divide the y values of the dataframes by the mols of the material.
