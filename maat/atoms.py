@@ -1,20 +1,27 @@
 '''
-## Description.
+## Description
 
-This module contains the `atom` dictionary, which contains the properties of all atoms.
+This module contains the `atom` dictionary, which contains the properties of all elements.
 This module is created and updated automatically with `maat.makeatoms`.
+
+Use example:
+```python
+aluminium_cross_section = maat.atom['Al'].cross_section
+protium_mass   = maat.atom['H'].isotope[0].mass
+deuterium_mass = maat.atom['H'].isotope[1].mass
+```
 
 ## References
 
 Atomic `mass`es are in atomic mass units (amu), and come from:
+
 Pure Appl. Chem., Vol. 78, No. 11, pp. 2051-2066, 2006.
 The following masses are obtained from Wikipedia:
 Ac: 227, Np: 237, Pm: 145, Tc: 98
 
 Isotope `mass`, `mass_number` and `abundance` come from:
 J. R. de Laeter, J. K. Böhlke, P. De Bièvre, H. Hidaka, H. S. Peiser, K. J. R. Rosman
-and P. D. P. Taylor (2003). "Atomic weights of the elements. Review 2000 (IUPAC Technical Report)"
-
+and P. D. P. Taylor (2003). 'Atomic weights of the elements. Review 2000 (IUPAC Technical Report)'
 Total bound scattering `cross_section`s $\\sigma_s$ are in barns (1 b = 100 fm$^2$).
 From Felix Fernandez-Alonso's book 'Neutron Scattering Fundamentals' (2013).
 
@@ -2401,3 +2408,4 @@ atom = {
         name          = 'Ununoctium',
         ),
 }
+

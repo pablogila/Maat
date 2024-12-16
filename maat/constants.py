@@ -25,7 +25,7 @@ import numpy as np
 
 # Do not use spaces between the = sign,
 # it is the keyword to deduce the version when making the docs!
-version='v2.7.0-dev3'
+version='v3.0.0-dev1'
 
 
 '''---

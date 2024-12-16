@@ -26,7 +26,7 @@ class Isotope:
 
 
 class Element:
-    def __init__(self=None, symbol=None, name=None, mass=None, number=None, cross_section=None, isotope=None):
+    def __init__(self=None, symbol=None, name=None, mass=None, number=None, cross_section=None, isotope:list=None):
         self.symbol = symbol
         '''Standard symbol'''
         self.name = name
@@ -37,7 +37,7 @@ class Element:
         '''Atomic number (Z). Corresponds to the number of protons / electrons'''
         self.cross_section = cross_section
         '''Total bound scattering cross section'''
-        self.isotope = []
+        self.isotope: list = isotope
         '''List containing `Isotope`s of the element'''
 
 
@@ -45,7 +45,7 @@ def write_elements_to_py(dict_of_elements:dict, filename='exported_elements.py')
     with open(filename, 'w') as f:
         f.write(
             "'''\n"
-            "## Description.\n\n"
+            "## Description\n\n"
             "This module contains the `atom` dictionary, which contains the properties of all elements.\n"
             "This module is created and updated automatically with `maat.makeatoms`.\n\n"
             "Use example:\n"
@@ -62,7 +62,7 @@ def write_elements_to_py(dict_of_elements:dict, filename='exported_elements.py')
             "Isotope `mass`, `mass_number` and `abundance` come from:\n"
             "J. R. de Laeter, J. K. Böhlke, P. De Bièvre, H. Hidaka, H. S. Peiser, K. J. R. Rosman\n"
             "and P. D. P. Taylor (2003). 'Atomic weights of the elements. Review 2000 (IUPAC Technical Report)'\n"
-            "Total bound scattering `cross_section`s $\\sigma_s$ are in barns (1 b = 100 fm$^2$).\n"
+            "Total bound scattering `cross_section`s $\\\\sigma_s$ are in barns (1 b = 100 fm$^2$).\n"
             "From Felix Fernandez-Alonso's book 'Neutron Scattering Fundamentals' (2013).\n\n"
             "---\n"
             "'''\n\n\n"
@@ -89,15 +89,16 @@ def write_elements_to_py(dict_of_elements:dict, filename='exported_elements.py')
                     if iso.abundance:
                         f.write(f"                abundance     = {iso.abundance},\n")
                     if iso.cross_section:
-                        f.write(f"                cross_section = {iso.cross_section}),\n")
+                        f.write(f"                cross_section = {iso.cross_section},\n")
                     f.write(f"                ),\n")
                 f.write("            ],\n")
             f.write(f"        ),\n")
         f.write("}\n")
+        print(f'Exported atoms to {filename}')
     return None
 '''
 Export a dictionary of elements to a python file.
 This is used to build and update the `maat.atoms` module, that contains
-the `` all atomic data such as element masses, cross-sections, etc.
+the `atom` dict with all the element data, such as masses, cross-sections, etc.
 '''
 
