@@ -1,8 +1,8 @@
 '''
 ## Description
-This module provides the tools to build the `maat.atoms` submodule,
-which contains the `maat.atoms.atom` dictionary.
-This dictionary carries the information of every element: isotope mass, cross section, etc.
+This module is used to work with information about chemical elements.
+It provides the tools to build the `maat.atoms` submodule, which contains the `maat.atoms.atom` megadictionary.
+Said dictionary carries the information of every element: isotope mass, cross section, etc.
 
 ## Index
 - `Isotope`
@@ -41,7 +41,7 @@ class Element:
         '''List containing `Isotope`s of the element'''
 
 
-def write_elements_to_py(dict_of_elements:dict, filename='exported_elements.py'):
+def write_atoms_to_py(dict_of_elements:dict, filename='exported_elements.py'):
     with open(filename, 'w') as f:
         f.write(
             "'''\n"
@@ -55,14 +55,14 @@ def write_elements_to_py(dict_of_elements:dict, filename='exported_elements.py')
             "deuterium_mass = maat.atom['H'].isotope[1].mass\n"
             "```\n\n"
             "## References\n\n"
-            "Atomic `mass`es are in atomic mass units (amu), and come from:\n\n"
+            "Atomic `mass` are in atomic mass units (amu), and come from:\n\n"
             "Pure Appl. Chem., Vol. 78, No. 11, pp. 2051-2066, 2006.\n"
             "The following masses are obtained from Wikipedia:\n"
             "Ac: 227, Np: 237, Pm: 145, Tc: 98\n\n"
             "Isotope `mass`, `mass_number` and `abundance` come from:\n"
             "J. R. de Laeter, J. K. Böhlke, P. De Bièvre, H. Hidaka, H. S. Peiser, K. J. R. Rosman\n"
             "and P. D. P. Taylor (2003). 'Atomic weights of the elements. Review 2000 (IUPAC Technical Report)'\n"
-            "Total bound scattering `cross_section`s $\\\\sigma_s$ are in barns (1 b = 100 fm$^2$).\n"
+            "Total bound scattering `cross_section` $\\\\sigma_s$ are in barns (1 b = 100 fm$^2$).\n"
             "From Felix Fernandez-Alonso's book 'Neutron Scattering Fundamentals' (2013).\n\n"
             "---\n"
             "'''\n\n\n"

@@ -464,6 +464,30 @@ class Material:
         decimal_accuracy = len(str(self.grams).split('.')[1])
         # Calculate the error in grams
         self.grams_error = 10**(-decimal_accuracy)
+    
+    #################### move somewhere else
+    def get_isotope_index(name:str):
+        '''
+        Decomposes the `name` containing an isotope, such as 'H2' or 'He4',
+        into a tuple with the element and the isotope index in `maat.atoms.atom`.
+        For example, 'H2' would return ('H', 1).
+        '''
+        element = ''.join(filter(str.isalpha, key))
+        number = int(''.join(filter(str.isdigit, key)))
+        i = 0
+        isotope_index = None
+        if element in atom.keys():
+            for isotope in atom[element].isotope:
+                if isotope.mass_number == number:
+                    isotope_index = i
+                    return element, isotope_index
+                i += 1
+            # mass_number not found, raise error
+            allowed_mass_numbers = []
+            for iso in atom[element].isotope:
+                allowed_mass_numbers.append(iso.mass_number)
+            raise KeyError(f'Unrecognised isotope: {key}. Allowed mass numbers for {key_letters} are: {allowed_mass_numbers}')
+        raise KeyError(f'Unrecognised atom: {key}. What is {key_letters}?')
 
     def _set_mass(self):
         '''Set the molar mass of the material.\n
