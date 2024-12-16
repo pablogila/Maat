@@ -26,7 +26,9 @@ h_eV = mt.h_eV
 import numpy as np
 
 
-version = 'v2.6.0-dev1'
+# Do not use spaces between the = sign,
+# it is the keyword to deduce the version when making the docs!
+version='v2.6.0-dev2'
 
 
 '''---

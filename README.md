@@ -1,4 +1,4 @@
-# Maat v2.6.0-dev1
+# Maat v2.6.0-dev2
 
 Welcome to **M**y **A**n**A**lysis **T**ools; or just **Maat**, as the Egyptian goddess of truth, order, and justice.  
 
@@ -37,17 +37,17 @@ Note that code examples are also provided in the `/examples/` folder.
 Maat has the following submodules:
 
 - [alias](https://pablogila.github.io/Maat/maat/alias.html). Similar to [thoth.alias](https://pablogila.github.io/Thoth/thoth/alias.html), contains common dictionaries with science-related strings, to correct user inputs.
-- [classes](https://pablogila.github.io/Maat/maat/classes.html). Here are the objects that allow you to work with the data. Loaded directly as `maat.Class(options)`.
-- [constants](https://pablogila.github.io/Maat/maat/constants.html). Common constants and conversion factors. Loaded directly as `maat.value`.
+- [classes](https://pablogila.github.io/Maat/maat/classes.html). Objects that allow you to work with the data. Load them directly as `maat.Class(options)`.
+- [constants](https://pablogila.github.io/Maat/maat/constants.html). Common constants and conversion factors. Load them directly as `maat.value`.
 - [fit](https://pablogila.github.io/Maat/maat/fit.html). Fitting operations.
 - [normalize](https://pablogila.github.io/Maat/maat/normalize.html). Normalization operations.
 - [plot](https://pablogila.github.io/Maat/maat/plot.html). Plotting operations.
-- [deuteration](https://pablogila.github.io/Maat/maat/deuteration.html). Deuteration estimation.
+- [deuteration](https://pablogila.github.io/Maat/maat/deuteration.html). Tools to estimate deuteration levels.
 - [sample](https://pablogila.github.io/Maat/maat/sample.html). Sample data for testing.
 
-The documentation can be compiled automatically using [pdoc](https://pdoc.dev/), by running:
+The documentation can be compiled automatically using [pdoc](https://pdoc.dev/) and [Thoth](https://github.com/pablogila/Thoth), by running:
 ```shell
-source pdoc.sh
+source makedocs.py
 ```
 
 
