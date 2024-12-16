@@ -39,6 +39,8 @@ Maat has the following submodules:
 - [alias](https://pablogila.github.io/Maat/maat/alias.html). Similar to [thoth.alias](https://pablogila.github.io/Thoth/thoth/alias.html), contains common dictionaries with science-related strings, to correct user inputs.
 - [classes](https://pablogila.github.io/Maat/maat/classes.html). Objects that allow you to work with the data. Load them directly as `maat.Class(options)`.
 - [constants](https://pablogila.github.io/Maat/maat/constants.html). Common constants and conversion factors. Load them directly as `maat.value`.
+- [atoms](https://pablogila.github.io/Maat/maat/atoms.html). Contains the `atom` dictionary, with the properties of all the elements (mass, cross section, etc).
+- [makeatoms](https://pablogila.github.io/Maat/maat/atoms.html). Used to build the atoms submodule.
 - [fit](https://pablogila.github.io/Maat/maat/fit.html). Fitting operations.
 - [normalize](https://pablogila.github.io/Maat/maat/normalize.html). Normalization operations.
 - [plot](https://pablogila.github.io/Maat/maat/plot.html). Plotting operations.

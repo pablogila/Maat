@@ -40,8 +40,8 @@ Dict with unit names, used to correct and normalise user inputs.
 '''
 
 experiment: dict = {
-    'INS' : ['INS', 'ins', 'Ins', 'InelasticNeutronScattering'],
-    'ATR' : ['ATR', 'atr', 'FTIR', 'ftir', 'AttenuatedTotalReflection'],
+    'INS'   : ['INS', 'ins', 'Ins', 'InelasticNeutronScattering'],
+    'ATR'   : ['ATR', 'atr', 'FTIR', 'ftir', 'AttenuatedTotalReflection'],
     'RAMAN' : ['RAMAN', 'raman', 'Raman'],
 }
 '''

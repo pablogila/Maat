@@ -4,6 +4,8 @@
 
 
 from . import alias
+from .makeatoms import *
+from .atoms import *
 from .constants import *
 from .classes import *
 from . import sample

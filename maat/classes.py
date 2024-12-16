@@ -22,6 +22,9 @@ ins = mt.Spectra(
 
 
 from . import alias
+from .atoms import atom
+from .makeatoms import Element, Isotope
+from .makeatoms import *
 from .constants import *
 import numpy as np
 import matplotlib.pyplot as plt
@@ -435,7 +438,7 @@ class Material:
         to only set the atoms and the grams, and optionally the name, and calculate the rest with `Material.set()`.
         '''
         self.atoms = atoms
-        '''Dict of atoms in the material, as in `{H: 6, C:1, N:1}`.'''
+        '''Dict of atoms in the material, as in `{'H': 6, 'C':1, 'N':1}`.'''
         self.name = name
         '''String with the name of the material.'''
         self.grams = grams
@@ -464,7 +467,27 @@ class Material:
         If `Material.grams` is not `None`, the number of moles will be calculated and overwritten.'''
         material_grams_per_mol = 0.0
         for key in self.atoms:
-            material_grams_per_mol += self.atoms[key] * mass[key]
+            try:
+                material_grams_per_mol += self.atoms[key] * atom[key].mass
+            except KeyError:
+                try:
+                    key_letters = ''.join(filter(str.isalpha, key))
+                    key_numbers = int(''.join(filter(str.isdigit, key)))
+                    isotope_counter = 0
+                    isotope_index = None
+                    for isotope in atom[key_letters].isotope:
+                        if isotope.mass_number == key_numbers:
+                            isotope_index = isotope_counter
+                        isotope_counter += 1
+                    material_grams_per_mol += self.atoms[key] * atom[key_letters].isotope[isotope_index].mass
+                except:
+                    try:
+                        allowed_mass_numbers = []
+                        for iso in atom[key_letters].isotope:
+                            allowed_mass_numbers.append(iso.mass_number)
+                        raise KeyError(f'Unrecognised isotope: {key}. Allowed mass numbers for {key_letters} are: {allowed_mass_numbers}')
+                    except:
+                        raise KeyError(f'Unrecognised atom: {key}. What is {key_letters}?')
         self.molar_mass = material_grams_per_mol
         if self.grams is not None:
             self._set_grams_error()
@@ -475,7 +498,7 @@ class Material:
         '''Set the cross section of the material, based on the atoms dict.'''
         total_cross_section = 0.0
         for key in self.atoms:
-            total_cross_section += self.atoms[key] * cross_section[key]
+            total_cross_section += self.atoms[key] * atom[key].cross_section
         self.cross_section = total_cross_section
 
     def set(self):

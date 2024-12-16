@@ -15,11 +15,13 @@ fix_dict ={
     '[alias](https://pablogila.github.io/Maat/maat/alias.html)'             : '`maat.alias`',
     '[classes](https://pablogila.github.io/Maat/maat/classes.html)'         : '`maat.classes`',
     '[constants](https://pablogila.github.io/Maat/maat/constants.html)'     : '`maat.constants`',
+    '[atoms](https://pablogila.github.io/Maat/maat/atoms.html)'             : '`maat.atoms`',
+    '[makeatoms](https://pablogila.github.io/Maat/maat/atoms.html)'         : '`maat.makeatoms`',
     '[fit](https://pablogila.github.io/Maat/maat/fit.html)'                 : '`maat.fit`',
     '[normalize](https://pablogila.github.io/Maat/maat/normalize.html)'     : '`maat.normalize`',
     '[plot](https://pablogila.github.io/Maat/maat/plot.html)'               : '`maat.plot`',
     '[deuteration](https://pablogila.github.io/Maat/maat/deuteration.html)' : '`maat.deuteration`',
-    '[sample](https://pablogila.github.io/Maat/maat/sample.html)'           : '`maat.sample`'
+    '[sample](https://pablogila.github.io/Maat/maat/sample.html)'           : '`maat.sample`',
 } 
 
 version = th.text.find('version=', version_path, 1)[0]

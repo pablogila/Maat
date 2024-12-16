@@ -22,21 +22,21 @@ MAPI = Material(
 MAPI.set()
 
 MAPI_CDND = Material(
-    atoms={'Pb': 1, 'I': 3, 'C': 1, 'N': 1, 'D': 6},
+    atoms={'Pb': 1, 'I': 3, 'C': 1, 'N': 1, 'H2': 6},
     name='CD3ND3PbI3'
     )
 '''CD$_3$ND$_3$PbI$_3$'''
 MAPI_CDND.set()
 
 MAPI_ND = Material(
-    atoms={'Pb': 1, 'I': 3, 'C': 1, 'N': 1, 'H': 3, 'D': 3},
+    atoms={'Pb': 1, 'I': 3, 'C': 1, 'N': 1, 'H': 3, 'H2': 3},
     name='CH3ND3PbI3'
     )
 '''CH$_3$ND$_3$PbI$_3$'''
 MAPI_ND.set()
 
 MAPI_CD = Material(
-    atoms={'Pb': 1, 'I': 3, 'C': 1, 'N': 1, 'H': 3, 'D': 3},
+    atoms={'Pb': 1, 'I': 3, 'C': 1, 'N': 1, 'H': 3, 'H2': 3},
     name='CD3NH3PbI3'
     )
 '''CD$_3$NH$_3$PbI$_3$'''
@@ -50,7 +50,7 @@ CH3NH3I = Material(
 CH3NH3I.set()
 
 CH3ND3I = Material(
-    atoms={'C' : 1, 'N': 1, 'H': 3, 'D': 3},
+    atoms={'C' : 1, 'N': 1, 'H': 3, 'H2': 3},
     name='CH3ND3'
     )
 '''CH$_3$ND$_3$I'''
