@@ -1,24 +1,27 @@
 import maat as mt
 
+print('We can extract atomic masses with the atom megadict, as atom[symbol].mass:')
 H_mass = mt.atom['H'].mass
-P_mass = mt.atom['H'].isotope[0].mass
-D_mass = mt.atom['H'].isotope[1].mass
-P_abundance = mt.atom['H'].isotope[0].abundance
-D_abundance = mt.atom['H'].isotope[1].abundance
-print(f'Hydrogen mass is:  {H_mass} uma\n'
-      f'Protium mass is:   {P_mass} uma ({P_abundance} abundance)\n'
-      f'Deuterium mass is: {D_mass} uma ({D_abundance} abundance)')
+print(f'  Hydrogen mass is:  {H_mass} uma')
 
-# If I don't know the isotope index, I can find it easily:
-element, isotope_index = mt.atoms.get_isotope_index('H2')
-D_cross_section = mt.atom['H'].isotope[isotope_index].cross_section
+print('We can access isotope data such as the cross section with maat.atom[symbol].isotope[A].cross_section')
+D_cross_section = mt.atom['H'].isotope[2].cross_section
+print(f'  Total bound scattering cross section for D is: {D_cross_section}')
 
-print(f'Used isotope index for D is: {isotope_index}\n'
-      f'Total bound scattering cross section for D is: {D_cross_section}')
+print("Let's see what isotopes are available for helium, with maat.atoms.allowed_isotopes(symbol):")
+He_isotopes = mt.atoms.allowed_isotopes('He')
+print(f"  {He_isotopes}")
 
-test_dict = {
-    1: 'uno',
-    15: 'quince'
-}
+print("We can also split the name of an isotope into its element and mass number, with maatt.atoms.split_isotope(isotope):")
+He4 = 'He4'
+element, isotope = mt.atoms.split_isotope(He4)
+print(f"  {He4} was splitted to {element} + {isotope}")
 
-print(test_dict[15])
+print('More info in the docs!')
+He3_mass = mt.atom['He'].isotope[3].mass
+He4_mass = mt.atom['He'].isotope[4].mass
+He3_abundance = mt.atom['He'].isotope[3].abundance
+He4_abundance = mt.atom['He'].isotope[4].abundance
+print(f'  He3 mass is: {He3_mass} uma ({He3_abundance} abundance)')
+print(f'  He4 mass is: {He4_mass} uma ({He4_abundance} abundance)')
+

@@ -1,6 +1,10 @@
 import maat as mt
 # Run the code in the same directory as this script
-mt.run_here()
+try:
+    import thoth as th
+    th.call.here()
+except:
+    print("Remember to check the file paths and all of that!")
 # Load the example data, customizing the plotting options
 ins = mt.Spectra(
     type='INS',
@@ -9,7 +13,7 @@ ins = mt.Spectra(
     units='meV',
     plotting=mt.Plotting(
         title='Calculated MAPbI$_3$ INS',
-        xlim=[5,100],
+        xlim=[8,500],
         margins=[0,0.1],
         vline=[35.5, 110],
         figsize=(8, 4.5),

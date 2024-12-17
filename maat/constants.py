@@ -16,6 +16,10 @@ h_eV = mt.h_eV
 - [Time conversion factors](#time-conversion-factors)
 - [Universal constants](#universal-constants)
 
+## References
+These values come from the 2022 CODATA Internationally
+recommended 2022 values of the Fundamental Physical Constants.
+
 ---
 '''
 

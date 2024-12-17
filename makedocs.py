@@ -5,7 +5,10 @@ It also requires Thoth, get it here: https://github.com/pablogila/Thoth
 Run this script as `python3 makedocs.py`.
 '''
 
-import thoth as th
+try:
+    import thoth as th
+except:
+    print("Aborting... You need Thoth to compile the documentation! https://github.com/pablogila/Thoth")
 
 readme = './README.md'
 temp_readme = './_README_temp.md'
@@ -16,23 +19,26 @@ fix_dict ={
     '[classes](https://pablogila.github.io/Maat/maat/classes.html)'         : '`maat.classes`',
     '[constants](https://pablogila.github.io/Maat/maat/constants.html)'     : '`maat.constants`',
     '[atoms](https://pablogila.github.io/Maat/maat/atoms.html)'             : '`maat.atoms`',
-    '[makeatoms](https://pablogila.github.io/Maat/maat/atoms.html)'         : '`maat.makeatoms`',
+    '[elements](https://pablogila.github.io/Maat/maat/elements.html)'       : '`maat.elements`',
     '[fit](https://pablogila.github.io/Maat/maat/fit.html)'                 : '`maat.fit`',
     '[normalize](https://pablogila.github.io/Maat/maat/normalize.html)'     : '`maat.normalize`',
     '[plot](https://pablogila.github.io/Maat/maat/plot.html)'               : '`maat.plot`',
     '[deuteration](https://pablogila.github.io/Maat/maat/deuteration.html)' : '`maat.deuteration`',
     '[sample](https://pablogila.github.io/Maat/maat/sample.html)'           : '`maat.sample`',
-} 
+}
 
-version = th.text.find('version=', version_path, 1)[0]
+version = th.text.find(r"version =", version_path, -1)[0]
 version = th.extract.string(version, 'version', None, True)
 
 print(f'Updating README to {version}...')
 th.text.replace_line(f'# Maat {version}', '# Maat v', readme, 1)
 
 print('Updating docs with Pdoc...')
+cwd = th.call.here()
 th.file.from_template(readme, temp_readme, None, fix_dict)
-th.call.shell(f"pdoc ./maat/ -o ./docs --mermaid --math --footer-text='Maat {version} documentation'")
+completed_process = th.call.shell(f"pdoc ./maat/ -o ./docs --mermaid --math --footer-text='Maat {version} documentation'", cwd)
+if completed_process.returncode != 0:
+    print(completed_process.stderr)
 th.file.remove(temp_readme)
 print('Done!')
 

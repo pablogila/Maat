@@ -11,14 +11,19 @@ This module manages the plotting of data.
 
 from .classes import *
 from . import normalize
+from . import alias
+import matplotlib.pyplot as plt
 
 
 def spectra(spectrum:Spectra):
-    '''Plot the given spectra, with optional `maat.classes.Plotting` and `maat.classes.ScaleRange` attributes.'''
+    '''
+    Plot the given spectra, with optional `maat.classes.Plotting` and `maat.classes.ScaleRange` attributes.
+    '''
 
     strings_to_delete_from_name = ['.csv', '.dat', '.txt', '_INS', '_ATR', '_FTIR', '_temp', '_RAMAN', '_Raman', '/data/', 'data/', '/csv/', 'csv/', '/INS/', 'INS/', '/FTIR/', 'FTIR/', '/ATR/', 'ATR/', '_smooth', '_smoothed', '_subtracted', '_cellsubtracted']
-    normalize_area_keys = ['area', 'a', 'A']
-    normalize_height_keys = ['height', 'y', 'Y', True]
+    normalize_area_keys = alias.parameters['area']
+    normalize_height_keys = alias.parameters['height']
+    normalize_height_keys.extend(alias.boolean[True])
 
     sdata = deepcopy(spectrum)
 

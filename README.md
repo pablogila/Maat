@@ -1,10 +1,11 @@
-# Maat v3.0.0-dev2
+# Maat v3.0.0
 
 Welcome to **M**y **A**n**A**lysis **T**ools; or just **Maat**, as the Egyptian goddess of truth, order, and justice.  
 
 Just as an Egyptian goddess fallen from the sky, this Python package makes my life easier when analyzing scientific data, such as experimental INS, FTIR and Raman CSV data files, among others.
 
-Like the Egyptian goddess, Maat is *married* to [Thoth](https://github.com/pablogila/Thoth), a super useful text file management package. Note that Thoth is required to run Maat. I don't know if this is lore accurate, but seriously, Thoth is a dependency to run the Maat package, so go ahead and install it.  
+Like the Egyptian goddess, Maat is *married* to [Thoth](https://github.com/pablogila/Thoth), a super useful text file management package.
+Note that although Thoth is not required to run Maat, it is needed to compile Maat's documentation.  
 
 
 ## Installation
@@ -20,9 +21,7 @@ Install the required dependencies by running:
 pip install numpy pandas matplotlib scipy
 ```
 
-Additionally, you need to install the [Thoth](https://github.com/pablogila/Thoth) python package to run Maat.  
-
-To install Maat, clone the repository from [GitHub](https://github.com/pablogila/Maat/) or download it as a ZIP and run inside the `/Maat/` directory:  
+To install Maat, clone the repository from [GitHub](https://github.com/pablogila/Maat/) or download the [latest stable release](https://github.com/pablogila/Maat/tags)  as a ZIP and run inside the `/Maat/` directory:  
 ```shell
 pip install .
 ```
@@ -32,20 +31,20 @@ pip install .
 
 You can [check the latest documentation online](https://pablogila.github.io/Maat/).
 An offline copy is also available in `/docs/maat.html`.
-Note that code examples are also provided in the `/examples/` folder.  
+Code examples are provided in the `/tests/` folder.  
 
 Maat has the following submodules:
 
-- [alias](https://pablogila.github.io/Maat/maat/alias.html). Similar to [thoth.alias](https://pablogila.github.io/Thoth/thoth/alias.html), contains common dictionaries with science-related strings, to correct user inputs.
-- [classes](https://pablogila.github.io/Maat/maat/classes.html). Objects that allow you to work with the data. Load them directly as `maat.Class(options)`.
-- [constants](https://pablogila.github.io/Maat/maat/constants.html). Common constants and conversion factors. Load them directly as `maat.value`.
-- [atoms](https://pablogila.github.io/Maat/maat/atoms.html). Contains the `atom` dictionary, with the properties of all the elements (mass, cross section, etc).
-- [makeatoms](https://pablogila.github.io/Maat/maat/atoms.html). Used to build the atoms submodule.
+- [alias](https://pablogila.github.io/Maat/maat/alias.html). Common dictionaries to correct user inputs.
+- [constants](https://pablogila.github.io/Maat/maat/constants.html). Universal constants and conversion factors. Use them directly as `maat.value`.
+- [elements](https://pablogila.github.io/Maat/maat/elements.html). Contains the `maat.atom` dictionary, with the properties of all the elements (mass, cross section, etc).
+- [atoms](https://pablogila.github.io/Maat/maat/atoms.html). Used to build and manage atomic elements.
+- [classes](https://pablogila.github.io/Maat/maat/classes.html). Classes that allow you to work with the data, such as loading INS spectra, etc.
+- [plot](https://pablogila.github.io/Maat/maat/plot.html). Plotting functions.
 - [fit](https://pablogila.github.io/Maat/maat/fit.html). Fitting operations.
 - [normalize](https://pablogila.github.io/Maat/maat/normalize.html). Normalization operations.
-- [plot](https://pablogila.github.io/Maat/maat/plot.html). Plotting operations.
 - [deuteration](https://pablogila.github.io/Maat/maat/deuteration.html). Tools to estimate deuteration levels.
-- [sample](https://pablogila.github.io/Maat/maat/sample.html). Sample data for testing.
+- [sample](https://pablogila.github.io/Maat/maat/sample.html). Sample data for testing purposes.
 
 The documentation can be compiled automatically using [pdoc](https://pdoc.dev/) and [Thoth](https://github.com/pablogila/Thoth), by running:
 ```shell

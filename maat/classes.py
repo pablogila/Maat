@@ -1,7 +1,6 @@
 '''
 ## Description
-This module contains the core classes and their functions.
-These are the objects that allow you to load and manipulate data.
+This module contains common classes and their functions, used to load and manipulate data.
 Any class can be instantiated directly: for example, to create a new
 `Spectra` class for your data, you just need to call `maat.Spectra(options)` as described below:
 ```python
@@ -12,10 +11,10 @@ ins = mt.Spectra(
 ```
 
 ## Index
-- `Spectra`: The main class used by Maat, is used to load and process spectral data.
-- `Plotting`: Stores plotting options. Used inside `Spectra.plotting`. This class can also be exported to be used in other codes.
-- `ScaleRange`: Used to handle the normalization of the data inside the specified range of values. Used inside `Spectra.scale_range`.
-- `Material`: Used to store and calculate material parameters, such as molar masses and cross sections.
+- `Spectra`. Used to load and process spectral data.
+- `Plotting`. Stores plotting options. Used inside `Spectra.plotting`.
+- `ScaleRange`. Handles data normalization inside the specified range of values. Used inside `Spectra.scale_range`.
+- `Material`. Used to store and calculate material parameters, such as molar masses and cross sections.
 
 ---
 '''
@@ -23,20 +22,17 @@ ins = mt.Spectra(
 
 from . import alias
 from .constants import *
-from .atomsdict import atom
+from .elements import atom
 from . import atoms
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 from copy import deepcopy
 import os
-import re
 
 
 class Plotting:
     '''
     Stores plotting options.
-    Mainly to be used inside the `Spectra` class, but it can also be exported and used in other codes.
     Read by `maat.plot.spectra(Spectra)`.
     '''
     def __init__(self,
@@ -166,19 +162,19 @@ class ScaleRange:
                  zoom:bool=False,
                  ):
         '''All values can be set when initializing the ScaleRange object.'''
-        self.index = index
+        self.index: int = index
         '''Index of the dataframe to use as reference.'''
-        self.xmin = xmin
+        self.xmin: float = xmin
         '''Minimum x-value to start normalizing the plots.'''
-        self.xmax = xmax
+        self.xmax: float = xmax
         '''Maximum x-value to normalize the plots.'''
-        self.ymin = ymin
+        self.ymin: list = ymin
         '''List with minimum y-values to normalize the plots.'''
-        self.ymax = ymax
+        self.ymax: list = ymax
         '''List with minimum y-values to normalize the plots.
         If `Plotting.normalize=True`, the plots are normalized according to the y-values provided.
         '''
-        self.zoom = zoom
+        self.zoom: bool = zoom
         '''
         Used when plotting with `maat.plot.spectra()`.
         If true, the data inside the range is scaled up to fit the entire plotting window.
@@ -244,9 +240,9 @@ class Spectra:
         self.type = None
         '''Type of the spectra: `'INS'`, `'ATR'`, or `'RAMAN'`.'''
         self.comment = comment
-        '''Custom comment. If `Plotting.title` is None,  Title of the plot.'''
+        '''Custom comment. If `Plotting.title` is None,  it will be the title of the plot.'''
         self.save_as = save_as
-        '''Filename to save the plot.'''
+        '''Filename to save the plot. None by default.'''
         self.filename = None
         '''
         List containing the filenames with the spectral data.
@@ -262,11 +258,11 @@ class Spectra:
         Loaded automatically from the filenames at initialization.
         '''
         self.units = None
-        '''Target units of the spectral data. Can be `'meV'` or `'cm-1'`.'''
+        '''Target units of the spectral data. Can be `'meV'` or `'cm-1'`, written as any of the variants listed in `maat.alias.unit[unit]`.'''
         self.units_in = None
         '''
-        Input units of the spectral data, used in the input CSV files. Can be `'meV'` or `'cm-1'`.
-        If the input CSV files have different units, it can also be set as a list, eg. `['meV', 'cm-1', 'cm-1']`.
+        Input units of the spectral data, used in the input CSV files. Can be `'meV'` or `'cm-1'`, written as any of the variants listed in `maat.alias.unit[unit]`.
+        If the input CSV files have different units, it can also be set as a list of the same length of the number of input files, eg. `['meV', 'cm-1', 'cm-1']`.
         '''
         self.plotting = plotting
         '''`Plotting` object, used to set the plotting options.'''
@@ -476,8 +472,8 @@ class Material:
             try:
                 material_grams_per_mol += self.atoms[key] * atom[key].mass
             except KeyError: # Split the atomic flag as H2, etc
-                element, isotope_index = atoms.get_isotope_index(key)
-                material_grams_per_mol += self.atoms[key] * atom[element].isotope[isotope_index].mass
+                element, isotope = atoms.split_isotope(key)
+                material_grams_per_mol += self.atoms[key] * atom[element].isotope[isotope].mass
         self.molar_mass = material_grams_per_mol
         if self.grams is not None:
             self._set_grams_error()
@@ -494,7 +490,7 @@ class Material:
             try:
                 total_cross_section += self.atoms[key] * atom[key].cross_section
             except KeyError: # Split the atomic flag as H2, etc
-                element, isotope_index = atoms.get_isotope_index(key)
+                element, isotope_index = atoms.split_isotope(key)
                 total_cross_section += self.atoms[key] * atom[element].isotope[isotope_index].cross_section
         self.cross_section = total_cross_section
 

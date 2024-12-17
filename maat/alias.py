@@ -1,10 +1,12 @@
 '''
 # Description
-Similar to [thoth.alias](https://pablogila.github.io/Thoth/thoth/alias.html), this module contains common dictionaries with science-related stings, to normalize user inputs.
+This module contains common dictionaries to normalize and correct user inputs.
 
 # Index
 - `unit`
 - `experiment`
+- `file`
+- `boolean`
 
 ---
 '''
@@ -36,8 +38,14 @@ unit: dict = {
     'H'    : ['H', 'h', 'hour', 'hours', 'Hour', 'Hours', 'HOUR', 'HOURS'],
 }
 '''
-Dict with unit names, used to correct and normalise user inputs.
+Dict with unit names.
 '''
+
+parameters = {
+    'height': ['height', 'HEIGHT', 'Height', 'H', 'h'],
+    'area'  : ['area', 'Area', 'AREA', 'a', 'A'],
+}
+'''Dict with different parameters.'''
 
 experiment: dict = {
     'INS'   : ['INS', 'ins', 'Ins', 'InelasticNeutronScattering'],
@@ -45,6 +53,23 @@ experiment: dict = {
     'RAMAN' : ['RAMAN', 'raman', 'Raman'],
 }
 '''
-Dictionary with experiment types, to correct user inputs.
+Dictionary with the available experiment types.
+'''
+
+file = {
+    'file'  : ['file', 'files', 'File', 'Files', 'FILE', 'FILES', 'f', 'F'],
+    'dir'   : ['dir', 'Dir', 'DIR', 'directory', 'Directory', 'DIRECTORY', 'd', 'D', 'folder', 'Folder', 'FOLDER'],
+    'Error' : ['Error', 'error', 'ERROR', 'Errors', 'errors', 'ERRORS'],
+    }
+'''
+Strings related to files.
+'''
+
+boolean= {
+    True  : ['yes', 'YES', 'Yes', 'Y', 'y', 'T', 'True', 'TRUE', 't', 'true', True, 'Si', 'SI', 'si', 'S', 's'],
+    False : ['no', 'NO', 'No', 'N', 'n', 'F', 'False', 'FALSE', 'f', 'false', False],
+}
+'''
+Strings with booleans such as 'yes' / 'no'.
 '''
 

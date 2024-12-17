@@ -2,6 +2,7 @@
 ## Description
 This module contains the classes for the `maat.atomsdict.atom` megadictionary,
 which carries the information of all elements: isotope mass, cross section, etc.
+The `atom` megadict is managed and updated with `maat.atoms`.
 
 ## Index
 - `Isotope`
@@ -24,9 +25,9 @@ class Isotope:
 
 
 class Element:
-    def __init__(self=None, symbol=None, name=None, mass=None, number=None, cross_section=None, isotope:list=None):
+    def __init__(self=None, symbol=None, name=None, mass=None, number=None, cross_section=None, isotope=None):
         self.symbol = symbol
-        '''Standard symbol'''
+        '''Standard symbol of the element'''
         self.name = name
         '''Full name'''
         self.mass = mass
@@ -35,6 +36,6 @@ class Element:
         '''Atomic number (Z). Corresponds to the number of protons / electrons'''
         self.cross_section = cross_section
         '''Total bound scattering cross section'''
-        self.isotope: list = isotope
-        '''List containing `Isotope`s of the element'''
+        self.isotope = isotope
+        '''Dictionary containing the different `Isotope` of the element. The keys are the mass number (A).'''
 

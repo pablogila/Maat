@@ -25,8 +25,7 @@ setup(
         install_requires=['numpy',
                           'matplotlib',
                           'pandas',
-                          'scipy',
-                          'thoth'],
+                          'scipy'],
         license='AGPL-3.0',
         keywords=['python', 'maat', 'INS', 'Raman', 'ATR', 'FTIR', 'spectroscopy', 'spectra', 'analysis'],
         classifiers= [

@@ -53,7 +53,7 @@ def plateau(spectra:Spectra, cuts=None, df_index:int=0):
     Fit the mean value and the error of a plateau in a `maat.classes.Spectra` object.
     If `maat.classes.Spectra.dataframe[df_index]` has an 'Error' column, those errors are also taken into account
     along with the standard deviation of the mean, else only the standard deviation is considered.
-    The 'Error' column title can be any string in `thoth.alias.file['Error']`.\n
+    The 'Error' column title can be any string in `maat.alias.file['Error']`.\n
     Use as `maat.fit.plateau(spectra, cuts=[low_cut, high_cut], df_index=0)`.
     Note that `cuts`, `low_cut` and/or `top_cut` can be set to None.
     '''
@@ -78,7 +78,7 @@ def plateau(spectra:Spectra, cuts=None, df_index:int=0):
         df = df[df[df.columns[0]] <= top_cut]
     mean = df[df.columns[1]].mean()
     std_mean = df[df.columns[1]].std()
-    error_column = next((col for col in th.alias.file['Error'] if col in df.columns), None)  # Get the error column title
+    error_column = next((col for col in alias.file['Error'] if col in df.columns), None)  # Get the error column title
     if error_column:
         errors = df[error_column].to_numpy()
         std_data = np.sqrt(np.sum(errors**2)) / len(errors)
@@ -125,7 +125,7 @@ def area_under_peak(
 
     area = scipy.integrate.simpson(y, x=x)
 
-    error_column = next((col for col in th.alias.file['Error'] if col in df_range.columns), None)  # Get the error column title
+    error_column = next((col for col in alias.file['Error'] if col in df_range.columns), None)  # Get the error column title
     if error_column:
         point_errors = df_range[error_column].to_numpy()
     else: # Assume the error in each point is the same as the baseline error
