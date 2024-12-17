@@ -22,9 +22,9 @@ ins = mt.Spectra(
 
 
 from . import alias
-from .atoms import atom
-from .makeatoms import *
 from .constants import *
+from .atomsdict import atom
+from . import atoms
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -464,57 +464,20 @@ class Material:
         decimal_accuracy = len(str(self.grams).split('.')[1])
         # Calculate the error in grams
         self.grams_error = 10**(-decimal_accuracy)
-    
-    #################### move somewhere else
-    def get_isotope_index(name:str):
-        '''
-        Decomposes the `name` containing an isotope, such as 'H2' or 'He4',
-        into a tuple with the element and the isotope index in `maat.atoms.atom`.
-        For example, 'H2' would return ('H', 1).
-        '''
-        element = ''.join(filter(str.isalpha, key))
-        number = int(''.join(filter(str.isdigit, key)))
-        i = 0
-        isotope_index = None
-        if element in atom.keys():
-            for isotope in atom[element].isotope:
-                if isotope.mass_number == number:
-                    isotope_index = i
-                    return element, isotope_index
-                i += 1
-            # mass_number not found, raise error
-            allowed_mass_numbers = []
-            for iso in atom[element].isotope:
-                allowed_mass_numbers.append(iso.mass_number)
-            raise KeyError(f'Unrecognised isotope: {key}. Allowed mass numbers for {key_letters} are: {allowed_mass_numbers}')
-        raise KeyError(f'Unrecognised atom: {key}. What is {key_letters}?')
 
     def _set_mass(self):
-        '''Set the molar mass of the material.\n
-        If `Material.grams` is not `None`, the number of moles will be calculated and overwritten.'''
+        '''
+        Set the molar mass of the material.
+        If `Material.grams` is not `None`, the number of moles will be calculated and overwritten.
+        If an isotope is used, eg. `'He4'`, it splits the name with `maat.constants.atoms.get_isotope_index`.
+        '''
         material_grams_per_mol = 0.0
         for key in self.atoms:
             try:
                 material_grams_per_mol += self.atoms[key] * atom[key].mass
             except KeyError: # Split the atomic flag as H2, etc
-                try:
-                    key_letters = ''.join(filter(str.isalpha, key))
-                    key_numbers = int(''.join(filter(str.isdigit, key)))
-                    i = 0
-                    isotope_index = None
-                    for isotope in atom[key_letters].isotope:
-                        if isotope.mass_number == key_numbers:
-                            isotope_index = i
-                        i += 1
-                    material_grams_per_mol += self.atoms[key] * atom[key_letters].isotope[isotope_index].mass
-                except: # You messed up!
-                    try:
-                        allowed_mass_numbers = []
-                        for iso in atom[key_letters].isotope:
-                            allowed_mass_numbers.append(iso.mass_number)
-                        raise KeyError(f'Unrecognised isotope: {key}. Allowed mass numbers for {key_letters} are: {allowed_mass_numbers}')
-                    except:
-                        raise KeyError(f'Unrecognised atom: {key}. What is {key_letters}?')
+                element, isotope_index = atoms.get_isotope_index(key)
+                material_grams_per_mol += self.atoms[key] * atom[element].isotope[isotope_index].mass
         self.molar_mass = material_grams_per_mol
         if self.grams is not None:
             self._set_grams_error()
@@ -522,30 +485,17 @@ class Material:
             self.mols_error = self.mols * np.sqrt((self.grams_error / self.grams)**2)
     
     def _set_cross_section(self):
-        '''Set the cross section of the material, based on the atoms dict.'''
+        '''
+        Set the cross section of the material, based on the atoms dict.
+        If an isotope is used, eg. `'He4'`, it splits the name with `maat.constants.atoms.get_isotope_index`.
+        '''
         total_cross_section = 0.0
         for key in self.atoms:
             try:
                 total_cross_section += self.atoms[key] * atom[key].cross_section
             except KeyError: # Split the atomic flag as H2, etc
-                try:
-                    key_letters = ''.join(filter(str.isalpha, key))
-                    key_numbers = int(''.join(filter(str.isdigit, key)))
-                    i = 0
-                    isotope_index = None
-                    for isotope in atom[key_letters].isotope:
-                        if isotope.mass_number == key_numbers:
-                            isotope_index = i
-                        i += 1
-                    total_cross_section += self.atoms[key] * atom[key_letters].isotope[isotope_index].cross_section
-                except: # You messed up!
-                    try:
-                        allowed_mass_numbers = []
-                        for iso in atom[key_letters].isotope:
-                            allowed_mass_numbers.append(iso.mass_number)
-                        raise KeyError(f'Unrecognised isotope: {key}. Allowed mass numbers for {key_letters} are: {allowed_mass_numbers}')
-                    except:
-                        raise KeyError(f'Unrecognised atom: {key}. What is {key_letters}?')
+                element, isotope_index = atoms.get_isotope_index(key)
+                total_cross_section += self.atoms[key] * atom[element].isotope[isotope_index].cross_section
         self.cross_section = total_cross_section
 
     def set(self):

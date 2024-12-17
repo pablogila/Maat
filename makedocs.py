@@ -9,7 +9,7 @@ import thoth as th
 
 readme = './README.md'
 temp_readme = './_README_temp.md'
-version_path = './maat/constants.py'
+version_path = './maat/__init__.py'
 
 fix_dict ={
     '[alias](https://pablogila.github.io/Maat/maat/alias.html)'             : '`maat.alias`',

@@ -23,11 +23,6 @@ h_eV = mt.h_eV
 import numpy as np
 
 
-# Do not use spaces between the = sign,
-# it is the keyword to deduce the version when making the docs!
-version='v3.0.0-dev1'
-
-
 '''---
 ## Energy conversion factors
 Note that `cm` refers to cm$^{-1}$.

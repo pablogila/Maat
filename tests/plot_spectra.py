@@ -4,7 +4,7 @@ mt.run_here()
 # Load the example data, customizing the plotting options
 ins = mt.Spectra(
     type='INS',
-    filename='example.csv',
+    filename='ins.csv',
     units_in='cm-1',
     units='meV',
     plotting=mt.Plotting(

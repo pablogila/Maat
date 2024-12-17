@@ -6,7 +6,6 @@
 /.vscode/
 /results/
 /out*/
-/test/
 /data/
 *.gz
 *.json
@@ -16,7 +15,6 @@
 temp_*
 *.png
 *.svg
-*.csv
 _*
 
 
