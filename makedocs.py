@@ -27,7 +27,7 @@ fix_dict ={
     '[sample](https://pablogila.github.io/Maat/maat/sample.html)'           : '`maat.sample`',
 }
 
-version = th.text.find(r"version =", version_path, -1)[0]
+version = th.find.lines(r"version =", version_path, -1)[0]
 version = th.extract.string(version, 'version', None, True)
 
 print(f'Updating README to {version}...')
