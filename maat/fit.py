@@ -21,7 +21,11 @@ from copy import deepcopy
 import thoth as th
 
 
-def mean_std(array:list, rounded:bool=True, degrees_of_freedom=0) -> tuple:
+def mean(
+        array:list,
+        rounded:bool=True,
+        degrees_of_freedom=0
+    ) -> tuple:
     '''
     Takes an `array` of numerical values
     and returns a tuple with the mean and standard deviation,
@@ -48,7 +52,11 @@ def mean_std(array:list, rounded:bool=True, degrees_of_freedom=0) -> tuple:
     return rounded_mean, rounded_error
 
 
-def plateau(spectra:Spectra, cuts=None, df_index:int=0):
+def plateau(
+        spectra:Spectra,
+        cuts=None,
+        df_index:int=0
+    ) -> tuple:
     '''
     Fit the mean value and the error of a plateau in a `maat.classes.Spectra` object.
     If `maat.classes.Spectra.dataframe[df_index]` has an 'Error' column, those errors are also taken into account
@@ -89,12 +97,12 @@ def plateau(spectra:Spectra, cuts=None, df_index:int=0):
 
 
 def area_under_peak(
-    spectra:Spectra,
-    peak:list,
-    df_index:int=0,
-    errors_as_in_baseline:bool=True,
-    min_as_baseline:bool=False
-    ):
+        spectra:Spectra,
+        peak:list,
+        df_index:int=0,
+        errors_as_in_baseline:bool=True,
+        min_as_baseline:bool=False
+    ) -> tuple:
     '''
     Calculate the area under a given peak.
 
@@ -140,12 +148,12 @@ def area_under_peak(
 
 
 def ratio_areas(
-    area:float,
-    area_total:float,
-    area_error:float=0.0,
-    area_total_error:float=0.0,
-    inverse_ratio:bool=False
-):
+        area:float,
+        area_total:float,
+        area_error:float=0.0,
+        area_total_error:float=0.0,
+        inverse_ratio:bool=False
+    ) -> tuple:
     '''
     Check the ratio between two areas, e.g. to estimate deuteration levels from ATR data.
     The ratio is calculated as `area / area_total`. This behavior is modified if `inverse_ratio = True`,

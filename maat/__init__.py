@@ -15,5 +15,5 @@ from . import plot
 from . import deuteration
 
 
-version = 'v3.0.2'
+version = 'v3.0.3'
 

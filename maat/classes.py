@@ -35,25 +35,26 @@ class Plotting:
     Stores plotting options.
     Read by `maat.plot.spectra(Spectra)`.
     '''
-    def __init__(self,
-                 title:str=None,
-                 xlim=None,
-                 ylim=None,
-                 margins=None,
-                 offset=True,
-                 normalize:bool=False,
-                 vline:list=None,
-                 vline_error:list=None,
-                 figsize:tuple=None,
-                 log_xscale:bool=False,
-                 show_yticks:bool=False,
-                 xlabel:str=None,
-                 ylabel:str=None,
-                 legend=None,
-                 legend_title:str=None,
-                 legend_size='medium',
-                 legend_loc='best',
-                 ):
+    def __init__(
+            self,
+            title:str=None,
+            xlim=None,
+            ylim=None,
+            margins=None,
+            offset=True,
+            normalize:bool=False,
+            vline:list=None,
+            vline_error:list=None,
+            figsize:tuple=None,
+            log_xscale:bool=False,
+            show_yticks:bool=False,
+            xlabel:str=None,
+            ylabel:str=None,
+            legend=None,
+            legend_title:str=None,
+            legend_size='medium',
+            legend_loc='best',
+        ):
         '''Default values can be overwritten when initializing the Plotting object.'''
         self.title = title
         '''Title of the plot. Set it to an empty string to remove the title.'''
@@ -153,14 +154,15 @@ class ScaleRange:
     This zoom setting can also be enabled without normalizing the plot, resulting in a zoom over the given range
     so that the `index` dataset fits the full plotting window, scaling the rest of the set accordingly.
     '''
-    def __init__(self,
-                 index:int=0,
-                 xmin:float=None,
-                 xmax:float=None,
-                 ymin:list=None,
-                 ymax:list=None,
-                 zoom:bool=False,
-                 ):
+    def __init__(
+            self,
+            index:int=0,
+            xmin:float=None,
+            xmax:float=None,
+            ymin:list=None,
+            ymax:list=None,
+            zoom:bool=False,
+        ):
         '''All values can be set when initializing the ScaleRange object.'''
         self.index: int = index
         '''Index of the dataframe to use as reference.'''
@@ -179,6 +181,7 @@ class ScaleRange:
         Used when plotting with `maat.plot.spectra()`.
         If true, the data inside the range is scaled up to fit the entire plotting window.
         '''
+
     def set_x(self, xmin:float=None, xmax:float=None):
         '''Override with an horizontal range.'''
         self.xmin = xmin
@@ -186,6 +189,7 @@ class ScaleRange:
         self.ymin = None
         self.ymax = None
         return self
+
     def set_y(self, ymin:list=None, ymax:list=None):
         '''Override with a vertical range.'''
         self.xmin = None
@@ -225,17 +229,18 @@ class Spectra:
 
     Below is a list of the available parameters for the Spectra object, along with their descriptions.
     '''
-    def __init__(self,
-                 type:str=None,
-                 comment:str=None,
-                 save_as:str=None,
-                 filename=None,
-                 dataframe=None,
-                 units=None,
-                 units_in=None,
-                 plotting:Plotting=Plotting(),
-                 scale_range:ScaleRange=ScaleRange(),
-                 ):
+    def __init__(
+            self,
+            type:str=None,
+            comment:str=None,
+            save_as:str=None,
+            filename=None,
+            dataframe=None,
+            units=None,
+            units_in=None,
+            plotting:Plotting=Plotting(),
+            scale_range:ScaleRange=ScaleRange(),
+        ):
         '''All values can be set when initializing the Spectra object.'''
         self.type = None
         '''Type of the spectra: `'INS'`, `'ATR'`, or `'RAMAN'`.'''
@@ -419,16 +424,17 @@ class Material:
     Used to calculate molar masses and cross sections,
     and to pass data to different analysis functions such as `maat.deuteration.impulse_approx().`
     '''
-    def __init__(self,
-                 atoms:dict,
-                 name:str=None,
-                 grams:float=None,
-                 grams_error:float=None,
-                 mols:float=None,
-                 mols_error:float=None,
-                 molar_mass:float=None,
-                 cross_section:float=None,
-                 ):
+    def __init__(
+            self,
+            atoms:dict,
+            name:str=None,
+            grams:float=None,
+            grams_error:float=None,
+            mols:float=None,
+            mols_error:float=None,
+            molar_mass:float=None,
+            cross_section:float=None,
+        ):
         '''
         All values can be set when initializing the Material object. However, it is recommended
         to only set the atoms and the grams, and optionally the name, and calculate the rest with `Material.set()`.

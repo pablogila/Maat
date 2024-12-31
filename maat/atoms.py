@@ -1,15 +1,15 @@
 '''
-## Description
+# Description
 This module provides the tools to create and manage the `maat.elements.atom` megadictionary,
 which contains the properties of all elements.
 Additionally, this module contains tools to sort and organise element data.
 
-## Index
+# Index
 - `export_to_py()`
 - `split_isotope()`
 - `allowed_isotopes()`
 
-## References
+# References
 
 Atomic `mass` are in atomic mass units (amu), and come from:
 Pure Appl. Chem., Vol. 78, No. 11, pp. 2051-2066, 2006.
@@ -30,7 +30,10 @@ From Felix Fernandez-Alonso's book 'Neutron Scattering Fundamentals' (2013).
 from .elements import atom
 
 
-def export_to_py(dict_of_elements:dict, filename='exported_elements.py'):
+def export_to_py(
+        dict_of_elements:dict,
+        filename='exported_elements.py'
+    ) -> None:
     '''
     Export a dictionary of chemical elements to a python file.
     This is used to build and update the `maat.elements.atom` megadictionary, that contains

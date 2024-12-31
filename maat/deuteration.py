@@ -17,13 +17,14 @@ from .fit import area_under_peak, ratio_areas, plateau
 from copy import deepcopy
 
 
-def impulse_approx(ins: Spectra,
-                   material_H: Material,
-                   material_D: Material,
-                   threshold: float=600,
-                   H_df_index: int=0,
-                   D_df_index: int=1
-                   ):
+def impulse_approx(
+        ins: Spectra,
+        material_H: Material,
+        material_D: Material,
+        threshold: float=600,
+        H_df_index: int=0,
+        D_df_index: int=1
+    ) -> tuple:
     '''
     Calculate the deuteration levels from INS spectra with the *Impulse Approximation*,
     see https://www.tandfonline.com/doi/full/10.1080/00018732.2017.1317963.
@@ -92,10 +93,11 @@ def impulse_approx(ins: Spectra,
     return round(deuteration,2), round(deuteration_error,2)
 
 
-def peaks_mapi(ins:Spectra,
-         peaks:dict,
-         df_index:int=0,
-         ):
+def peaks_mapi(
+        ins:Spectra,
+        peaks:dict,
+        df_index:int=0,
+    ) -> str:
     '''
     Calculate the deuteration of your CH$_3$NH$_3$PbI$_3$ samples by integrating the INS disrotatory peaks,
     which appear at around 38 meV for the fully protonated sample.

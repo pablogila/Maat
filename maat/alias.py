@@ -4,6 +4,7 @@ This module contains common dictionaries to normalize and correct user inputs.
 
 # Index
 - `unit`
+- `parameters`
 - `experiment`
 - `file`
 - `boolean`

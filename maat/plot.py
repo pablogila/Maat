@@ -1,8 +1,8 @@
 '''
-## Description
+# Description
 This module manages the plotting of data.
 
-## Index
+# Index
 - `spectra()`
 
 --- 

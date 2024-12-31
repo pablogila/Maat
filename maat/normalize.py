@@ -81,7 +81,9 @@ def _spectra_y(sdata:Spectra):
 
 
 def area(spectra:Spectra):
-    '''Normalize the given spectra by the area under the datasets, with optional `maat.classes.ScaleRange` attributes.'''
+    '''
+    Normalize the given spectra by the area under the datasets, with optional `maat.classes.ScaleRange` attributes.
+    '''
     sdata = deepcopy(spectra)
     if hasattr(sdata, 'scale_range') and sdata.scale_range is not None:
         scale_range = sdata.scale_range
