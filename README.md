@@ -1,6 +1,6 @@
 # Maat v3.0.3
 
-Welcome to **M**y **A**n**A**lysis **T**ools; or just **Maat**, as the Egyptian goddess of truth, order, and justice.  
+Welcome to the *spectru**M** **A**n**A**lysis **T**ools*; or just **Maat**, as the Egyptian goddess of truth, order, and justice.  
 
 Just as an Egyptian goddess fallen from the sky, this Python package makes my life easier when analyzing scientific data, such as experimental INS, FTIR and Raman CSV data files, among others.
 
