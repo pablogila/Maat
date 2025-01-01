@@ -1,16 +1,16 @@
 '''
-## Description
+# Description
 This module contains common classes and their functions, used to load and manipulate data.
 Any class can be instantiated directly: for example, to create a new
-`Spectra` class for your data, you just need to call `maat.Spectra(options)` as described below:
+`Spectra` class for your data, you just need to call `maatpy.Spectra(options)` as described below:
 ```python
-import maat as mt
+import maatpy as mt
 ins = mt.Spectra(
     # Options here
     )
 ```
 
-## Index
+# Index
 - `Spectra`. Used to load and process spectral data.
 - `Plotting`. Stores plotting options. Used inside `Spectra.plotting`.
 - `ScaleRange`. Handles data normalization inside the specified range of values. Used inside `Spectra.scale_range`.
@@ -33,7 +33,7 @@ import os
 class Plotting:
     '''
     Stores plotting options.
-    Read by `maat.plot.spectra(Spectra)`.
+    Read by `maatpy.plot.spectra(Spectra)`.
     '''
     def __init__(
             self,
@@ -148,7 +148,7 @@ class ScaleRange:
     spectra.scale_range = ScaleRange(index=0, ymin=[2, 3], ymax=[50, 60])
     ```
 
-    To normalize when plotting with `maat.plot.spectra(Spectra)`, remember to set `Plotting.normalize=True`.
+    To normalize when plotting with `maatpy.plot.spectra(Spectra)`, remember to set `Plotting.normalize=True`.
     When normalizing the plot, all datasets are fitted inside the plotting window, scaling over the entire data range into view.
     To override this behaviour and expand over the given range to fill the plot window, you can set `ScaleRange.zoom=True`.
     This zoom setting can also be enabled without normalizing the plot, resulting in a zoom over the given range
@@ -178,7 +178,7 @@ class ScaleRange:
         '''
         self.zoom: bool = zoom
         '''
-        Used when plotting with `maat.plot.spectra()`.
+        Used when plotting with `maatpy.plot.spectra()`.
         If true, the data inside the range is scaled up to fit the entire plotting window.
         '''
 
@@ -202,12 +202,12 @@ class ScaleRange:
 class Spectra:
     '''
     Spectra object. Used to load and process spectral data.
-    Most functions present in Maat receive this object as input.
+    Most functions present in MaatPy receive this object as input.
 
     **Use example:** to load two INS spectra CSV files from MANTID with cm$^{-1}$ as input units,
     and plot them in meV units, normalizing their heights over the range from 20 to 50 meV:
     ```python
-    import maat as mt
+    import maatpy as mt
     ins = mt.Spectra(
         type='INS',
         filename=['example_1.csv', 'example_2.csv'],
@@ -263,10 +263,10 @@ class Spectra:
         Loaded automatically from the filenames at initialization.
         '''
         self.units = None
-        '''Target units of the spectral data. Can be `'meV'` or `'cm-1'`, written as any of the variants listed in `maat.alias.unit[unit]`.'''
+        '''Target units of the spectral data. Can be `'meV'` or `'cm-1'`, written as any of the variants listed in `maatpy.alias.unit[unit]`.'''
         self.units_in = None
         '''
-        Input units of the spectral data, used in the input CSV files. Can be `'meV'` or `'cm-1'`, written as any of the variants listed in `maat.alias.unit[unit]`.
+        Input units of the spectral data, used in the input CSV files. Can be `'meV'` or `'cm-1'`, written as any of the variants listed in `maatpy.alias.unit[unit]`.
         If the input CSV files have different units, it can also be set as a list of the same length of the number of input files, eg. `['meV', 'cm-1', 'cm-1']`.
         '''
         self.plotting = plotting
@@ -422,7 +422,7 @@ class Material:
     '''
     Material class.
     Used to calculate molar masses and cross sections,
-    and to pass data to different analysis functions such as `maat.deuteration.impulse_approx().`
+    and to pass data to different analysis functions such as `maatpy.deuteration.impulse_approx().`
     '''
     def __init__(
             self,
@@ -471,7 +471,7 @@ class Material:
         '''
         Set the molar mass of the material.
         If `Material.grams` is not `None`, the number of moles will be calculated and overwritten.
-        If an isotope is used, eg. `'He4'`, it splits the name with `maat.constants.atoms.get_isotope_index`.
+        If an isotope is used, eg. `'He4'`, it splits the name with `maatpy.constants.atoms.get_isotope_index`.
         '''
         material_grams_per_mol = 0.0
         for key in self.atoms:
@@ -489,7 +489,7 @@ class Material:
     def _set_cross_section(self):
         '''
         Set the cross section of the material, based on the atoms dict.
-        If an isotope is used, eg. `'He4'`, it splits the name with `maat.constants.atoms.get_isotope_index`.
+        If an isotope is used, eg. `'He4'`, it splits the name with `maatpy.constants.atoms.get_isotope_index`.
         '''
         total_cross_section = 0.0
         for key in self.atoms:

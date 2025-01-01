@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="pdoc 15.0.1"/>
-    <title>maat.classes API documentation</title>
+    <title>maatpy.classes API documentation</title>
 
     <style>/*! * Bootstrap Reboot v5.0.0 (https://getbootstrap.com/) * Copyright 2011-2021 The Bootstrap Authors * Copyright 2011-2021 Twitter, Inc. * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE) * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md) */*,::after,::before{box-sizing:border-box}@media (prefers-reduced-motion:no-preference){:root{scroll-behavior:smooth}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#212529;background-color:#fff;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}hr{margin:1rem 0;color:inherit;background-color:currentColor;border:0;opacity:.25}hr:not([size]){height:1px}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:.5rem;font-weight:500;line-height:1.2}h1{font-size:calc(1.375rem + 1.5vw)}@media (min-width:1200px){h1{font-size:2.5rem}}h2{font-size:calc(1.325rem + .9vw)}@media (min-width:1200px){h2{font-size:2rem}}h3{font-size:calc(1.3rem + .6vw)}@media (min-width:1200px){h3{font-size:1.75rem}}h4{font-size:calc(1.275rem + .3vw)}@media (min-width:1200px){h4{font-size:1.5rem}}h5{font-size:1.25rem}h6{font-size:1rem}p{margin-top:0;margin-bottom:1rem}abbr[data-bs-original-title],abbr[title]{-webkit-text-decoration:underline dotted;text-decoration:underline dotted;cursor:help;-webkit-text-decoration-skip-ink:none;text-decoration-skip-ink:none}address{margin-bottom:1rem;font-style:normal;line-height:inherit}ol,ul{padding-left:2rem}dl,ol,ul{margin-top:0;margin-bottom:1rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0}dt{font-weight:700}dd{margin-bottom:.5rem;margin-left:0}blockquote{margin:0 0 1rem}b,strong{font-weight:bolder}small{font-size:.875em}mark{padding:.2em;background-color:#fcf8e3}sub,sup{position:relative;font-size:.75em;line-height:0;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}a{color:#0d6efd;text-decoration:underline}a:hover{color:#0a58ca}a:not([href]):not([class]),a:not([href]):not([class]):hover{color:inherit;text-decoration:none}code,kbd,pre,samp{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:1em;direction:ltr;unicode-bidi:bidi-override}pre{display:block;margin-top:0;margin-bottom:1rem;overflow:auto;font-size:.875em}pre code{font-size:inherit;color:inherit;word-break:normal}code{font-size:.875em;color:#d63384;word-wrap:break-word}a>code{color:inherit}kbd{padding:.2rem .4rem;font-size:.875em;color:#fff;background-color:#212529;border-radius:.2rem}kbd kbd{padding:0;font-size:1em;font-weight:700}figure{margin:0 0 1rem}img,svg{vertical-align:middle}table{caption-side:bottom;border-collapse:collapse}caption{padding-top:.5rem;padding-bottom:.5rem;color:#6c757d;text-align:left}th{text-align:inherit;text-align:-webkit-match-parent}tbody,td,tfoot,th,thead,tr{border-color:inherit;border-style:solid;border-width:0}label{display:inline-block}button{border-radius:0}button:focus:not(:focus-visible){outline:0}button,input,optgroup,select,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}button,select{text-transform:none}[role=button]{cursor:pointer}select{word-wrap:normal}select:disabled{opacity:1}[list]::-webkit-calendar-picker-indicator{display:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]:not(:disabled),[type=reset]:not(:disabled),[type=submit]:not(:disabled),button:not(:disabled){cursor:pointer}::-moz-focus-inner{padding:0;border-style:none}textarea{resize:vertical}fieldset{min-width:0;padding:0;margin:0;border:0}legend{float:left;width:100%;padding:0;margin-bottom:.5rem;font-size:calc(1.275rem + .3vw);line-height:inherit}@media (min-width:1200px){legend{font-size:1.5rem}}legend+*{clear:left}::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-fields-wrapper,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-text,::-webkit-datetime-edit-year-field{padding:0}::-webkit-inner-spin-button{height:auto}[type=search]{outline-offset:-2px;-webkit-appearance:textfield}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-color-swatch-wrapper{padding:0}::file-selector-button{font:inherit}::-webkit-file-upload-button{font:inherit;-webkit-appearance:button}output{display:inline-block}iframe{border:0}summary{display:list-item;cursor:pointer}progress{vertical-align:baseline}[hidden]{display:none!important}</style>
     <style>/*! syntax-highlighting.css */pre{line-height:125%;}span.linenos{color:inherit; background-color:transparent; padding-left:5px; padding-right:20px;}.pdoc-code .hll{background-color:#ffffcc}.pdoc-code{background:#f8f8f8;}.pdoc-code .c{color:#3D7B7B; font-style:italic}.pdoc-code .err{border:1px solid #FF0000}.pdoc-code .k{color:#008000; font-weight:bold}.pdoc-code .o{color:#666666}.pdoc-code .ch{color:#3D7B7B; font-style:italic}.pdoc-code .cm{color:#3D7B7B; font-style:italic}.pdoc-code .cp{color:#9C6500}.pdoc-code .cpf{color:#3D7B7B; font-style:italic}.pdoc-code .c1{color:#3D7B7B; font-style:italic}.pdoc-code .cs{color:#3D7B7B; font-style:italic}.pdoc-code .gd{color:#A00000}.pdoc-code .ge{font-style:italic}.pdoc-code .gr{color:#E40000}.pdoc-code .gh{color:#000080; font-weight:bold}.pdoc-code .gi{color:#008400}.pdoc-code .go{color:#717171}.pdoc-code .gp{color:#000080; font-weight:bold}.pdoc-code .gs{font-weight:bold}.pdoc-code .gu{color:#800080; font-weight:bold}.pdoc-code .gt{color:#0044DD}.pdoc-code .kc{color:#008000; font-weight:bold}.pdoc-code .kd{color:#008000; font-weight:bold}.pdoc-code .kn{color:#008000; font-weight:bold}.pdoc-code .kp{color:#008000}.pdoc-code .kr{color:#008000; font-weight:bold}.pdoc-code .kt{color:#B00040}.pdoc-code .m{color:#666666}.pdoc-code .s{color:#BA2121}.pdoc-code .na{color:#687822}.pdoc-code .nb{color:#008000}.pdoc-code .nc{color:#0000FF; font-weight:bold}.pdoc-code .no{color:#880000}.pdoc-code .nd{color:#AA22FF}.pdoc-code .ni{color:#717171; font-weight:bold}.pdoc-code .ne{color:#CB3F38; font-weight:bold}.pdoc-code .nf{color:#0000FF}.pdoc-code .nl{color:#767600}.pdoc-code .nn{color:#0000FF; font-weight:bold}.pdoc-code .nt{color:#008000; font-weight:bold}.pdoc-code .nv{color:#19177C}.pdoc-code .ow{color:#AA22FF; font-weight:bold}.pdoc-code .w{color:#bbbbbb}.pdoc-code .mb{color:#666666}.pdoc-code .mf{color:#666666}.pdoc-code .mh{color:#666666}.pdoc-code .mi{color:#666666}.pdoc-code .mo{color:#666666}.pdoc-code .sa{color:#BA2121}.pdoc-code .sb{color:#BA2121}.pdoc-code .sc{color:#BA2121}.pdoc-code .dl{color:#BA2121}.pdoc-code .sd{color:#BA2121; font-style:italic}.pdoc-code .s2{color:#BA2121}.pdoc-code .se{color:#AA5D1F; font-weight:bold}.pdoc-code .sh{color:#BA2121}.pdoc-code .si{color:#A45A77; font-weight:bold}.pdoc-code .sx{color:#008000}.pdoc-code .sr{color:#A45A77}.pdoc-code .s1{color:#BA2121}.pdoc-code .ss{color:#19177C}.pdoc-code .bp{color:#008000}.pdoc-code .fm{color:#0000FF}.pdoc-code .vc{color:#19177C}.pdoc-code .vg{color:#19177C}.pdoc-code .vi{color:#19177C}.pdoc-code .vm{color:#19177C}.pdoc-code .il{color:#666666}</style>
@@ -54,11 +54,11 @@
     <nav class="pdoc">
         <label id="navtoggle" for="togglestate" class="pdoc-button"><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke-linecap='round' stroke="currentColor" stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg></label>
         <input id="togglestate" type="checkbox" aria-hidden="true" tabindex="-1">
-        <div>            <a class="pdoc-button module-list-button" href="../maat.html">
+        <div>            <a class="pdoc-button module-list-button" href="../maatpy.html">
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z"/>
   <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
-</svg>                &nbsp;maat</a>
+</svg>                &nbsp;maatpy</a>
 
 
             <input type="search" placeholder="Search..." role="searchbox" aria-label="search"
@@ -248,7 +248,7 @@
     </ul>
 
 
-            <footer>Maat v3.0.3 documentation</footer>
+            <footer>MaatPy v3.1.0 documentation</footer>
 
         <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
             built with <span class="visually-hidden">pdoc</span><img
@@ -260,23 +260,23 @@
     <main class="pdoc">
             <section class="module-info">
                     <h1 class="modulename">
-<a href="./../maat.html">maat</a><wbr>.classes    </h1>
+<a href="./../maatpy.html">maatpy</a><wbr>.classes    </h1>
 
-                        <div class="docstring"><h2 id="description">Description</h2>
+                        <div class="docstring"><h1 id="description">Description</h1>
 
 <p>This module contains common classes and their functions, used to load and manipulate data.
 Any class can be instantiated directly: for example, to create a new
-<code><a href="#Spectra">Spectra</a></code> class for your data, you just need to call <code><a href="#Spectra">maat.Spectra</a>(options)</code> as described below:</p>
+<code><a href="#Spectra">Spectra</a></code> class for your data, you just need to call <code><a href="#Spectra">maatpy.Spectra</a>(options)</code> as described below:</p>
 
 <div class="pdoc-code codehilite">
-<pre><span></span><code><span class="kn">import</span> <span class="nn">maat</span> <span class="k">as</span> <span class="nn">mt</span>
+<pre><span></span><code><span class="kn">import</span> <span class="nn">maatpy</span> <span class="k">as</span> <span class="nn">mt</span>
 <span class="n">ins</span> <span class="o">=</span> <span class="n">mt</span><span class="o">.</span><span class="n">Spectra</span><span class="p">(</span>
     <span class="c1"># Options here</span>
     <span class="p">)</span>
 </code></pre>
 </div>
 
-<h2 id="index">Index</h2>
+<h1 id="index">Index</h1>
 
 <ul>
 <li><code><a href="#Spectra">Spectra</a></code>. Used to load and process spectral data.</li>
@@ -293,18 +293,18 @@ Any class can be instantiated directly: for example, to create a new
                         <label class="view-source-button" for="mod-classes-view-source"><span>View Source</span></label>
 
                         <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos">  1</span></a><span class="sd">&#39;&#39;&#39;</span>
-</span><span id="L-2"><a href="#L-2"><span class="linenos">  2</span></a><span class="sd">## Description</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos">  2</span></a><span class="sd"># Description</span>
 </span><span id="L-3"><a href="#L-3"><span class="linenos">  3</span></a><span class="sd">This module contains common classes and their functions, used to load and manipulate data.</span>
 </span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a><span class="sd">Any class can be instantiated directly: for example, to create a new</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="sd">`Spectra` class for your data, you just need to call `maat.Spectra(options)` as described below:</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="sd">`Spectra` class for your data, you just need to call `maatpy.Spectra(options)` as described below:</span>
 </span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="sd">```python</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="sd">import maat as mt</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="sd">import maatpy as mt</span>
 </span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="sd">ins = mt.Spectra(</span>
 </span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="sd">    # Options here</span>
 </span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="sd">    )</span>
 </span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="sd">```</span>
 </span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a>
-</span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a><span class="sd">## Index</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a><span class="sd"># Index</span>
 </span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a><span class="sd">- `Spectra`. Used to load and process spectral data.</span>
 </span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a><span class="sd">- `Plotting`. Stores plotting options. Used inside `Spectra.plotting`.</span>
 </span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="sd">- `ScaleRange`. Handles data normalization inside the specified range of values. Used inside `Spectra.scale_range`.</span>
@@ -327,7 +327,7 @@ Any class can be instantiated directly: for example, to create a new
 </span><span id="L-33"><a href="#L-33"><span class="linenos"> 33</span></a><span class="k">class</span> <span class="nc">Plotting</span><span class="p">:</span>
 </span><span id="L-34"><a href="#L-34"><span class="linenos"> 34</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 </span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a><span class="sd">    Stores plotting options.</span>
-</span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a><span class="sd">    Read by `maat.plot.spectra(Spectra)`.</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a><span class="sd">    Read by `maatpy.plot.spectra(Spectra)`.</span>
 </span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a><span class="sd">    &#39;&#39;&#39;</span>
 </span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
 </span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a>            <span class="bp">self</span><span class="p">,</span>
@@ -442,7 +442,7 @@ Any class can be instantiated directly: for example, to create a new
 </span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a><span class="sd">    spectra.scale_range = ScaleRange(index=0, ymin=[2, 3], ymax=[50, 60])</span>
 </span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a><span class="sd">    ```</span>
 </span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a>
-</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a><span class="sd">    To normalize when plotting with `maat.plot.spectra(Spectra)`, remember to set `Plotting.normalize=True`.</span>
+</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a><span class="sd">    To normalize when plotting with `maatpy.plot.spectra(Spectra)`, remember to set `Plotting.normalize=True`.</span>
 </span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a><span class="sd">    When normalizing the plot, all datasets are fitted inside the plotting window, scaling over the entire data range into view.</span>
 </span><span id="L-153"><a href="#L-153"><span class="linenos">153</span></a><span class="sd">    To override this behaviour and expand over the given range to fill the plot window, you can set `ScaleRange.zoom=True`.</span>
 </span><span id="L-154"><a href="#L-154"><span class="linenos">154</span></a><span class="sd">    This zoom setting can also be enabled without normalizing the plot, resulting in a zoom over the given range</span>
@@ -472,7 +472,7 @@ Any class can be instantiated directly: for example, to create a new
 </span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">zoom</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">zoom</span>
 </span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a><span class="sd">        Used when plotting with `maat.plot.spectra()`.</span>
+</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a><span class="sd">        Used when plotting with `maatpy.plot.spectra()`.</span>
 </span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a><span class="sd">        If true, the data inside the range is scaled up to fit the entire plotting window.</span>
 </span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a>
@@ -496,12 +496,12 @@ Any class can be instantiated directly: for example, to create a new
 </span><span id="L-202"><a href="#L-202"><span class="linenos">202</span></a><span class="k">class</span> <span class="nc">Spectra</span><span class="p">:</span>
 </span><span id="L-203"><a href="#L-203"><span class="linenos">203</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 </span><span id="L-204"><a href="#L-204"><span class="linenos">204</span></a><span class="sd">    Spectra object. Used to load and process spectral data.</span>
-</span><span id="L-205"><a href="#L-205"><span class="linenos">205</span></a><span class="sd">    Most functions present in Maat receive this object as input.</span>
+</span><span id="L-205"><a href="#L-205"><span class="linenos">205</span></a><span class="sd">    Most functions present in MaatPy receive this object as input.</span>
 </span><span id="L-206"><a href="#L-206"><span class="linenos">206</span></a>
 </span><span id="L-207"><a href="#L-207"><span class="linenos">207</span></a><span class="sd">    **Use example:** to load two INS spectra CSV files from MANTID with cm$^{-1}$ as input units,</span>
 </span><span id="L-208"><a href="#L-208"><span class="linenos">208</span></a><span class="sd">    and plot them in meV units, normalizing their heights over the range from 20 to 50 meV:</span>
 </span><span id="L-209"><a href="#L-209"><span class="linenos">209</span></a><span class="sd">    ```python</span>
-</span><span id="L-210"><a href="#L-210"><span class="linenos">210</span></a><span class="sd">    import maat as mt</span>
+</span><span id="L-210"><a href="#L-210"><span class="linenos">210</span></a><span class="sd">    import maatpy as mt</span>
 </span><span id="L-211"><a href="#L-211"><span class="linenos">211</span></a><span class="sd">    ins = mt.Spectra(</span>
 </span><span id="L-212"><a href="#L-212"><span class="linenos">212</span></a><span class="sd">        type=&#39;INS&#39;,</span>
 </span><span id="L-213"><a href="#L-213"><span class="linenos">213</span></a><span class="sd">        filename=[&#39;example_1.csv&#39;, &#39;example_2.csv&#39;],</span>
@@ -557,10 +557,10 @@ Any class can be instantiated directly: for example, to create a new
 </span><span id="L-263"><a href="#L-263"><span class="linenos">263</span></a><span class="sd">        Loaded automatically from the filenames at initialization.</span>
 </span><span id="L-264"><a href="#L-264"><span class="linenos">264</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="L-265"><a href="#L-265"><span class="linenos">265</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-266"><a href="#L-266"><span class="linenos">266</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Target units of the spectral data. Can be `&#39;meV&#39;` or `&#39;cm-1&#39;`, written as any of the variants listed in `maat.alias.unit[unit]`.&#39;&#39;&#39;</span>
+</span><span id="L-266"><a href="#L-266"><span class="linenos">266</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Target units of the spectral data. Can be `&#39;meV&#39;` or `&#39;cm-1&#39;`, written as any of the variants listed in `maatpy.alias.unit[unit]`.&#39;&#39;&#39;</span>
 </span><span id="L-267"><a href="#L-267"><span class="linenos">267</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">units_in</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="L-268"><a href="#L-268"><span class="linenos">268</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-</span><span id="L-269"><a href="#L-269"><span class="linenos">269</span></a><span class="sd">        Input units of the spectral data, used in the input CSV files. Can be `&#39;meV&#39;` or `&#39;cm-1&#39;`, written as any of the variants listed in `maat.alias.unit[unit]`.</span>
+</span><span id="L-269"><a href="#L-269"><span class="linenos">269</span></a><span class="sd">        Input units of the spectral data, used in the input CSV files. Can be `&#39;meV&#39;` or `&#39;cm-1&#39;`, written as any of the variants listed in `maatpy.alias.unit[unit]`.</span>
 </span><span id="L-270"><a href="#L-270"><span class="linenos">270</span></a><span class="sd">        If the input CSV files have different units, it can also be set as a list of the same length of the number of input files, eg. `[&#39;meV&#39;, &#39;cm-1&#39;, &#39;cm-1&#39;]`.</span>
 </span><span id="L-271"><a href="#L-271"><span class="linenos">271</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="L-272"><a href="#L-272"><span class="linenos">272</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span> <span class="o">=</span> <span class="n">plotting</span>
@@ -716,7 +716,7 @@ Any class can be instantiated directly: for example, to create a new
 </span><span id="L-422"><a href="#L-422"><span class="linenos">422</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 </span><span id="L-423"><a href="#L-423"><span class="linenos">423</span></a><span class="sd">    Material class.</span>
 </span><span id="L-424"><a href="#L-424"><span class="linenos">424</span></a><span class="sd">    Used to calculate molar masses and cross sections,</span>
-</span><span id="L-425"><a href="#L-425"><span class="linenos">425</span></a><span class="sd">    and to pass data to different analysis functions such as `maat.deuteration.impulse_approx().`</span>
+</span><span id="L-425"><a href="#L-425"><span class="linenos">425</span></a><span class="sd">    and to pass data to different analysis functions such as `maatpy.deuteration.impulse_approx().`</span>
 </span><span id="L-426"><a href="#L-426"><span class="linenos">426</span></a><span class="sd">    &#39;&#39;&#39;</span>
 </span><span id="L-427"><a href="#L-427"><span class="linenos">427</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
 </span><span id="L-428"><a href="#L-428"><span class="linenos">428</span></a>            <span class="bp">self</span><span class="p">,</span>
@@ -765,7 +765,7 @@ Any class can be instantiated directly: for example, to create a new
 </span><span id="L-471"><a href="#L-471"><span class="linenos">471</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 </span><span id="L-472"><a href="#L-472"><span class="linenos">472</span></a><span class="sd">        Set the molar mass of the material.</span>
 </span><span id="L-473"><a href="#L-473"><span class="linenos">473</span></a><span class="sd">        If `Material.grams` is not `None`, the number of moles will be calculated and overwritten.</span>
-</span><span id="L-474"><a href="#L-474"><span class="linenos">474</span></a><span class="sd">        If an isotope is used, eg. `&#39;He4&#39;`, it splits the name with `maat.constants.atoms.get_isotope_index`.</span>
+</span><span id="L-474"><a href="#L-474"><span class="linenos">474</span></a><span class="sd">        If an isotope is used, eg. `&#39;He4&#39;`, it splits the name with `maatpy.constants.atoms.get_isotope_index`.</span>
 </span><span id="L-475"><a href="#L-475"><span class="linenos">475</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="L-476"><a href="#L-476"><span class="linenos">476</span></a>        <span class="n">material_grams_per_mol</span> <span class="o">=</span> <span class="mf">0.0</span>
 </span><span id="L-477"><a href="#L-477"><span class="linenos">477</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
@@ -783,7 +783,7 @@ Any class can be instantiated directly: for example, to create a new
 </span><span id="L-489"><a href="#L-489"><span class="linenos">489</span></a>    <span class="k">def</span> <span class="nf">_set_cross_section</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-490"><a href="#L-490"><span class="linenos">490</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 </span><span id="L-491"><a href="#L-491"><span class="linenos">491</span></a><span class="sd">        Set the cross section of the material, based on the atoms dict.</span>
-</span><span id="L-492"><a href="#L-492"><span class="linenos">492</span></a><span class="sd">        If an isotope is used, eg. `&#39;He4&#39;`, it splits the name with `maat.constants.atoms.get_isotope_index`.</span>
+</span><span id="L-492"><a href="#L-492"><span class="linenos">492</span></a><span class="sd">        If an isotope is used, eg. `&#39;He4&#39;`, it splits the name with `maatpy.constants.atoms.get_isotope_index`.</span>
 </span><span id="L-493"><a href="#L-493"><span class="linenos">493</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="L-494"><a href="#L-494"><span class="linenos">494</span></a>        <span class="n">total_cross_section</span> <span class="o">=</span> <span class="mf">0.0</span>
 </span><span id="L-495"><a href="#L-495"><span class="linenos">495</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
@@ -837,7 +837,7 @@ Any class can be instantiated directly: for example, to create a new
             <div class="pdoc-code codehilite"><pre><span></span><span id="Plotting-34"><a href="#Plotting-34"><span class="linenos"> 34</span></a><span class="k">class</span> <span class="nc">Plotting</span><span class="p">:</span>
 </span><span id="Plotting-35"><a href="#Plotting-35"><span class="linenos"> 35</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 </span><span id="Plotting-36"><a href="#Plotting-36"><span class="linenos"> 36</span></a><span class="sd">    Stores plotting options.</span>
-</span><span id="Plotting-37"><a href="#Plotting-37"><span class="linenos"> 37</span></a><span class="sd">    Read by `maat.plot.spectra(Spectra)`.</span>
+</span><span id="Plotting-37"><a href="#Plotting-37"><span class="linenos"> 37</span></a><span class="sd">    Read by `maatpy.plot.spectra(Spectra)`.</span>
 </span><span id="Plotting-38"><a href="#Plotting-38"><span class="linenos"> 38</span></a><span class="sd">    &#39;&#39;&#39;</span>
 </span><span id="Plotting-39"><a href="#Plotting-39"><span class="linenos"> 39</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
 </span><span id="Plotting-40"><a href="#Plotting-40"><span class="linenos"> 40</span></a>            <span class="bp">self</span><span class="p">,</span>
@@ -942,7 +942,7 @@ Any class can be instantiated directly: for example, to create a new
 
 
             <div class="docstring"><p>Stores plotting options.
-Read by <code><a href="plot.html#spectra">maat.plot.spectra</a>(Spectra)</code>.</p>
+Read by <code><a href="plot.html#spectra">maatpy.plot.spectra</a>(Spectra)</code>.</p>
 </div>
 
 
@@ -1294,7 +1294,7 @@ It can also be an array containing the strings to display; in that case, element
 </span><span id="ScaleRange-149"><a href="#ScaleRange-149"><span class="linenos">149</span></a><span class="sd">    spectra.scale_range = ScaleRange(index=0, ymin=[2, 3], ymax=[50, 60])</span>
 </span><span id="ScaleRange-150"><a href="#ScaleRange-150"><span class="linenos">150</span></a><span class="sd">    ```</span>
 </span><span id="ScaleRange-151"><a href="#ScaleRange-151"><span class="linenos">151</span></a>
-</span><span id="ScaleRange-152"><a href="#ScaleRange-152"><span class="linenos">152</span></a><span class="sd">    To normalize when plotting with `maat.plot.spectra(Spectra)`, remember to set `Plotting.normalize=True`.</span>
+</span><span id="ScaleRange-152"><a href="#ScaleRange-152"><span class="linenos">152</span></a><span class="sd">    To normalize when plotting with `maatpy.plot.spectra(Spectra)`, remember to set `Plotting.normalize=True`.</span>
 </span><span id="ScaleRange-153"><a href="#ScaleRange-153"><span class="linenos">153</span></a><span class="sd">    When normalizing the plot, all datasets are fitted inside the plotting window, scaling over the entire data range into view.</span>
 </span><span id="ScaleRange-154"><a href="#ScaleRange-154"><span class="linenos">154</span></a><span class="sd">    To override this behaviour and expand over the given range to fill the plot window, you can set `ScaleRange.zoom=True`.</span>
 </span><span id="ScaleRange-155"><a href="#ScaleRange-155"><span class="linenos">155</span></a><span class="sd">    This zoom setting can also be enabled without normalizing the plot, resulting in a zoom over the given range</span>
@@ -1324,7 +1324,7 @@ It can also be an array containing the strings to display; in that case, element
 </span><span id="ScaleRange-179"><a href="#ScaleRange-179"><span class="linenos">179</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="ScaleRange-180"><a href="#ScaleRange-180"><span class="linenos">180</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">zoom</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">zoom</span>
 </span><span id="ScaleRange-181"><a href="#ScaleRange-181"><span class="linenos">181</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-</span><span id="ScaleRange-182"><a href="#ScaleRange-182"><span class="linenos">182</span></a><span class="sd">        Used when plotting with `maat.plot.spectra()`.</span>
+</span><span id="ScaleRange-182"><a href="#ScaleRange-182"><span class="linenos">182</span></a><span class="sd">        Used when plotting with `maatpy.plot.spectra()`.</span>
 </span><span id="ScaleRange-183"><a href="#ScaleRange-183"><span class="linenos">183</span></a><span class="sd">        If true, the data inside the range is scaled up to fit the entire plotting window.</span>
 </span><span id="ScaleRange-184"><a href="#ScaleRange-184"><span class="linenos">184</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="ScaleRange-185"><a href="#ScaleRange-185"><span class="linenos">185</span></a>
@@ -1358,7 +1358,7 @@ Those peaks may have ymin values of 2 and 3, and ymax values of 50 and 60 respec
 </code></pre>
 </div>
 
-<p>To normalize when plotting with <code><a href="plot.html#spectra">maat.plot.spectra</a>(Spectra)</code>, remember to set <code><a href="#Plotting.normalize">Plotting.normalize</a>=True</code>.
+<p>To normalize when plotting with <code><a href="plot.html#spectra">maatpy.plot.spectra</a>(Spectra)</code>, remember to set <code><a href="#Plotting.normalize">Plotting.normalize</a>=True</code>.
 When normalizing the plot, all datasets are fitted inside the plotting window, scaling over the entire data range into view.
 To override this behaviour and expand over the given range to fill the plot window, you can set <code><a href="#ScaleRange.zoom">ScaleRange.zoom</a>=True</code>.
 This zoom setting can also be enabled without normalizing the plot, resulting in a zoom over the given range
@@ -1400,7 +1400,7 @@ so that the <code><a href="#ScaleRange.index">index</a></code> dataset fits the 
 </span><span id="ScaleRange.__init__-179"><a href="#ScaleRange.__init__-179"><span class="linenos">179</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="ScaleRange.__init__-180"><a href="#ScaleRange.__init__-180"><span class="linenos">180</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">zoom</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">zoom</span>
 </span><span id="ScaleRange.__init__-181"><a href="#ScaleRange.__init__-181"><span class="linenos">181</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-</span><span id="ScaleRange.__init__-182"><a href="#ScaleRange.__init__-182"><span class="linenos">182</span></a><span class="sd">        Used when plotting with `maat.plot.spectra()`.</span>
+</span><span id="ScaleRange.__init__-182"><a href="#ScaleRange.__init__-182"><span class="linenos">182</span></a><span class="sd">        Used when plotting with `maatpy.plot.spectra()`.</span>
 </span><span id="ScaleRange.__init__-183"><a href="#ScaleRange.__init__-183"><span class="linenos">183</span></a><span class="sd">        If true, the data inside the range is scaled up to fit the entire plotting window.</span>
 </span><span id="ScaleRange.__init__-184"><a href="#ScaleRange.__init__-184"><span class="linenos">184</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span></pre></div>
@@ -1485,7 +1485,7 @@ If <code><a href="#Plotting.normalize">Plotting.normalize</a>=True</code>, the p
     </div>
     <a class="headerlink" href="#ScaleRange.zoom"></a>
     
-            <div class="docstring"><p>Used when plotting with <code><a href="plot.html#spectra">maat.plot.spectra()</a></code>.
+            <div class="docstring"><p>Used when plotting with <code><a href="plot.html#spectra">maatpy.plot.spectra()</a></code>.
 If true, the data inside the range is scaled up to fit the entire plotting window.</p>
 </div>
 
@@ -1558,12 +1558,12 @@ If true, the data inside the range is scaled up to fit the entire plotting windo
             <div class="pdoc-code codehilite"><pre><span></span><span id="Spectra-203"><a href="#Spectra-203"><span class="linenos">203</span></a><span class="k">class</span> <span class="nc">Spectra</span><span class="p">:</span>
 </span><span id="Spectra-204"><a href="#Spectra-204"><span class="linenos">204</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 </span><span id="Spectra-205"><a href="#Spectra-205"><span class="linenos">205</span></a><span class="sd">    Spectra object. Used to load and process spectral data.</span>
-</span><span id="Spectra-206"><a href="#Spectra-206"><span class="linenos">206</span></a><span class="sd">    Most functions present in Maat receive this object as input.</span>
+</span><span id="Spectra-206"><a href="#Spectra-206"><span class="linenos">206</span></a><span class="sd">    Most functions present in MaatPy receive this object as input.</span>
 </span><span id="Spectra-207"><a href="#Spectra-207"><span class="linenos">207</span></a>
 </span><span id="Spectra-208"><a href="#Spectra-208"><span class="linenos">208</span></a><span class="sd">    **Use example:** to load two INS spectra CSV files from MANTID with cm$^{-1}$ as input units,</span>
 </span><span id="Spectra-209"><a href="#Spectra-209"><span class="linenos">209</span></a><span class="sd">    and plot them in meV units, normalizing their heights over the range from 20 to 50 meV:</span>
 </span><span id="Spectra-210"><a href="#Spectra-210"><span class="linenos">210</span></a><span class="sd">    ```python</span>
-</span><span id="Spectra-211"><a href="#Spectra-211"><span class="linenos">211</span></a><span class="sd">    import maat as mt</span>
+</span><span id="Spectra-211"><a href="#Spectra-211"><span class="linenos">211</span></a><span class="sd">    import maatpy as mt</span>
 </span><span id="Spectra-212"><a href="#Spectra-212"><span class="linenos">212</span></a><span class="sd">    ins = mt.Spectra(</span>
 </span><span id="Spectra-213"><a href="#Spectra-213"><span class="linenos">213</span></a><span class="sd">        type=&#39;INS&#39;,</span>
 </span><span id="Spectra-214"><a href="#Spectra-214"><span class="linenos">214</span></a><span class="sd">        filename=[&#39;example_1.csv&#39;, &#39;example_2.csv&#39;],</span>
@@ -1619,10 +1619,10 @@ If true, the data inside the range is scaled up to fit the entire plotting windo
 </span><span id="Spectra-264"><a href="#Spectra-264"><span class="linenos">264</span></a><span class="sd">        Loaded automatically from the filenames at initialization.</span>
 </span><span id="Spectra-265"><a href="#Spectra-265"><span class="linenos">265</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="Spectra-266"><a href="#Spectra-266"><span class="linenos">266</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="Spectra-267"><a href="#Spectra-267"><span class="linenos">267</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Target units of the spectral data. Can be `&#39;meV&#39;` or `&#39;cm-1&#39;`, written as any of the variants listed in `maat.alias.unit[unit]`.&#39;&#39;&#39;</span>
+</span><span id="Spectra-267"><a href="#Spectra-267"><span class="linenos">267</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Target units of the spectral data. Can be `&#39;meV&#39;` or `&#39;cm-1&#39;`, written as any of the variants listed in `maatpy.alias.unit[unit]`.&#39;&#39;&#39;</span>
 </span><span id="Spectra-268"><a href="#Spectra-268"><span class="linenos">268</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">units_in</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="Spectra-269"><a href="#Spectra-269"><span class="linenos">269</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-</span><span id="Spectra-270"><a href="#Spectra-270"><span class="linenos">270</span></a><span class="sd">        Input units of the spectral data, used in the input CSV files. Can be `&#39;meV&#39;` or `&#39;cm-1&#39;`, written as any of the variants listed in `maat.alias.unit[unit]`.</span>
+</span><span id="Spectra-270"><a href="#Spectra-270"><span class="linenos">270</span></a><span class="sd">        Input units of the spectral data, used in the input CSV files. Can be `&#39;meV&#39;` or `&#39;cm-1&#39;`, written as any of the variants listed in `maatpy.alias.unit[unit]`.</span>
 </span><span id="Spectra-271"><a href="#Spectra-271"><span class="linenos">271</span></a><span class="sd">        If the input CSV files have different units, it can also be set as a list of the same length of the number of input files, eg. `[&#39;meV&#39;, &#39;cm-1&#39;, &#39;cm-1&#39;]`.</span>
 </span><span id="Spectra-272"><a href="#Spectra-272"><span class="linenos">272</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="Spectra-273"><a href="#Spectra-273"><span class="linenos">273</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span> <span class="o">=</span> <span class="n">plotting</span>
@@ -1776,13 +1776,13 @@ If true, the data inside the range is scaled up to fit the entire plotting windo
 
 
             <div class="docstring"><p>Spectra object. Used to load and process spectral data.
-Most functions present in Maat receive this object as input.</p>
+Most functions present in MaatPy receive this object as input.</p>
 
 <p><strong>Use example:</strong> to load two INS spectra CSV files from MANTID with cm$^{-1}$ as input units,
 and plot them in meV units, normalizing their heights over the range from 20 to 50 meV:</p>
 
 <div class="pdoc-code codehilite">
-<pre><span></span><code><span class="kn">import</span> <span class="nn">maat</span> <span class="k">as</span> <span class="nn">mt</span>
+<pre><span></span><code><span class="kn">import</span> <span class="nn">maatpy</span> <span class="k">as</span> <span class="nn">mt</span>
 <span class="n">ins</span> <span class="o">=</span> <span class="n">mt</span><span class="o">.</span><span class="n">Spectra</span><span class="p">(</span>
     <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;INS&#39;</span><span class="p">,</span>
     <span class="n">filename</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;example_1.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;example_2.csv&#39;</span><span class="p">],</span>
@@ -1851,10 +1851,10 @@ and plot them in meV units, normalizing their heights over the range from 20 to 
 </span><span id="Spectra.__init__-264"><a href="#Spectra.__init__-264"><span class="linenos">264</span></a><span class="sd">        Loaded automatically from the filenames at initialization.</span>
 </span><span id="Spectra.__init__-265"><a href="#Spectra.__init__-265"><span class="linenos">265</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="Spectra.__init__-266"><a href="#Spectra.__init__-266"><span class="linenos">266</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="Spectra.__init__-267"><a href="#Spectra.__init__-267"><span class="linenos">267</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Target units of the spectral data. Can be `&#39;meV&#39;` or `&#39;cm-1&#39;`, written as any of the variants listed in `maat.alias.unit[unit]`.&#39;&#39;&#39;</span>
+</span><span id="Spectra.__init__-267"><a href="#Spectra.__init__-267"><span class="linenos">267</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Target units of the spectral data. Can be `&#39;meV&#39;` or `&#39;cm-1&#39;`, written as any of the variants listed in `maatpy.alias.unit[unit]`.&#39;&#39;&#39;</span>
 </span><span id="Spectra.__init__-268"><a href="#Spectra.__init__-268"><span class="linenos">268</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">units_in</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="Spectra.__init__-269"><a href="#Spectra.__init__-269"><span class="linenos">269</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-</span><span id="Spectra.__init__-270"><a href="#Spectra.__init__-270"><span class="linenos">270</span></a><span class="sd">        Input units of the spectral data, used in the input CSV files. Can be `&#39;meV&#39;` or `&#39;cm-1&#39;`, written as any of the variants listed in `maat.alias.unit[unit]`.</span>
+</span><span id="Spectra.__init__-270"><a href="#Spectra.__init__-270"><span class="linenos">270</span></a><span class="sd">        Input units of the spectral data, used in the input CSV files. Can be `&#39;meV&#39;` or `&#39;cm-1&#39;`, written as any of the variants listed in `maatpy.alias.unit[unit]`.</span>
 </span><span id="Spectra.__init__-271"><a href="#Spectra.__init__-271"><span class="linenos">271</span></a><span class="sd">        If the input CSV files have different units, it can also be set as a list of the same length of the number of input files, eg. `[&#39;meV&#39;, &#39;cm-1&#39;, &#39;cm-1&#39;]`.</span>
 </span><span id="Spectra.__init__-272"><a href="#Spectra.__init__-272"><span class="linenos">272</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="Spectra.__init__-273"><a href="#Spectra.__init__-273"><span class="linenos">273</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span> <span class="o">=</span> <span class="n">plotting</span>
@@ -1952,7 +1952,7 @@ Loaded automatically from the filenames at initialization.</p>
     </div>
     <a class="headerlink" href="#Spectra.units"></a>
     
-            <div class="docstring"><p>Target units of the spectral data. Can be <code>'meV'</code> or <code>'cm-1'</code>, written as any of the variants listed in <code><a href="alias.html#unit">maat.alias.unit</a>[unit]</code>.</p>
+            <div class="docstring"><p>Target units of the spectral data. Can be <code>'meV'</code> or <code>'cm-1'</code>, written as any of the variants listed in <code><a href="alias.html#unit">maatpy.alias.unit</a>[unit]</code>.</p>
 </div>
 
 
@@ -1965,7 +1965,7 @@ Loaded automatically from the filenames at initialization.</p>
     </div>
     <a class="headerlink" href="#Spectra.units_in"></a>
     
-            <div class="docstring"><p>Input units of the spectral data, used in the input CSV files. Can be <code>'meV'</code> or <code>'cm-1'</code>, written as any of the variants listed in <code><a href="alias.html#unit">maat.alias.unit</a>[unit]</code>.
+            <div class="docstring"><p>Input units of the spectral data, used in the input CSV files. Can be <code>'meV'</code> or <code>'cm-1'</code>, written as any of the variants listed in <code><a href="alias.html#unit">maatpy.alias.unit</a>[unit]</code>.
 If the input CSV files have different units, it can also be set as a list of the same length of the number of input files, eg. <code>['meV', 'cm-1', 'cm-1']</code>.</p>
 </div>
 
@@ -2138,7 +2138,7 @@ If the input CSV files have different units, it can also be set as a list of the
 </span><span id="Material-423"><a href="#Material-423"><span class="linenos">423</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 </span><span id="Material-424"><a href="#Material-424"><span class="linenos">424</span></a><span class="sd">    Material class.</span>
 </span><span id="Material-425"><a href="#Material-425"><span class="linenos">425</span></a><span class="sd">    Used to calculate molar masses and cross sections,</span>
-</span><span id="Material-426"><a href="#Material-426"><span class="linenos">426</span></a><span class="sd">    and to pass data to different analysis functions such as `maat.deuteration.impulse_approx().`</span>
+</span><span id="Material-426"><a href="#Material-426"><span class="linenos">426</span></a><span class="sd">    and to pass data to different analysis functions such as `maatpy.deuteration.impulse_approx().`</span>
 </span><span id="Material-427"><a href="#Material-427"><span class="linenos">427</span></a><span class="sd">    &#39;&#39;&#39;</span>
 </span><span id="Material-428"><a href="#Material-428"><span class="linenos">428</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
 </span><span id="Material-429"><a href="#Material-429"><span class="linenos">429</span></a>            <span class="bp">self</span><span class="p">,</span>
@@ -2187,7 +2187,7 @@ If the input CSV files have different units, it can also be set as a list of the
 </span><span id="Material-472"><a href="#Material-472"><span class="linenos">472</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 </span><span id="Material-473"><a href="#Material-473"><span class="linenos">473</span></a><span class="sd">        Set the molar mass of the material.</span>
 </span><span id="Material-474"><a href="#Material-474"><span class="linenos">474</span></a><span class="sd">        If `Material.grams` is not `None`, the number of moles will be calculated and overwritten.</span>
-</span><span id="Material-475"><a href="#Material-475"><span class="linenos">475</span></a><span class="sd">        If an isotope is used, eg. `&#39;He4&#39;`, it splits the name with `maat.constants.atoms.get_isotope_index`.</span>
+</span><span id="Material-475"><a href="#Material-475"><span class="linenos">475</span></a><span class="sd">        If an isotope is used, eg. `&#39;He4&#39;`, it splits the name with `maatpy.constants.atoms.get_isotope_index`.</span>
 </span><span id="Material-476"><a href="#Material-476"><span class="linenos">476</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="Material-477"><a href="#Material-477"><span class="linenos">477</span></a>        <span class="n">material_grams_per_mol</span> <span class="o">=</span> <span class="mf">0.0</span>
 </span><span id="Material-478"><a href="#Material-478"><span class="linenos">478</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
@@ -2205,7 +2205,7 @@ If the input CSV files have different units, it can also be set as a list of the
 </span><span id="Material-490"><a href="#Material-490"><span class="linenos">490</span></a>    <span class="k">def</span> <span class="nf">_set_cross_section</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="Material-491"><a href="#Material-491"><span class="linenos">491</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 </span><span id="Material-492"><a href="#Material-492"><span class="linenos">492</span></a><span class="sd">        Set the cross section of the material, based on the atoms dict.</span>
-</span><span id="Material-493"><a href="#Material-493"><span class="linenos">493</span></a><span class="sd">        If an isotope is used, eg. `&#39;He4&#39;`, it splits the name with `maat.constants.atoms.get_isotope_index`.</span>
+</span><span id="Material-493"><a href="#Material-493"><span class="linenos">493</span></a><span class="sd">        If an isotope is used, eg. `&#39;He4&#39;`, it splits the name with `maatpy.constants.atoms.get_isotope_index`.</span>
 </span><span id="Material-494"><a href="#Material-494"><span class="linenos">494</span></a><span class="sd">        &#39;&#39;&#39;</span>
 </span><span id="Material-495"><a href="#Material-495"><span class="linenos">495</span></a>        <span class="n">total_cross_section</span> <span class="o">=</span> <span class="mf">0.0</span>
 </span><span id="Material-496"><a href="#Material-496"><span class="linenos">496</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
@@ -2246,7 +2246,7 @@ If the input CSV files have different units, it can also be set as a list of the
 
             <div class="docstring"><p>Material class.
 Used to calculate molar masses and cross sections,
-and to pass data to different analysis functions such as <code><a href="deuteration.html#impulse_approx">maat.deuteration.impulse_approx()</a>.</code></p>
+and to pass data to different analysis functions such as <code><a href="deuteration.html#impulse_approx">maatpy.deuteration.impulse_approx()</a>.</code></p>
 </div>
 
 

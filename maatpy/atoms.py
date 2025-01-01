@@ -1,6 +1,6 @@
 '''
 # Description
-This module provides the tools to create and manage the `maat.elements.atom` megadictionary,
+This module provides the tools to create and manage the `maatpy.elements.atom` megadictionary,
 which contains the properties of all elements.
 Additionally, this module contains tools to sort and organise element data.
 
@@ -36,29 +36,29 @@ def export_to_py(
     ) -> None:
     '''
     Export a dictionary of chemical elements to a python file.
-    This is used to build and update the `maat.elements.atom` megadictionary, that contains
+    This is used to build and update the `maatpy.elements.atom` megadictionary, that contains
     all the element data, such as masses, cross-sections, etc.
     '''
     with open(filename, 'w') as f:
         # Write the docstrings
         f.write(
             "'''\n"
-            "## Description\n"
+            "# Description\n"
             "This module contains the `atom` dictionary, which contains the properties of all elements.\n"
-            "This module is created, managed and updated automatically with `maat.atoms`,\n"
+            "This module is created, managed and updated automatically with `maatpy.atoms`,\n"
             "which also contains the references for this data.\n"
-            "The `atom` dictionary is loaded directly in Maat as `maat.atom`.\n\n"
+            "The `atom` dictionary is loaded directly in MaatPy as `maatpy.atom`.\n\n"
             "Use example:\n"
             "```python\n"
-            "aluminium_cross_section = maat.atom['Al'].cross_section\n"
-            "He4_mass = maat.atom['H'].isotope[4].mass\n"
+            "aluminium_cross_section = maatpy.atom['Al'].cross_section\n"
+            "He4_mass = maatpy.atom['H'].isotope[4].mass\n"
             "```\n\n"
-            "## Index\n"
+            "# Index\n"
             "- `Isotope`\n"
             "- `Element`\n"
             "- `atom`\n\n"
-            "## References\n"
-            "See the full list of references for this data in `maat.atoms`.\n\n"
+            "# References\n"
+            "See the full list of references for this data in `maatpy.atoms`.\n\n"
             "---\n"
             "'''\n\n\n"
         )
@@ -125,7 +125,7 @@ def split_isotope(name:str) -> tuple:
     Decomposes the `name` containing an isotope, such as 'H2' or 'He4',
     into a tuple with the element and the mass number.
     For example, 'He4' would return ('He', 4).
-    If the isotope is not found in the `maat.elements.atom` megadictionary,
+    If the isotope is not found in the `maatpy.elements.atom` megadictionary,
     it raises an error, informing of the allowed mass numbers (A) values for the given element.
     '''
     element = ''.join(filter(str.isalpha, name))
@@ -139,7 +139,7 @@ def split_isotope(name:str) -> tuple:
 def allowed_isotopes(element) -> list:
     '''
     Returns a list with the allowed mass numbers (A) of the isotopes of a given `element`.
-    These mass numbers are used as isotope keys in the `maat.elements.atom` megadictionary.
+    These mass numbers are used as isotope keys in the `maatpy.elements.atom` megadictionary.
     '''
     if not element in atom.keys():
         raise KeyError(f'Unrecognised element: {element}')

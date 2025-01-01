@@ -1,8 +1,8 @@
 '''
-## Description
+# Description
 This module contains different methods to calculate deuteration levels from spectra.
 
-## Index
+# Index
 - `impulse_approx()`
 - `peaks_mapi()`
 
@@ -29,7 +29,7 @@ def impulse_approx(
     Calculate the deuteration levels from INS spectra with the *Impulse Approximation*,
     see https://www.tandfonline.com/doi/full/10.1080/00018732.2017.1317963.
 
-    Protonated and deuterated materials must be specified as `maat.classes.Material` objects.
+    Protonated and deuterated materials must be specified as `maatpy.classes.Material` objects.
     The threshold controls the start of the plateau (in meV) to consider Deep Inelastic Neutron Scattering (DINS).
     The protonated and deuterated dataframe indexes are specified by `H_df_index` and `D_df_index`, respectively.
 
@@ -43,7 +43,7 @@ def impulse_approx(
     $$
 
     > [!WARNING]
-    > This approximation is very sensitive to the mass sample, specified by `maat.classes.Material.grams`.
+    > This approximation is very sensitive to the mass sample, specified by `maatpy.classes.Material.grams`.
     '''
     ins = deepcopy(ins)
     material_H = deepcopy(material_H)

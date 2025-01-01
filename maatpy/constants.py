@@ -1,14 +1,14 @@
 '''
-## Description
+# Description
 This module contains useful constants and conversion factors.
-Any value from this module can be acessed directly by calling it as `maat.value`.
+Any value from this module can be acessed directly by calling it as `maatpy.value`.
 For example, to call the planck constant in eV·s, you can use:
 ```python
-import maat as mt
+import maatpy as mt
 h_eV = mt.h_eV
 ```
 
-## Index
+# Index
 - [Energy conversion factors](#energy-conversion-factors)
 - [Distance conversion factors](#distance-conversion-factors)
 - [Mass conversion factors](#mass-conversion-factors)
@@ -16,7 +16,7 @@ h_eV = mt.h_eV
 - [Time conversion factors](#time-conversion-factors)
 - [Universal constants](#universal-constants)
 
-## References
+# References
 These values come from the 2022 CODATA Internationally
 recommended 2022 values of the Fundamental Physical Constants.
 
@@ -26,6 +26,8 @@ recommended 2022 values of the Fundamental Physical Constants.
 
 import numpy as np
 
+
+version = 'v3.1.0'
 
 '''---
 ## Energy conversion factors

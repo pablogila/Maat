@@ -1,9 +1,9 @@
 '''
-## Description
+# Description
 This module contains functions for fitting and analyzing data.
 
-## Index
-- `mean_std()`
+# Index
+- `mean()`
 - `plateau()`
 - `area_under_peak()`
 - `ratio_areas()`
@@ -18,7 +18,6 @@ from .classes import *
 import scipy
 import numpy as np
 from copy import deepcopy
-import thoth as th
 
 
 def mean(
@@ -58,11 +57,11 @@ def plateau(
         df_index:int=0
     ) -> tuple:
     '''
-    Fit the mean value and the error of a plateau in a `maat.classes.Spectra` object.
-    If `maat.classes.Spectra.dataframe[df_index]` has an 'Error' column, those errors are also taken into account
+    Fit the mean value and the error of a plateau in a `maatpy.classes.Spectra` object.
+    If `maatpy.classes.Spectra.dataframe[df_index]` has an 'Error' column, those errors are also taken into account
     along with the standard deviation of the mean, else only the standard deviation is considered.
-    The 'Error' column title can be any string in `maat.alias.file['Error']`.\n
-    Use as `maat.fit.plateau(spectra, cuts=[low_cut, high_cut], df_index=0)`.
+    The 'Error' column title can be any string in `maatpy.alias.file['Error']`.\n
+    Use as `maatpy.fit.plateau(spectra, cuts=[low_cut, high_cut], df_index=0)`.
     Note that `cuts`, `low_cut` and/or `top_cut` can be set to None.
     '''
     df = deepcopy(spectra.dataframe[df_index])

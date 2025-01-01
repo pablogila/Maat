@@ -1,23 +1,23 @@
 '''
-## Description
+# Description
 This module contains the `atom` dictionary, which contains the properties of all elements.
-This module is created, managed and updated automatically with `maat.atoms`,
+This module is created, managed and updated automatically with `maatpy.atoms`,
 which also contains the references for this data.
-The `atom` dictionary is loaded directly in Maat as `maat.atom`.
+The `atom` dictionary is loaded directly in Maat as `maatpy.atom`.
 
 Use example:
 ```python
-aluminium_cross_section = maat.atom['Al'].cross_section
-He4_mass = maat.atom['H'].isotope[4].mass
+aluminium_cross_section = maatpy.atom['Al'].cross_section
+He4_mass = maatpy.atom['H'].isotope[4].mass
 ```
 
-## Index
+# Index
 - `Isotope`
 - `Element`
 - `atom`
 
-## References
-See the full list of references for this data in `maat.atoms`.
+# References
+See the full list of references for this data in `maatpy.atoms`.
 
 ---
 '''

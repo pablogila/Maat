@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 
 def spectra(spectrum:Spectra):
     '''
-    Plot the given spectra, with optional `maat.classes.Plotting` and `maat.classes.ScaleRange` attributes.
+    Plot the given spectra, with optional `maatpy.classes.Plotting` and `maatpy.classes.ScaleRange` attributes.
     '''
 
     strings_to_delete_from_name = ['.csv', '.dat', '.txt', '_INS', '_ATR', '_FTIR', '_temp', '_RAMAN', '_Raman', '/data/', 'data/', '/csv/', 'csv/', '/INS/', 'INS/', '/FTIR/', 'FTIR/', '/ATR/', 'ATR/', '_smooth', '_smoothed', '_subtracted', '_cellsubtracted']

@@ -1,8 +1,8 @@
 '''
 # Description
 This module contains premade examples of material compositions and other experimental values.
-The `maat.classes.Material.grams` is yet to be provided,
-before setting the material with `maat.classes.Material.set()`.
+The `maatpy.classes.Material.grams` is yet to be provided,
+before setting the material with `maatpy.classes.Material.set()`.
 
 ---
 '''
